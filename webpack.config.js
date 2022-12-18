@@ -17,13 +17,17 @@ const config = {
   },
   plugins: [
       new HtmlWebpackPlugin({
-          template: 'index.html',
+          template: 'src/index.html',
       }),
 
       new MiniCssExtractPlugin(),
   ],
   module: {
       rules: [
+          {
+              test: /\.tsx?$/,
+              loader: "babel-loader"
+          },
           {
               test: /\.(ts|tsx)$/i,
               loader: 'ts-loader',
@@ -54,6 +58,7 @@ module.exports = () => {
       config.mode = 'production';
   } else {
       config.mode = 'development';
+      config.watch = true;
       config.devtool = 'eval-source-map';
   }
   return config;

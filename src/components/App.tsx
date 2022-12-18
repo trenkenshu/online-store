@@ -1,8 +1,15 @@
 import React from 'react';
+import Footer from './footer';
+import Header from './header';
+import ProductCard from './productCard';
 
 function App() {
   return (
-   <h1>Online Store</h1>
+    <>
+       <Header/>
+       <ProductCard/>
+       <Footer/>
+    </>
   );
 }
 

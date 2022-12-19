@@ -1,5 +1,6 @@
 import React from 'react';
 import '../scss/productCard.scss'
+import Button from './Button';
 function ProductCard () {
   return(
     <div className='product__card'>
@@ -14,8 +15,8 @@ function ProductCard () {
         <div className="product__stock">product__stock</div>
       </div>
       <div className="product__btns">
-        <button className="btn product__btn_add">Add to Cart</button>
-        <button className="btn product__btn_details">Details</button>
+        <Button name="Add to Cart"></Button>
+        <Button name="Details"></Button>
       </div>
     </div>
   )

@@ -1,0 +1,14 @@
+@import './variables';
+.filters{
+  padding:  5px 0;
+  border: 1px solid $bgColor;
+  border-radius: 10px;
+  width: 25%;
+  height: fit-content;
+  font-size: 1.6rem;
+  &__btns{
+    display: flex;
+    justify-content: space-evenly;
+  }
+}
+

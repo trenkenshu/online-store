@@ -1,0 +1,15 @@
+@import './variables';
+.btn {
+  padding: 10px 15px;
+  border: 1px solid $yellowColor;
+  border-radius: 10px;
+  outline: none;
+  background-color: $bgColor;
+  color: $yellowColor;
+  cursor: pointer;
+  transition: all .3s ease-in;
+  &:hover {
+    background-color: $yellowColor;
+    color: $bgColor;
+  }
+}

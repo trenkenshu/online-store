@@ -1,13 +1,13 @@
 import React from 'react';
-import Footer from './footer';
-import Header from './header';
-import ProductCard from './productCard';
+import Footer from './Footer';
+import Header from './Header';
+import Catalog from './Сatalog';
 
 function App() {
   return (
     <>
        <Header/>
-       <ProductCard/>
+       <Catalog/>
        <Footer/>
     </>
   );

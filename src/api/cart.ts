@@ -2,7 +2,7 @@ import ICart from '../interfaces/cart';
 import { IProduct } from '../interfaces/products';
 
 class Cart {
-  private cart: ICart;
+  private cart;
   constructor () {
     this.cart = {
       currentProducts: [],

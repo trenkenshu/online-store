@@ -1,18 +1,16 @@
 import React from 'react';
-import './Button.scss'
+import './Button.scss';
 
 type ButtonType = {
-  name?:string,
-  children?: React.ReactNode,
-  onClick?: Function;
-}
+    name?: string;
+    children?: React.ReactNode;
+    onClick?: Function;
+};
 
-const Button = (props: ButtonType)  => {
-  const {name} = props;
+const Button = (props: ButtonType) => {
+    const { name } = props;
 
-  return (
-    <button className="btn">{name}</button>
-  )
-}
+    return <button className="btn">{name}</button>;
+};
 
 export default Button;

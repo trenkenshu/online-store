@@ -1,4 +1,4 @@
-export interface IProduct {
+export interface IProduct extends Record<string, number | string | URL | URL[]> {
   id: number;
   title: string;
   description: string;

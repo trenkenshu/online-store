@@ -1,0 +1,70 @@
+.header {
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+  color: white;
+  // background-color: $bgColor;
+  // color: $mainTextColor;
+  width: 100%;
+  padding: 10px 30px;
+  &__logo {
+    font-size: 4rem;
+    cursor: pointer;
+    &:hover{
+      & .yellow {
+        color: white;
+        // color: $mainTextColor;
+      }
+      &  .header__logo-link {
+        color: rgb(255, 230, 0);
+        // color: $yellowColor;
+      }
+    }
+  }
+  &__logo-link{
+    text-decoration: none;
+    color: white;
+    // color: $mainTextColor;
+    font-weight: 400;
+    font-style: italic;
+    transition: all .3s ease-in;
+  }
+  &__total-price {
+    display: flex;
+    align-items: center;
+    font-size: 1.8rem;
+    gap: 5px;
+  }
+  &__text{
+    text-transform: uppercase;
+  }
+  &__cart{
+    position: relative;
+    width: 55px;
+    height: 55px;
+    background-image: url('/src/assets/cart-icon.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: all .3s ease-in;
+    cursor: pointer;
+    &:hover{
+      transform: scale(1.1);
+    }
+  }
+  &__cart-amount {
+    position: absolute;
+    top: 44%;
+    left: 50%;
+    font-size: 2rem;
+    color: black;
+    // color: $bgColor;
+    transform: translate(-50%,0);
+  }
+  
+  .yellow {
+    transition: all .3s ease-in;
+    color: rgb(255, 230, 0);
+    // color: $yellowColor;
+  }
+}

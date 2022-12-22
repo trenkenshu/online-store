@@ -1,0 +1,40 @@
+.product {
+  &__card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 5px;
+    width: 24%;
+    border: 1px solid black;
+    border-radius: 10px;
+    font-size: 1.6rem;
+    padding: 5px;
+    cursor: pointer;
+  }
+  &__name,
+  &__brand {
+    text-align: center;
+    text-transform: uppercase;
+  }
+  &__value{
+    font-weight: bold;
+  }
+  &__img{
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+  }
+  &__info{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  &__btns {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+  }
+}

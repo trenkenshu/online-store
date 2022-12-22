@@ -1,0 +1,21 @@
+.btn {
+  padding: 10px;
+  border: 1px solid rgb(255, 230, 0);
+  // border: 1px solid $yellowColor;
+  border-radius: 10px;
+  outline: none;
+  font-size: 1.6rem;
+  background-color: black;
+  color: rgb(255, 230, 0);
+  // background-color: $bgColor;
+  // color: $yellowColor;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .3s ease-in;
+  &:hover {
+    background-color: rgb(255, 230, 0);
+    color: black;
+    // background-color: $yellowColor;
+    // color: $bgColor;
+  }
+}

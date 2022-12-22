@@ -1,14 +1,14 @@
 import React from 'react';
-import '../scss/header.scss'
+import './Header.scss'
 
 
-function Header () {
+const Header = () => {
+  
   return (
     <header className='header'>
-      <div className='header__container container'>
         <h1 className='header__logo'>
           <a className="header__logo-link" href="#">
-          <span className='yellow'>Online</span> store
+            <span className='yellow'>Online</span> store
           </a>
         </h1>
         <div className='header__total-price'>
@@ -18,8 +18,8 @@ function Header () {
         <div className='header__cart'>
           <div className='header__cart-amount'>0</div>
         </div>
-      </div>
     </header>
   )
 }
+
 export default Header;

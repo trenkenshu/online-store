@@ -1,13 +1,14 @@
-@import './variables';
 .footer {
-  background-color: $bgColor;
-  color: $mainTextColor;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+  color: white;
+  // background-color: $bgColor;
+  // color: $mainTextColor;
   font-size: 1.6rem;
-  &__container {
-    display:flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+  width: 100%;
+  padding: 10px 30px;
   &__authors{
     display: flex;
     flex-direction: column;
@@ -17,17 +18,19 @@
   &__github-link {
     display: inline-block;
     text-decoration: none;
-    color: $mainTextColor;
+    color: white;
+    // color: $mainTextColor;
     transition: all .3s ease-in;
     &:hover{
-      color: $yellowColor;
+      color: rgb(255, 230, 0);
+      // color: $yellowColor;
     }
   }
   &__rs-logo{
     display: block;
     width: 85px;
     height: 45px;
-    background-image: url('../assets/rs_school_js.svg');
+    background-image: url('/src/assets/rs_school_js.svg');
     background-repeat: no-repeat;
     transition: all .3s ease-in;
     &:hover{

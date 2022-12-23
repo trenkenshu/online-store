@@ -10,7 +10,7 @@ export const Filter = (props: FilterType) => {
 
     return (
         <div className="filter">
-            <h3 className="filter__name">{name}</h3>
+            <h3 className="filter__title">{name}</h3>
             {children}
         </div>
     );

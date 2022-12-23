@@ -4,11 +4,20 @@ import DualSlider from '../DualSlider';
 import Filter from '../Filter';
 import FilterItem from '../FilterItem';
 import './FilterBlock.scss';
-import { catalogType } from '../../pages/Catalog';
+import { catalogType } from '../../pages/Catalog/Catalog';
 
 const FiltersBlock = (props: catalogType) => {
-    const { products, categories, brands, priceRange,
-        stockRange, priceRangeVals, stockRangeVals, db, setCatalogStates } = props;
+    const {
+        products,
+        categories,
+        brands,
+        priceRange,
+        stockRange,
+        priceRangeVals,
+        stockRangeVals,
+        db,
+        setCatalogStates,
+    } = props;
 
     return (
         <div className="filters">
@@ -23,7 +32,7 @@ const FiltersBlock = (props: catalogType) => {
                             <FilterItem
                                 category={categoryObj.category}
                                 maxAmount={categoryObj.maxAmount}
-                                currentAmount={categoryObj.currentAmount}
+                                currentAmount={categoryObj.currentAmount }
                                 db={db}
                                 key={index}
                                 filterName="category"
@@ -54,21 +63,23 @@ const FiltersBlock = (props: catalogType) => {
                 <DualSlider
                     min={priceRange.min}
                     max={priceRange.max}
-                    minVal = {priceRangeVals.min}
-                    maxVal = {priceRangeVals.max}
-                    db = {db}
-                    action = 'price'
-                    setCatalogStates={setCatalogStates} />
+                    minVal={priceRangeVals.min}
+                    maxVal={priceRangeVals.max}
+                    db={db}
+                    action="price"
+                    setCatalogStates={setCatalogStates}
+                />
             </Filter>
             <Filter name="Stock">
                 <DualSlider
                     min={stockRange.min}
                     max={stockRange.max}
-                    minVal = {stockRangeVals.min}
-                    maxVal = {stockRangeVals.max}
-                    db = {db}
-                    action = 'stock'
-                    setCatalogStates={setCatalogStates} />
+                    minVal={stockRangeVals.min}
+                    maxVal={stockRangeVals.max}
+                    db={db}
+                    action="stock"
+                    setCatalogStates={setCatalogStates}
+                />
             </Filter>
         </div>
     );

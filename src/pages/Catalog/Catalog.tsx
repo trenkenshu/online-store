@@ -1,10 +1,9 @@
 import React from 'react';
-import DBhandler, { MinmaxType, UniqueFiltersType } from '../api/database';
-import FiltersBlock from '../components/FiltersBlock/FiltersBlock';
-import ProductsBlock from '../components/ProductsBlock/ProductsBlock';
-import { IProduct } from '../interfaces/products';
-
-import '../scss/Catalog.scss';
+import DBhandler, { MinmaxType, UniqueFiltersType } from '../../api/database';
+import FiltersBlock from '../../components/FiltersBlock/FiltersBlock';
+import ProductsBlock from '../../components/ProductsBlock';
+import { IProduct } from '../../interfaces/products';
+import './Catalog.scss';
 
 export type catalogType = {
     products: IProduct[];
@@ -19,8 +18,17 @@ export type catalogType = {
 };
 
 const Catalog = (props: catalogType) => {
-    const { products, categories, brands, priceRange,
-        stockRange, stockRangeVals, priceRangeVals, db, setCatalogStates } = props;
+    const {
+        products,
+        categories,
+        brands,
+        priceRange,
+        stockRange,
+        stockRangeVals,
+        priceRangeVals,
+        db,
+        setCatalogStates,
+    } = props;
 
     // console.log('catalog', props);
     return (
@@ -33,8 +41,8 @@ const Catalog = (props: catalogType) => {
                     brands={brands}
                     priceRange={priceRange}
                     stockRange={stockRange}
-                    priceRangeVals= {priceRangeVals}
-                    stockRangeVals= {stockRangeVals}
+                    priceRangeVals={priceRangeVals}
+                    stockRangeVals={stockRangeVals}
                     db={db}
                 />
                 <ProductsBlock products={products} />

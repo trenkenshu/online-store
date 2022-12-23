@@ -1,5 +1,15 @@
 .filter {
   &__item{
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__body{
+    display: flex;
+    gap: 5px;
+  }
+  &__amount {
+    display: flex;
+    gap: 5px;
   }
 }

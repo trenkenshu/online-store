@@ -1,2 +1,2 @@
-import DualSlider from "./DualSlider";
+import DualSlider from './DualSlider';
 export default DualSlider;

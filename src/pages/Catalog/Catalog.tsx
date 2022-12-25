@@ -1,6 +1,6 @@
 import React from 'react';
 import DBhandler, { MinmaxType, UniqueFiltersType } from '../../api/database';
-import FiltersBlock from '../../components/FiltersBlock/FiltersBlock';
+import FiltersBlock from '../../components/FiltersBlock';
 import ProductsBlock from '../../components/ProductsBlock';
 import { IProduct } from '../../interfaces/products';
 import './Catalog.scss';

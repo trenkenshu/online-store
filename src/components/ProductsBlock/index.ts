@@ -1,2 +1,2 @@
-import ProductsBlock from "./ProductsBlock";
+import ProductsBlock from './ProductsBlock';
 export default ProductsBlock;

@@ -5,6 +5,7 @@ import Catalog from '../pages/Catalog';
 import DBhandler, { MinmaxType, UniqueFiltersType } from '../api/database';
 import { IProduct } from '../interfaces/products';
 import '../scss/App.scss';
+import Cart from '../pages/Cart';
 
 const db = new DBhandler();
 const data: Promise<IProduct[]> = db.load(new URL('https://dummyjson.com/products?limit=100'));

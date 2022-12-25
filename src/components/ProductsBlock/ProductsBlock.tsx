@@ -17,7 +17,7 @@ const ProductsBlock = (props: IProducts) => {
     if (view === 'list') {
         productItemsClasses.push('products__items_list');
     }
-    console.log('classes', productItemsClasses);
+    // console.log('classes', productItemsClasses);
     return (
         <div className="products">
             <div className="products__options">

@@ -4,13 +4,18 @@ import './Button.scss';
 type ButtonType = {
     name?: string;
     children?: React.ReactNode;
-    onClick?: Function;
+    onClick?: () => void;
 };
 
 const Button = (props: ButtonType) => {
-    const { name } = props;
+    const { name, onClick } = props;
+    // console.log('button', props);
 
-    return <button className="btn">{name}</button>;
+    return (
+        <button className="btn" onClick={() => onClick && onClick()}>
+            {name}
+        </button>
+    );
 };
 
 export default Button;

@@ -5,7 +5,7 @@ import IProductCard from '../../interfaces/productCard';
 // import { IProduct } from '../../interfaces/products';
 
 const ProductCard = (props: IProductCard) => {
-    const { product, dataId } = props;
+    const { product } = props;
 
     const addToCart = () => {
         console.log('productObject', product);
@@ -15,10 +15,13 @@ const ProductCard = (props: IProductCard) => {
     };
 
     return (
-        <div className="product__card" data-id={dataId} onClick={openProductPage}>
-            <div className="product__img" style={{ backgroundImage: `url(${product.thumbnail.toString()})` }}></div>
+        <div className="product__card">
             <div className="product__info">
-                <div className="product__body">
+                <div className="product__body" onClick={openProductPage}>
+                    <div
+                        className="product__img"
+                        style={{ backgroundImage: `url(${product.thumbnail.toString()})` }}
+                    ></div>
                     <div className="product__title">
                         <h4 className="product__name">{product.title}</h4>
                         <div className="product__brand">{product.brand}</div>

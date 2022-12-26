@@ -24,18 +24,18 @@ const App = () => {
         setCatData(data);
         setCategories(db.uniqueFilterFields(data, 'category'));
         setBrands(db.uniqueFilterFields(data, 'brand'));
-            switch(withRanges) {
-                case 'price':
-                    setPriceRangeVals(db.minMax(data, 'price'));
-                    break;
-                case 'stock':
-                    setStockRangeVals(db.minMax(data, 'stock'));
-                    break;
-                case 'both':
-                    setPriceRangeVals(db.minMax(data, 'price'));
-                    setStockRangeVals(db.minMax(data, 'stock'));
-                    break;
-            }
+        switch (withRanges) {
+            case 'price':
+                setPriceRangeVals(db.minMax(data, 'price'));
+                break;
+            case 'stock':
+                setStockRangeVals(db.minMax(data, 'stock'));
+                break;
+            case 'both':
+                setPriceRangeVals(db.minMax(data, 'price'));
+                setStockRangeVals(db.minMax(data, 'stock'));
+                break;
+        }
     };
     useEffect(() => {
         data.then((readyArray) => {
@@ -55,8 +55,8 @@ const App = () => {
                 brands={brands}
                 priceRange={priceRange}
                 stockRange={stockRange}
-                priceRangeVals = {priceRangeVals}
-                stockRangeVals = {stockRangeVals}
+                priceRangeVals={priceRangeVals}
+                stockRangeVals={stockRangeVals}
                 db={db}
             />
             <Footer />

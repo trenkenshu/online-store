@@ -57,7 +57,7 @@ const ProductsBlock = (props: IProducts) => {
             </div>
             <div className={productItemsClasses.join(' ')}>
                 {products.map((product) => (
-                    <ProductCard product={product} key={product.id} dataId={product.id} />
+                    <ProductCard product={product} key={product.id} />
                 ))}
             </div>
         </div>

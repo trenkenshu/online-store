@@ -3,6 +3,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    font-weight: bold;
+    &_empty{
+      color: lightgray;
+    }
   }
   &__body{
     display: flex;
@@ -13,9 +17,9 @@
     gap: 5px;
   }
   &__item {
-    &_active{
-      font-weight: bold;
-    }
+    // &_active{
+    //   font-weight: bold;
+    // }
     &_empty{
       color: lightgray;
     }

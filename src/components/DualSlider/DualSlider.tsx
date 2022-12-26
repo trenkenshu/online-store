@@ -11,10 +11,9 @@ type minMaxForFilterType = {
     db: DBhandler;
     action: 'price' | 'stock';
     setCatalogStates: (data: IProduct[], withRanges: 'both' | 'stock' | 'price') => void;
-}
+};
 
-const DualSlider: FC<minMaxForFilterType> = ({ min, max, minVal, maxVal,
-        setCatalogStates, db, action }) => {
+const DualSlider: FC<minMaxForFilterType> = ({ min, max, minVal, maxVal, setCatalogStates, db, action }) => {
     console.log('dual', minVal, maxVal);
     const [minInputVal, setMinInputVal] = useState(min);
     const [maxInputVal, setMaxInputVal] = useState(max);
@@ -28,21 +27,21 @@ const DualSlider: FC<minMaxForFilterType> = ({ min, max, minVal, maxVal,
     }, [min, max]);*/
 
     useEffect(() => {
-        if(minVal === 0) {
+        if (minVal === 0) {
             setMinInputVal(min);
             db.addFilterField<MinmaxType>(action, {
                 min: min,
-                max: max
+                max: max,
             });
             setCatalogStates(db.runFilter(), action === 'stock' ? 'price' : 'stock');
         } else {
             setMinInputVal(minVal);
         }
-        if(maxVal === 0) {
+        if (maxVal === 0) {
             setMaxInputVal(max);
             db.addFilterField<MinmaxType>(action, {
                 min: min,
-                max: max
+                max: max,
             });
             setCatalogStates(db.runFilter(), action === 'stock' ? 'price' : 'stock');
         } else {
@@ -51,8 +50,8 @@ const DualSlider: FC<minMaxForFilterType> = ({ min, max, minVal, maxVal,
     }, [minVal, maxVal]);
 
     if (range.current) {
-        range.current.style.left = `0%`
-        range.current.style.width = `100%`
+        range.current.style.left = `0%`;
+        range.current.style.width = `100%`;
     }
 
     return (
@@ -66,7 +65,7 @@ const DualSlider: FC<minMaxForFilterType> = ({ min, max, minVal, maxVal,
                     const value = Math.min(Number(event.target.value), maxInputVal - 1);
                     db.addFilterField<MinmaxType>(action, {
                         min: value,
-                        max: maxInputVal
+                        max: maxInputVal,
                     });
                     setCatalogStates(db.runFilter(), action === 'stock' ? 'price' : 'stock');
                     setMinInputVal(value);
@@ -84,7 +83,7 @@ const DualSlider: FC<minMaxForFilterType> = ({ min, max, minVal, maxVal,
                     const value = Math.max(Number(event.target.value), minInputVal + 1);
                     db.addFilterField<MinmaxType>(action, {
                         min: minInputVal,
-                        max: value
+                        max: value,
                     });
                     setCatalogStates(db.runFilter(), action === 'stock' ? 'price' : 'stock');
                     setMaxInputVal(value);

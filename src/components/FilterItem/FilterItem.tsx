@@ -14,6 +14,7 @@ export type FilterItemType = {
 };
 const FilterItem = (props: FilterItemType) => {
     const { category, brand, maxAmount, currentAmount, db, filterName, setCatalogStates } = props;
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         if (event.target.checked) {
             db.addFilterField<string>(filterName, category ? category : brand ? brand : '');
@@ -27,14 +28,14 @@ const FilterItem = (props: FilterItemType) => {
     };
 
     return (
-        <div className="filter__item">
+        <div className={currentAmount === 0 ? 'filter__item filter__item_empty' : 'filter__item'}>
             <div className="filter__body">
                 <input type="checkbox" className="filter__checkbox" id={category} onChange={handleChange}></input>
                 <label className="filter__label" htmlFor={category} data-name={category}></label>
                 <p className="filter__name">{category ? category : brand ? brand : ''}</p>
             </div>
             <div className="filter__amount">
-                <p className="filter__current-amount">{currentAmount}</p>
+                <p className="filter__current-amount">{currentAmount} /</p>
                 <p className="filter__total-amount">{maxAmount}</p>
             </div>
         </div>

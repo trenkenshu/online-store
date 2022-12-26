@@ -83,8 +83,15 @@
         width: 40%;
       }
       & .product__info{
-        width: 58%;
-        justify-content: space-around;
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      & .product__body {
+        width: 85%;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
       }
       & .product__name {
         font-size: 2rem;
@@ -94,6 +101,10 @@
         gap: 10px;
       }
       & .product__btns{
+        justify-content: center;
+        flex-direction: column;
+        gap: 20px;
+        padding: 10px;
         font-size: 2rem;
       }
       & .btn {

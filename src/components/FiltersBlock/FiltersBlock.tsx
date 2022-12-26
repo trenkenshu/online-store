@@ -19,11 +19,14 @@ const FiltersBlock = (props: catalogType) => {
         setCatalogStates,
     } = props;
 
+    const reset = () => console.log(`reset`);
+    const copy = () => console.log(`copy`);
+
     return (
         <div className="filters">
             <div className="filters__btns">
-                <Button name="Reset filters"></Button>
-                <Button name="Copy link"></Button>
+                <Button name="Reset filters" onClick={reset}></Button>
+                <Button name="Copy link" onClick={copy}></Button>
             </div>
             <Filter name="Category">
                 <div className="filter__list">

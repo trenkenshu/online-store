@@ -43,8 +43,8 @@ export default class DBhandler {
         if (this.db.length === 0) {
             try {
                 const ans = await fetch(url);
-                const json = await ans.json();
-                ansData = json.products;
+                const json = (await ans.json());
+                ansData = json.products ;
                 this.db = await ansData;
                 this.db.forEach((item) => {
                     item.brand = item.brand.charAt(0).toUpperCase() + item.brand.slice(1).toLowerCase();
@@ -65,9 +65,8 @@ export default class DBhandler {
     public async loadOne(url: URL, productId: number): Promise<IProduct> {
         const link = url.toString() + String(productId);
         const ans = fetch(new URL(link));
-        return (await ans).json();
+        return (await ans).json() as Promise<IProduct>;
     }
-
 
     ////////  UNIQUE FIELDS FOR FILTERS WITH MAX  //////// TODO type
 
@@ -85,7 +84,7 @@ export default class DBhandler {
             ans.push({
                 [criteria]: item,
                 maxAmount: this.db.filter((i) => String(i[criteria]).toLowerCase() === item.toLowerCase()).length,
-                currentAmount: dataBase.filter((i) => String(i[criteria]).toLowerCase() === item.toLowerCase()).length
+                currentAmount: dataBase.filter((i) => String(i[criteria]).toLowerCase() === item.toLowerCase()).length,
             });
         });
 
@@ -97,19 +96,18 @@ export default class DBhandler {
     public minMax(db: IProduct[], priceOrStock: 'price' | 'stock'): MinmaxType {
         const filteredDB: IProduct[] = db.concat([]);
         filteredDB.sort((a, b) => {
-
-          return a[priceOrStock] - b[priceOrStock];
+            return a[priceOrStock] - b[priceOrStock];
         });
 
         return filteredDB.length
-        ? {
-            min: filteredDB[0][priceOrStock],
-            max: filteredDB[filteredDB.length - 1][priceOrStock],
-        }
-        : {
-          min: 0,
-          max: 0
-        };
+            ? {
+                  min: filteredDB[0][priceOrStock],
+                  max: filteredDB[filteredDB.length - 1][priceOrStock],
+              }
+            : {
+                  min: 0,
+                  max: 0,
+              };
     }
     ////////// METHOD TO ADD SEARCH CRITERIA  ////////// TODO type
 
@@ -138,7 +136,7 @@ export default class DBhandler {
     /////////  METHOD TO REMOVE SEARCH CRITERIA  ////////
 
     public removeFilterField(key: string, value: string): void {
-        console.log(' removed ', key, value, this.categoryCriteria );
+        console.log(' removed ', key, value, this.categoryCriteria);
         if (key === 'category') {
             const position = this.categoryCriteria.indexOf(value.toLowerCase());
             console.log(position);

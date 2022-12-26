@@ -1,2 +1,2 @@
-import FilterItem from "./FilterItem";
+import FilterItem from './FilterItem';
 export default FilterItem;

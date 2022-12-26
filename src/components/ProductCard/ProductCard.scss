@@ -4,18 +4,36 @@
     flex-direction: column;
     justify-content: space-between;
     gap: 5px;
-    width: 24%;
+    width: 23%;
     border: 1px solid black;
     border-radius: 10px;
     font-size: 1.6rem;
     padding: 5px;
+    user-select: none;
     cursor: pointer;
+    &_active {
+      background-color:#ff7f7f;
+    }
   }
-  &__name,
-  &__brand {
+  &__info{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  &__body{
+    display: flex;
+    flex-direction: column;
+  }
+  &__title {
     text-align: center;
     text-transform: uppercase;
   }
+  &__data{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
   &__value{
     font-weight: bold;
   }
@@ -27,14 +45,8 @@
     background-repeat: no-repeat;
     border-radius: 10px;
   }
-  &__info{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-  }
   &__btns {
     display: flex;
     justify-content: space-around;
-    align-items: flex-end;
   }
 }

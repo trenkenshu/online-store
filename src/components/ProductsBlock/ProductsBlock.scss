@@ -1,7 +1,5 @@
-.product {
-  &__block {
-    width: 75%;
-  }
+.products {
+  width: 75%;
   &__options{
     display: flex;
     justify-content: space-between;
@@ -68,51 +66,51 @@
       // border-color: $yellowColor;
     }
   }
-
- 
-  &__list{
+  &__items{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
-    padding: 10px 0;
-  }
-
-  //Change view
-  &__list.grid {
-    & .product__card{
-      position: relative;
-      flex-direction: row;
-      width: 100%;
+    gap: 15px;
+    padding: 10px;
+    &_list { 
+      //Change view
+      & .product__card{
+        flex-direction: row;
+        width: 100%;
+      }
+      & .product__img {
+        height: 300px;
+        width: 40%;
+      }
+      & .product__info{
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      & .product__body {
+        width: 85%;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+      & .product__name {
+        font-size: 2rem;
+      }
+      & .product__data {
+        font-size: 1.8rem;
+        gap: 10px;
+      }
+      & .product__btns{
+        justify-content: center;
+        flex-direction: column;
+        gap: 20px;
+        padding: 10px;
+        font-size: 2rem;
+      }
+      & .btn {
+        font-size: 2rem;
+        padding: 10px 15px;
+      }
     }
-    & .product__name {
-      position: absolute;
-      left: 51%;
-      top: 5%;
-    }
-    & .product__img {
-      height: 300px;
-    }
-    & .product__brand {
-      position: absolute;
-      left: 51%;
-      top: 15%;
-    }
-    & .product__category {
-      position: absolute;
-      left: 51%;
-      top:30%
-    }
-    & .product__info {
-      position: absolute;
-      left: 85%;
-      top: 5%;
-      gap: 10px;
-    }
-    & .product__btns{
-      width: 100%;
-    }
-
-   
   }
 }

@@ -1,0 +1,54 @@
+.cart {
+  font-size: 1.6rem;
+  &__list-options{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+    color: #ffe600;
+    padding: 10px ;
+    border-radius: 10px;
+  }
+  &__title{
+    text-transform: uppercase;
+  }
+  &__control {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+  }
+  &__items{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-transform: uppercase;
+  }
+  &__limit-input{
+    outline: none;
+    width: 32px;
+    border: 1px solid #ffe600;
+    border-radius: 5px;
+    background-color: gray;
+    color: #ffe600;
+    text-align: center;
+    font-size:2.2rem;
+  }
+  &__pages{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  &__pages-btn{
+    outline: none;
+    width: 25px;
+    border: 1px solid #ffe600;
+    border-radius: 5px;
+    background-color: gray;
+    color: #ffe600;
+    font-size:1.8rem;
+    cursor: pointer;
+  }
+  &__pages-number{
+    font-size: 2.2rem;
+  }
+}

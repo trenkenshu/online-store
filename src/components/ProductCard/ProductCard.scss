@@ -9,6 +9,7 @@
     border-radius: 10px;
     font-size: 1.6rem;
     padding: 5px;
+    user-select: none;
     cursor: pointer;
     &_active {
       background-color:#ff7f7f;

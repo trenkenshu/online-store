@@ -32,7 +32,7 @@ const FiltersBlock = (props: catalogType) => {
                             <FilterItem
                                 category={categoryObj.category}
                                 maxAmount={categoryObj.maxAmount}
-                                currentAmount={categoryObj.currentAmount }
+                                currentAmount={categoryObj.currentAmount}
                                 db={db}
                                 key={index}
                                 filterName="category"

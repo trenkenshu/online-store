@@ -11,6 +11,10 @@ const ProductsBlock = (props: IProducts) => {
     const [view, setView] = useState('grid');
     const productItemsClasses = ['products__items'];
 
+    // const log = (event: React.MouseEvent<HTMLElement>) => {
+    //     console.log(event.currentTarget);
+    // };
+
     const changeView = (newView: string) => {
         setView(newView);
     };
@@ -53,7 +57,7 @@ const ProductsBlock = (props: IProducts) => {
             </div>
             <div className={productItemsClasses.join(' ')}>
                 {products.map((product) => (
-                    <ProductCard product={product} key={product.id} />
+                    <ProductCard product={product} key={product.id} dataId={product.id} />
                 ))}
             </div>
         </div>

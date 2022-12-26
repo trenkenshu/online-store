@@ -5,10 +5,17 @@ import IProductCard from '../../interfaces/productCard';
 // import { IProduct } from '../../interfaces/products';
 
 const ProductCard = (props: IProductCard) => {
-    const { product } = props;
+    const { product, dataId } = props;
+
+    const addToCart = () => {
+        console.log('productObject', product);
+    };
+    const openProductPage = () => {
+        console.log('details=>productID', product.id);
+    };
 
     return (
-        <div className="product__card">
+        <div className="product__card" data-id={dataId} onClick={openProductPage}>
             <div className="product__img" style={{ backgroundImage: `url(${product.thumbnail.toString()})` }}></div>
             <div className="product__info">
                 <div className="product__body">
@@ -35,8 +42,8 @@ const ProductCard = (props: IProductCard) => {
                     </div>
                 </div>
                 <div className="product__btns">
-                    <Button name="Add to Cart"></Button>
-                    <Button name="Details"></Button>
+                    <Button name="Add to Cart" onClick={addToCart}></Button>
+                    <Button name="Details" onClick={openProductPage}></Button>
                 </div>
             </div>
         </div>

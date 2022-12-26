@@ -1,10 +1,12 @@
 import React from 'react';
+import { IProduct } from '../../interfaces/products';
 import './Button.scss';
 
 type ButtonType = {
     name?: string;
     children?: React.ReactNode;
     onClick?: () => void;
+    // product?: IProduct;
 };
 
 const Button = (props: ButtonType) => {

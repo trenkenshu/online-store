@@ -8,16 +8,19 @@ import '../scss/Catalog.scss';
 
 export type catalogType = {
     products: IProduct[];
-    setCatalogStates: (data: IProduct[]) => void;
+    setCatalogStates: (data: IProduct[], withRanges: 'both' | 'stock' | 'price') => void;
     categories: UniqueFiltersType;
     brands: UniqueFiltersType;
     priceRange: MinmaxType;
     stockRange: MinmaxType;
+    priceRangeVals: MinmaxType;
+    stockRangeVals: MinmaxType;
     db: DBhandler;
 };
 
 const Catalog = (props: catalogType) => {
-    const { products, categories, brands, priceRange, stockRange, db, setCatalogStates } = props;
+    const { products, categories, brands, priceRange,
+        stockRange, stockRangeVals, priceRangeVals, db, setCatalogStates } = props;
 
     // console.log('catalog', props);
     return (
@@ -30,6 +33,8 @@ const Catalog = (props: catalogType) => {
                     brands={brands}
                     priceRange={priceRange}
                     stockRange={stockRange}
+                    priceRangeVals= {priceRangeVals}
+                    stockRangeVals= {stockRangeVals}
                     db={db}
                 />
                 <ProductsBlock products={products} />

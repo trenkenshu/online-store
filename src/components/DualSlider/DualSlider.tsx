@@ -1,43 +1,59 @@
 import React, { ChangeEvent, FC, useCallback, useEffect, useState, useRef } from 'react';
-import { MinmaxType } from '../../api/database';
+import DBhandler, { MinmaxType } from '../../api/database';
+import { IProduct } from '../../interfaces/products';
 import './DualSlider.scss';
 
-const DualSlider: FC<MinmaxType> = ({ min, max }) => {
-    // console.log('dual', min, max);
-    const [minVal, setMinVal] = useState(min);
-    const [maxVal, setMaxVal] = useState(max);
+type minMaxForFilterType = {
+    min: number;
+    max: number;
+    minVal: number;
+    maxVal: number;
+    db: DBhandler;
+    action: 'price' | 'stock';
+    setCatalogStates: (data: IProduct[], withRanges: 'both' | 'stock' | 'price') => void;
+}
+
+const DualSlider: FC<minMaxForFilterType> = ({ min, max, minVal, maxVal,
+        setCatalogStates, db, action }) => {
+    console.log('dual', minVal, maxVal);
+    const [minInputVal, setMinInputVal] = useState(min);
+    const [maxInputVal, setMaxInputVal] = useState(max);
     const minValRef = useRef(min);
     const maxValRef = useRef(max);
     const range = useRef<HTMLDivElement>(null);
 
-    // Convert to percentage
-    const getPercent = useCallback((value: number) => Math.round(((value - min) / (max - min)) * 100), [min, max]);
+    /*useEffect(() => {
+        setMinInputVal(min);
+        setMaxInputVal(max);
+    }, [min, max]);*/
 
     useEffect(() => {
-        setMinVal(min);
-        setMaxVal(max);
-    }, [min, max]);
-
-    // Set width of the range to decrease from the left side
-    useEffect(() => {
-        const minPercent = getPercent(minVal);
-        const maxPercent = getPercent(maxValRef.current);
-
-        if (range.current) {
-            range.current.style.left = `${minPercent}%`;
-            range.current.style.width = `${maxPercent - minPercent}%`;
+        if(minVal === 0) {
+            setMinInputVal(min);
+            db.addFilterField<MinmaxType>(action, {
+                min: min,
+                max: max
+            });
+            setCatalogStates(db.runFilter(), action === 'stock' ? 'price' : 'stock');
+        } else {
+            setMinInputVal(minVal);
         }
-    }, [minVal, getPercent]);
-
-    // Set width of the range to decrease from the right side
-    useEffect(() => {
-        const minPercent = getPercent(minValRef.current);
-        const maxPercent = getPercent(maxVal);
-
-        if (range.current) {
-            range.current.style.width = `${maxPercent - minPercent}%`;
+        if(maxVal === 0) {
+            setMaxInputVal(max);
+            db.addFilterField<MinmaxType>(action, {
+                min: min,
+                max: max
+            });
+            setCatalogStates(db.runFilter(), action === 'stock' ? 'price' : 'stock');
+        } else {
+            setMaxInputVal(maxVal);
         }
-    }, [maxVal, getPercent]);
+    }, [minVal, maxVal]);
+
+    if (range.current) {
+        range.current.style.left = `0%`
+        range.current.style.width = `100%`
+    }
 
     return (
         <div className="slider">
@@ -45,30 +61,40 @@ const DualSlider: FC<MinmaxType> = ({ min, max }) => {
                 type="range"
                 min={min}
                 max={max}
-                value={minVal}
+                value={minInputVal}
                 onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                    const value = Math.min(Number(event.target.value), maxVal - 1);
-                    setMinVal(value);
+                    const value = Math.min(Number(event.target.value), maxInputVal - 1);
+                    db.addFilterField<MinmaxType>(action, {
+                        min: value,
+                        max: maxInputVal
+                    });
+                    setCatalogStates(db.runFilter(), action === 'stock' ? 'price' : 'stock');
+                    setMinInputVal(value);
                     minValRef.current = value;
                 }}
                 className="slider__thumb slider__thumb-left"
-                style={{ zIndex: minVal > max - 100 ? '5' : '3' }}
+                style={{ zIndex: minInputVal > max - 100 ? '5' : '3' }}
             />
             <input
                 type="range"
                 min={min}
                 max={max}
-                value={maxVal}
+                value={maxInputVal}
                 onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                    const value = Math.max(Number(event.target.value), minVal + 1);
-                    setMaxVal(value);
+                    const value = Math.max(Number(event.target.value), minInputVal + 1);
+                    db.addFilterField<MinmaxType>(action, {
+                        min: minInputVal,
+                        max: value
+                    });
+                    setCatalogStates(db.runFilter(), action === 'stock' ? 'price' : 'stock');
+                    setMaxInputVal(value);
                     maxValRef.current = value;
                 }}
                 className="slider__thumb slider__thumb-right"
             />
             <div className="slider__wrapper">
-                <div className="slider__from">{minVal}</div>
-                <div className="slider__to">{maxVal}</div>
+                <div className="slider__from">{minInputVal}</div>
+                <div className="slider__to">{maxInputVal}</div>
                 <div className="slider__track"></div>
                 <div ref={range} className="slider__range"></div>
             </div>

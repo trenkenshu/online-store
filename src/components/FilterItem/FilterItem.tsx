@@ -1,5 +1,5 @@
 import React from 'react';
-import DBhandler from '../../api/database';
+import DBhandler, { MinmaxType } from '../../api/database';
 import { IProduct } from '../../interfaces/products';
 import './FilterItem.scss';
 
@@ -7,24 +7,22 @@ export type FilterItemType = {
     category?: string;
     brand?: string;
     maxAmount: number;
+    currentAmount: number;
     db: DBhandler;
     filterName: string;
-    setCatalogStates: (data: IProduct[]) => void;
+    setCatalogStates: (data: IProduct[], withRanges: 'both' | 'stock' | 'price') => void;
 };
 const FilterItem = (props: FilterItemType) => {
-    const { category, brand, maxAmount, db, filterName, setCatalogStates } = props;
-    // console.log('fitem', props);
+    const { category, brand, maxAmount, currentAmount, db, filterName, setCatalogStates } = props;
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         if (event.target.checked) {
             db.addFilterField<string>(filterName, category ? category : brand ? brand : '');
             const filterData = db.runFilter();
-            console.log('changeData', filterData);
-            setCatalogStates(filterData);
+            setCatalogStates(filterData, 'both');
         } else {
             db.removeFilterField(filterName, category ? category : brand ? brand : '');
             const filterData = db.runFilter();
-            console.log('deleteData', filterData);
-            setCatalogStates(filterData);
+            setCatalogStates(filterData, 'both');
         }
     };
 
@@ -32,8 +30,12 @@ const FilterItem = (props: FilterItemType) => {
         <div className="filter__item">
             <input type="checkbox" className="filter__checkbox" id={category} onChange={handleChange}></input>
             <label className="filter__label" htmlFor={category} data-name={category}></label>
-            <p>{category ? category : brand ? brand : ''}</p>
-            <p>{maxAmount}</p>
+            <p>{category ? category : brand ? brand : ''} </p>
+            <p className="filter__label-amount">
+                <span className="filter__label-current" data-current="">
+                    {currentAmount} / </span>
+                {maxAmount}
+            </p>
         </div>
     );
 };

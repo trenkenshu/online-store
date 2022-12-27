@@ -16,6 +16,7 @@
     
   }
   &__amount{
+    width: 150px;
     text-transform: uppercase;
   }
   &__sort,
@@ -88,7 +89,7 @@
         justify-content: space-between;
       }
       & .product__body {
-        width: 85%;
+        width: 80%;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;

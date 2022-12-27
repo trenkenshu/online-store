@@ -6,15 +6,15 @@ import { IProducts } from '../../interfaces/products';
 import ProductCard from '../ProductCard';
 
 const ProductsBlock = (props: IProducts) => {
-    const { products } = props;
+    const { products, cart, setTotalItems } = props;
     // console.log('ProductsBlock', props);
+    // console.log('ProductsBlockCART', cart);
     const [view, setView] = useState('grid');
     const productItemsClasses = ['products__items'];
 
     // const log = (event: React.MouseEvent<HTMLElement>) => {
     //     console.log(event.currentTarget);
     // };
-
     const changeView = (newView: string) => {
         setView(newView);
     };
@@ -57,7 +57,7 @@ const ProductsBlock = (props: IProducts) => {
             </div>
             <div className={productItemsClasses.join(' ')}>
                 {products.map((product) => (
-                    <ProductCard product={product} key={product.id} />
+                    <ProductCard product={product} key={product.id} cart={cart} setTotalItems={setTotalItems} />
                 ))}
             </div>
         </div>

@@ -1,7 +1,8 @@
+import { ICartItem } from '../api/cart';
 import { IProduct } from './products';
 
 export default interface ICart {
-    currentProducts: [item: IProduct, amount: number][];
-    subtotal: number;
-    itemsCount: number;
+    currentProducts: ICartItem[];
+    totalSum: number;
+    totalItems: number;
 }

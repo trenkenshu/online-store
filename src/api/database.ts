@@ -112,10 +112,10 @@ export default class DBhandler {
     ////////// METHOD TO ADD SEARCH CRITERIA  ////////// TODO type
 
     public addFilterField<T>(key: string, value: T): void {
-        console.log('key', key);
-        console.log('value', value);
-        console.log('categoryCriteria', this.categoryCriteria);
-        console.log('brandCriteria', this.brandCriteria);
+        // console.log('key', key);
+        // console.log('value', value);
+        // console.log('categoryCriteria', this.categoryCriteria);
+        // console.log('brandCriteria', this.brandCriteria);
         if (key === 'category' && !this.categoryCriteria.includes(String(value))) {
             this.categoryCriteria.push(String(value).toLowerCase());
         }
@@ -136,10 +136,10 @@ export default class DBhandler {
     /////////  METHOD TO REMOVE SEARCH CRITERIA  ////////
 
     public removeFilterField(key: string, value: string): void {
-        console.log(' removed ', key, value, this.categoryCriteria);
+        // console.log(' removed ', key, value, this.categoryCriteria);
         if (key === 'category') {
             const position = this.categoryCriteria.indexOf(value.toLowerCase());
-            console.log(position);
+            // console.log(position);
             this.categoryCriteria.splice(position, 1);
         }
         if (key === 'brand') {

@@ -10,7 +10,6 @@
     font-size: 1.6rem;
     padding: 5px;
     user-select: none;
-    cursor: pointer;
     &_active {
       background-color:#ff7f7f;
     }
@@ -25,6 +24,7 @@
   &__body{
     display: flex;
     flex-direction: column;
+    gap: 5px;
   }
   &__title {
     text-align: center;

@@ -12,6 +12,8 @@
   cursor: pointer;
   white-space: nowrap;
   transition: background-color .3s ease-in,color .3s ease-in;
+  text-decoration: none;
+  text-align: center;
   &:hover {
     background-color: rgb(255, 230, 0);
     color: black;

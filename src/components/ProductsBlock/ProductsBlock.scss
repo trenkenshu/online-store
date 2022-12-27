@@ -79,9 +79,12 @@
         flex-direction: row;
         width: 100%;
       }
+      & .product__link-img {
+        width: 50%;
+      }
       & .product__img {
         height: 300px;
-        width: 40%;
+        width: 100%;
       }
       & .product__info{
         width: 100%;

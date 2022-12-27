@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './ProductsBlock.scss';
 // import Button from '../Button';
 // import ICatalog from './interfaces/catalog';
-import { IProducts } from '../../interfaces/products';
 import ProductCard from '../ProductCard';
+import { StoreContext } from '../../context';
 
-const ProductsBlock = (props: IProducts) => {
-    const { products, cart, setTotalItems } = props;
-    // console.log('ProductsBlock', props);
-    // console.log('ProductsBlockCART', cart);
+const ProductsBlock = () => {
+    // const { products, cart, setTotalItems } = props;
+    const { products, cart, setTotalItems } = useContext(StoreContext);
     const [view, setView] = useState('grid');
     const productItemsClasses = ['products__items'];
-
+    // console.log('ProductsBlock', props);
+    // console.log('ProductsBlockCART', cart);
     // const log = (event: React.MouseEvent<HTMLElement>) => {
     //     console.log(event.currentTarget);
     // };

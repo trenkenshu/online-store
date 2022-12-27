@@ -1,24 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Button from '../Button/Button';
 import DualSlider from '../DualSlider';
 import Filter from '../Filter';
 import FilterItem from '../FilterItem';
 import './FilterBlock.scss';
 import { catalogType } from '../../pages/Catalog/Catalog';
+import { StoreContext } from '../../context';
 
-const FiltersBlock = (props: catalogType) => {
-    const {
-        products,
-        categories,
-        brands,
-        priceRange,
-        stockRange,
-        priceRangeVals,
-        stockRangeVals,
-        db,
-        setCatalogStates,
-    } = props;
-
+const FiltersBlock = () => {
+    const { categories, brands, priceRange, stockRange, priceRangeVals, stockRangeVals, database, setCatalogStates } =
+        useContext(StoreContext);
     const reset = () => console.log(`reset`);
     const copy = () => console.log(`copy`);
 
@@ -36,7 +27,7 @@ const FiltersBlock = (props: catalogType) => {
                                 category={categoryObj.category}
                                 maxAmount={categoryObj.maxAmount}
                                 currentAmount={categoryObj.currentAmount}
-                                db={db}
+                                db={database}
                                 key={index}
                                 filterName="category"
                                 setCatalogStates={setCatalogStates}
@@ -53,7 +44,7 @@ const FiltersBlock = (props: catalogType) => {
                                 brand={brandObj.brand}
                                 maxAmount={brandObj.maxAmount}
                                 currentAmount={brandObj.currentAmount}
-                                db={db}
+                                db={database}
                                 key={index}
                                 filterName="brand"
                                 setCatalogStates={setCatalogStates}
@@ -68,7 +59,7 @@ const FiltersBlock = (props: catalogType) => {
                     max={priceRange.max}
                     minVal={priceRangeVals.min}
                     maxVal={priceRangeVals.max}
-                    db={db}
+                    db={database}
                     action="price"
                     setCatalogStates={setCatalogStates}
                 />
@@ -79,7 +70,7 @@ const FiltersBlock = (props: catalogType) => {
                     max={stockRange.max}
                     minVal={stockRangeVals.min}
                     maxVal={stockRangeVals.max}
-                    db={db}
+                    db={database}
                     action="stock"
                     setCatalogStates={setCatalogStates}
                 />

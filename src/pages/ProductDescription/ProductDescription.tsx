@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import DBhandler from '../../api/database';
@@ -41,7 +42,6 @@ const ProductDescription = () => {
     }
 
     return (
-        <Layout>
             <main className="main">
                 { productInfo && (<div className="product-page">
                     <div className="product-page__path">
@@ -87,7 +87,6 @@ const ProductDescription = () => {
                     </div>
                 </div>)}
             </main>
-        </Layout>
     );
 };
 

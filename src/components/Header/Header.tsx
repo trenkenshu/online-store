@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import CartClass from '../../api/cart';
-
 import './Header.scss';
+import { StoreContext } from '../../context';
 
-type HeaderType = {
-    cart: CartClass;
-    totalItems: number;
-};
-const Header = (props: HeaderType) => {
-    const { cart, totalItems } = props;
+// type HeaderType = {
+//     cart: CartClass;
+//     totalItems: number;
+// };
+const Header = () => {
+    // const { cart, totalItems } = props;
+    const { cart, totalItems } = useContext(StoreContext);
     const [totalSum, setTotalSum] = useState(0);
     useEffect(() => {
         setTotalSum(cart.calculateTotalSum());

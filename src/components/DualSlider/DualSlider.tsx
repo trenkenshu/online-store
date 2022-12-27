@@ -14,7 +14,7 @@ type minMaxForFilterType = {
 };
 
 const DualSlider: FC<minMaxForFilterType> = ({ min, max, minVal, maxVal, setCatalogStates, db, action }) => {
-    console.log('dual', minVal, maxVal);
+    // console.log('dual', minVal, maxVal);
     const [minInputVal, setMinInputVal] = useState(min);
     const [maxInputVal, setMaxInputVal] = useState(max);
     const minValRef = useRef(min);

@@ -1,3 +1,6 @@
+import CartClass from '../api/cart';
+import ICart from './cart';
+
 export interface IProduct extends Record<string, number | string | URL | URL[]> {
     id: number;
     title: string;
@@ -14,4 +17,6 @@ export interface IProduct extends Record<string, number | string | URL | URL[]> 
 
 export interface IProducts {
     products: IProduct[];
+    cart?: CartClass;
+    setTotalItems?: (number: number) => void;
 }

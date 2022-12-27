@@ -1,16 +1,15 @@
 .product {
   &__card {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 5px;
+    // flex-direction: column;
+    // justify-content: space-between;
+    // gap: 5px;
     width: 23%;
     border: 1px solid black;
     border-radius: 10px;
     font-size: 1.6rem;
     padding: 5px;
     user-select: none;
-    cursor: pointer;
     &_active {
       background-color:#ff7f7f;
     }
@@ -18,11 +17,14 @@
   &__info{
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
     gap: 10px;
   }
   &__body{
     display: flex;
     flex-direction: column;
+    gap: 5px;
   }
   &__title {
     text-align: center;

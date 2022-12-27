@@ -60,7 +60,7 @@ module.exports = () => {
       config.mode = 'production';
   } else {
       config.mode = 'development';
-      config.watch = true;
+    //   config.watch = true;
       config.devtool = 'eval-source-map';
   }
   return config;

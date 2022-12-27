@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DBhandler, { MinmaxType, UniqueFiltersType } from '../../api/database';
 import FiltersBlock from '../../components/FiltersBlock';
 import ProductsBlock from '../../components/ProductsBlock';
 import { IProduct } from '../../interfaces/products';
+import Layout from '../../components/Layout';
 import './Catalog.scss';
 
 export type catalogType = {
@@ -17,25 +18,62 @@ export type catalogType = {
     db: DBhandler;
 };
 
-const Catalog = (props: catalogType) => {
-    const {
-        products,
-        categories,
-        brands,
-        priceRange,
-        stockRange,
-        stockRangeVals,
-        priceRangeVals,
-        db,
-        setCatalogStates,
-    } = props;
+const db = new DBhandler();
+const data: Promise<IProduct[]> = db.load(new URL('https://dummyjson.com/products?limit=100'));
+
+const Catalog = () => {
+    const [catData, setCatData] = useState<IProduct[]>([]);
+    const [categories, setCategories] = useState<UniqueFiltersType>([]);
+    const [brands, setBrands] = useState<UniqueFiltersType>([]);
+    const [priceRange, setPriceRange] = useState<MinmaxType>({ min: 0, max: Infinity });
+    const [stockRange, setStockRange] = useState<MinmaxType>({ min: 0, max: Infinity });
+    const [priceRangeVals, setPriceRangeVals] = useState<MinmaxType>({ min: 0, max: Infinity });
+    const [stockRangeVals, setStockRangeVals] = useState<MinmaxType>({ min: 0, max: Infinity });
+
+    const setCatalogStates = (data: IProduct[], withRanges: 'both' | 'stock' | 'price'): void => {
+        console.log(db.uniqueFilterFields(data, 'category'));
+        setCatData(data);
+        setCategories(db.uniqueFilterFields(data, 'category'));
+        setBrands(db.uniqueFilterFields(data, 'brand'));
+        switch (withRanges) {
+            case 'price':
+                setPriceRangeVals(db.minMax(data, 'price'));
+                break;
+            case 'stock':
+                setStockRangeVals(db.minMax(data, 'stock'));
+                break;
+            case 'both':
+                setPriceRangeVals(db.minMax(data, 'price'));
+                setStockRangeVals(db.minMax(data, 'stock'));
+                break;
+        }
+    };
+    useEffect(() => {
+        data.then((readyArray) => {
+            setPriceRange(db.minMax(readyArray, 'price'));
+            setStockRange(db.minMax(readyArray, 'stock'));
+            setCatalogStates(readyArray, 'both');
+        }).catch((error: Error) => console.log(error.message));
+    }, []);
+    // const {
+    //     products,
+    //     categories,
+    //     brands,
+    //     priceRange,
+    //     stockRange,
+    //     stockRangeVals,
+    //     priceRangeVals,
+    //     db,
+    //     setCatalogStates,
+    // } = props;
 
     // console.log('catalog', props);
     return (
-        <main className="main">
+        <Layout>
+            <main className="main">
             <div className="catalog">
                 <FiltersBlock
-                    products={products}
+                    products={catData}
                     setCatalogStates={setCatalogStates}
                     categories={categories}
                     brands={brands}
@@ -45,9 +83,10 @@ const Catalog = (props: catalogType) => {
                     stockRangeVals={stockRangeVals}
                     db={db}
                 />
-                <ProductsBlock products={products} />
+                <ProductsBlock products={catData} />
             </div>
         </main>
+        </Layout>
     );
 };
 

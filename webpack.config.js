@@ -10,10 +10,12 @@ const config = {
   output: {
       path: path.resolve(__dirname, 'dist'),
       clean: true,
+      publicPath: '/',
   },
   devServer: {
       open: true,
       host: 'localhost',
+      historyApiFallback: true,
   },
   plugins: [
       new HtmlWebpackPlugin({

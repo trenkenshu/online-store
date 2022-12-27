@@ -2,6 +2,7 @@ import React from 'react';
 import './ProductCard.scss';
 import Button from '../Button';
 import IProductCard from '../../interfaces/productCard';
+import { Link } from 'react-router-dom';
 // import { IProduct } from '../../interfaces/products';
 
 const ProductCard = (props: IProductCard) => {
@@ -17,6 +18,7 @@ const ProductCard = (props: IProductCard) => {
     return (
         <div className="product__card">
             <div className="product__info">
+              <Link to={`/${product.id}`}>
                 <div className="product__body" onClick={openProductPage}>
                     <div
                         className="product__img"
@@ -44,9 +46,10 @@ const ProductCard = (props: IProductCard) => {
                         </div>
                     </div>
                 </div>
+              </Link>
                 <div className="product__btns">
                     <Button name="Add to Cart" onClick={addToCart}></Button>
-                    <Button name="Details" onClick={openProductPage}></Button>
+                    <Link to={`/${product.id}`}><Button name="Details" /*onClick={openProductPage}*/></Button></Link>
                 </div>
             </div>
         </div>

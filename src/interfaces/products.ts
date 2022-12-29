@@ -18,5 +18,5 @@ export interface IProduct extends Record<string, number | string | URL | URL[]> 
 export interface IProducts {
     products: IProduct[];
     cart?: CartClass;
-    setTotalItems?: (number: number) => void;
+    setTotalProducts: (number: number) => void;
 }

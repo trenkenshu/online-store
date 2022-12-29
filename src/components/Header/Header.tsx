@@ -6,15 +6,15 @@ import { StoreContext } from '../../context';
 
 // type HeaderType = {
 //     cart: CartClass;
-//     totalItems: number;
+//     totalProducts: number;
 // };
 const Header = () => {
-    // const { cart, totalItems } = props;
-    const { cart, totalItems } = useContext(StoreContext);
-    const [totalSum, setTotalSum] = useState(0);
-    useEffect(() => {
-        setTotalSum(cart.calculateTotalSum());
-    }, [totalItems]);
+    // const { cart, totalProducts } = props;
+    const { cart, totalProducts, totalSum, setTotalSum } = useContext(StoreContext);
+
+    // useEffect(() => {
+    //     setTotalSum(cart.calculateTotalSum());
+    // }, [totalProducts]);
     return (
         <header className="header">
             <h1 className="header__logo">
@@ -28,7 +28,7 @@ const Header = () => {
             </div>
             <Link to="/cart">
                 <div className="header__cart">
-                    <div className="header__cart-amount">{totalItems}</div>
+                    <div className="header__cart-amount">{totalProducts}</div>
                 </div>
             </Link>
         </header>

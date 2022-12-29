@@ -107,6 +107,7 @@
       & .product__btns{
         justify-content: center;
         flex-direction: column;
+        min-width: 190px;
         gap: 20px;
         padding: 10px;
         font-size: 2rem;

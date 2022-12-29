@@ -1,0 +1,32 @@
+.promo {
+  &__input{
+    outline: none;
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: black;
+    color: #ffe600;
+    font-size: 1.8rem;
+    text-align: center;
+  }
+  &__test{
+    font-size: 1.5rem;
+  }
+  &__sale-block{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  &__sale-text{
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+  &__add-btn{
+    padding: 5px;
+    background-color: black;
+    color: #ffe600;
+    border: 1px solid black;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+}

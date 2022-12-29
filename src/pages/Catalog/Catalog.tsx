@@ -17,7 +17,7 @@ export type catalogType = {
     stockRangeVals: MinmaxType;
     db: DBhandler;
     cart?: CartClass;
-    setTotalItems?: (number: number) => void;
+    setTotalProducts: (number: number) => void;
 };
 
 const Catalog = () => {

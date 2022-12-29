@@ -22,8 +22,10 @@ export interface StoreType {
     stockRange: MinmaxType;
     priceRangeVals: MinmaxType;
     stockRangeVals: MinmaxType;
-    totalItems: number;
-    setTotalItems: (number: number) => void;
+    totalProducts: number;
+    setTotalProducts: (number: number) => void;
+    totalSum: number;
+    setTotalSum: (number: number) => void;
     setCatalogStates: (data: IProduct[], withRanges: 'both' | 'stock' | 'price') => void;
 }
 
@@ -39,7 +41,8 @@ const App = () => {
     const [stockRange, setStockRange] = useState<MinmaxType>({ min: 0, max: Infinity });
     const [priceRangeVals, setPriceRangeVals] = useState<MinmaxType>({ min: 0, max: Infinity });
     const [stockRangeVals, setStockRangeVals] = useState<MinmaxType>({ min: 0, max: Infinity });
-    const [totalItems, setTotalItems] = useState(cart.getTotalItems());
+    const [totalProducts, setTotalProducts] = useState(cart.getTotalProducts());
+    const [totalSum, setTotalSum] = useState(cart.calculateTotalSum());
 
     const setCatalogStates = (data: IProduct[], withRanges: 'both' | 'stock' | 'price'): void => {
         console.log(db.uniqueFilterFields(data, 'category'));
@@ -77,8 +80,10 @@ const App = () => {
         stockRange: stockRange,
         priceRangeVals: priceRangeVals,
         stockRangeVals: stockRangeVals,
-        totalItems: totalItems,
-        setTotalItems: setTotalItems,
+        totalProducts: totalProducts,
+        setTotalProducts: setTotalProducts,
+        totalSum: totalSum,
+        setTotalSum: setTotalSum,
         setCatalogStates: setCatalogStates,
     };
 
@@ -90,7 +95,16 @@ const App = () => {
                         <Routes>
                             <Route path="/" element={<Catalog />} />
                             <Route path="/:id" element={<ProductDescription />} />
-                            <Route path="/cart" element={<Cart />} />
+                            <Route
+                                path="/cart"
+                                element={
+                                    cart.currentProducts.length === 0 ? (
+                                        <div className="cart__empty">Cart is empty ☹️</div>
+                                    ) : (
+                                        <Cart />
+                                    )
+                                }
+                            />
                             <Route path="/notfound" element={<Error404 />} />
                         </Routes>
                     </Layout>

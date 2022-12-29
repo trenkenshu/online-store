@@ -6,8 +6,8 @@ import ProductCard from '../ProductCard';
 import { StoreContext } from '../../context';
 
 const ProductsBlock = () => {
-    // const { products, cart, setTotalItems } = props;
-    const { products, cart, setTotalItems } = useContext(StoreContext);
+    // const { products, cart, setTotalProducts} = props;
+    const { products, cart, setTotalProducts } = useContext(StoreContext);
     const [view, setView] = useState('grid');
     const productItemsClasses = ['products__items'];
     // console.log('ProductsBlock', props);
@@ -57,7 +57,7 @@ const ProductsBlock = () => {
             </div>
             <div className={productItemsClasses.join(' ')}>
                 {products.map((product) => (
-                    <ProductCard product={product} key={product.id} cart={cart} setTotalItems={setTotalItems} />
+                    <ProductCard product={product} cart={cart} setTotalProducts={setTotalProducts} key={product.id} />
                 ))}
             </div>
         </div>

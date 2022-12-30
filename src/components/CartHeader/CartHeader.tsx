@@ -8,18 +8,23 @@ type CartHeaderType = {
     itemsPerPage: number;
     setItemsPerPage: (data: number) => void;
     totalPages: number;
+    handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 const CartHeader = (props: CartHeaderType) => {
     const { cart } = useContext(StoreContext);
-    const { currentPage, setCurrentPage, itemsPerPage, setItemsPerPage, totalPages } = props;
+    const { currentPage, setCurrentPage, itemsPerPage, setItemsPerPage, totalPages, handleChange } = props;
 
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setItemsPerPage(+event.target.value);
-        console.log(totalPages);
-        // setCurrentPage(Math.floor(cart.currentProducts.length / itemsPerPage));
-        console.log('11111', currentPage);
-        //если меняется значение итемов на странице то надо как-то менять нахождение на текущей странице
-    };
+    // const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    //     setItemsPerPage(+event.target.value);
+    //     console.log('totalPages', totalPages);
+    //     // setCurrentPage(Math.floor(cart.currentProducts.length / itemsPerPage));
+    //     console.log('11111', currentPage);
+    //     //если меняется значение итемов на странице то надо как-то менять нахождение на текущей странице
+    //     if (currentPage > totalPages) {
+    //         console.log('inside', totalPages);
+    //         setCurrentPage(currentPage - 1);
+    //     }
+    // };
     const increasePage = () => {
         // console.log('+++');
         if (currentPage < totalPages) {

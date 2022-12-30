@@ -59,4 +59,22 @@
     font-size: 2rem;
     cursor: pointer;
   }
+  &__discount_aplied {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background-color: darkred;
+    color: #ffe600;
+    border-radius: 10px;
+    padding: 5px;
+  }
+  &__discount-btn {
+    color: #ffe600;
+    border: 1px solid #ffe600;
+    border-radius: 10px;
+    background-color: black;
+    padding: 5px;
+    cursor: pointer;
+  }
 }

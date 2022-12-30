@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { CartItemType } from '../../api/cart';
 import CartHeader from '../../components/CartHeader';
 import CartItem from '../../components/CartItem';
@@ -42,6 +42,17 @@ const Cart = () => {
             }
         }
     };
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setItemsPerPage(+event.target.value);
+        console.log('totalPages', totalPages);
+        // setCurrentPage(Math.floor(cart.currentProducts.length / itemsPerPage));
+        console.log('11111', currentPage);
+        //TODO!!! если меняется значение итемов на странице то надо как-то менять нахождение на текущей странице
+        if (currentPage === totalPages) {
+            console.log('inside', totalPages);
+            // setCurrentPage(Math.floor(cart.currentProducts.length / itemsPerPage));
+        }
+    };
     return (
         <div className="cart">
             <div className="cart__list">
@@ -51,13 +62,12 @@ const Cart = () => {
                     itemsPerPage={itemsPerPage}
                     setItemsPerPage={setItemsPerPage}
                     totalPages={totalPages}
+                    handleChange={handleChange}
                 />
                 {currentCartList.map((item, index) => (
                     <CartItem
                         product={item.product}
                         amount={item.amount}
-                        // cartList={cartList}
-                        // setCartlist={setCartlist}
                         index={index + 1}
                         key={index}
                         increaseAmount={increaseAmount}

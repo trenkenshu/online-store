@@ -1,12 +1,9 @@
-import ICart from '../interfaces/cart';
 import { IProduct } from '../interfaces/products';
 
 export type CartItemType = {
     product: IProduct;
     amount: number;
     index: number;
-    // setCartlist: (data: CartItemType[]) => void;
-    // cartList: CartItemType[];
     increaseAmount: (id: number) => void;
     decreaseAmount: (id: number) => void;
     currentPage: number;
@@ -36,7 +33,7 @@ class CartClass {
         this.currentProducts.splice(removedIndex, 1);
         console.log('removeCurrPr', this.currentProducts);
     }
-    private refresh() {}
+    // private refresh() {}
     public calculateTotalSum() {
         this.totalSum = 0;
         this.currentProducts.forEach((el) => {
@@ -53,13 +50,6 @@ class CartClass {
         console.log('totalProducts', this.totalProducts);
         return this.totalProducts;
     }
-    // public updateAmount(id: number, increment: string) {
-    //     this.currentProducts.forEach((el) => {
-    //         if(el.id === id) {
-
-    //         }
-    //     })
-    // })
 }
 
 export default CartClass;

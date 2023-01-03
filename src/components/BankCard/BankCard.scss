@@ -1,0 +1,78 @@
+.card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  gap: 30px;
+  font-size: 1.2rem;
+  // margin: 0 auto;
+  padding: 30px;
+  border-radius: 10px;
+  background-color: darkred;
+  &__upper-info,
+  &__bottom-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-transform: uppercase;
+  }
+  &__upper-info{
+    gap: 15px;
+  }
+  &__logo{
+    width: 40px;
+    height: 40px;
+    background-image: url('/src/assets/nologo.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    &_visa {
+      background-image: url('/src/assets/visa_icon.png');
+    }
+    &_mastercard {
+      background-image: url('/src/assets/master-card-icon.png');
+    }
+  }
+  &__input{
+    appearance: none;
+    // -moz-appearance: textfield;
+    outline: none;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: lightyellow;
+    font-weight: bold;
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button{
+      -webkit-appearance: none;
+    }
+    &:hover,
+    &:focus{
+      appearance: none;
+      // -moz-appearance: textfield;
+    }
+  }
+
+  &__input-number{
+    width: 80%;
+    padding: 5px;
+    text-align: center;
+  }
+  // &__bottom-info{
+  //   display: flex;
+  //   width: 100%;
+  // }
+  &__input-valid,
+  &__input-cvv{
+    width: 50%;
+    text-align: center;
+    padding: 5px;
+  }
+  &__valid,
+  &__cvv {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    align-items: center;
+  }
+}

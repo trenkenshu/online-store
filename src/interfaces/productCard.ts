@@ -6,6 +6,6 @@ interface IProductCard {
     key: number;
     cart?: CartClass;
     // onClick?: (event: React.MouseEvent<HTMLElement>) => void;
-    setTotalItems?: (number: number) => void;
+    setTotalProducts: (number: number) => void;
 }
 export default IProductCard;

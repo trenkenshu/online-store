@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './ProductCard.scss';
 import Button from '../Button';
 import IProductCard from '../../interfaces/productCard';
 import { Link } from 'react-router-dom';
+import { StoreContext } from '../../context';
 // import { IProduct } from '../../interfaces/products';
 
 const ProductCard = (props: IProductCard) => {
-    const { product, cart, setTotalItems } = props;
+    const { product, cart, setTotalProducts } = props;
+    const { setTotalSum } = useContext(StoreContext);
     const [addButton, setAddButton] = useState(true);
 
     const addToCart = () => {
@@ -14,23 +16,25 @@ const ProductCard = (props: IProductCard) => {
         cart && cart.add({ product: product, amount: 1 });
         setAddButton(false);
         cart && cart.calculateTotalSum();
-        cart && setTotalItems && setTotalItems(cart.getTotalItems());
+        cart && setTotalProducts && setTotalProducts(cart.getTotalProducts());
+        cart && setTotalSum(cart.calculateTotalSum());
     };
     const dropFromCart = () => {
         console.log('dropFromCart');
         cart && cart.remove(product.id);
         setAddButton(true);
         cart && cart.calculateTotalSum();
-        cart && setTotalItems && setTotalItems(cart.getTotalItems());
+        cart && setTotalProducts && setTotalProducts(cart.getTotalProducts());
+        cart && setTotalSum(cart.calculateTotalSum());
     };
-    const openProductPage = () => {
-        console.log('details=>productID', product.id);
-    };
+    // const openProductPage = () => {
+    //     console.log('details=>productID', product.id);
+    // };
 
     return (
         <div className={addButton ? 'product__card' : 'product__card product__card_active'}>
             <div className="product__info">
-                <div className="product__body" onClick={openProductPage}>
+                <div className="product__body">
                     <Link className="product__link-img" to={`/${product.id}`}>
                         <div
                             className="product__img"

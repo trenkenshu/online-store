@@ -6,7 +6,7 @@ import CartClass from '../../api/cart';
 type LayoutType = {
     children: React.ReactNode;
     // cart: CartClass;
-    // totalItems: number;
+    // totalProducts: number;
 };
 
 const Layout = (props: LayoutType) => {

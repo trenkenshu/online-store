@@ -17,17 +17,15 @@ export type catalogType = {
     stockRangeVals: MinmaxType;
     db: DBhandler;
     cart?: CartClass;
-    setTotalItems?: (number: number) => void;
+    setTotalProducts: (number: number) => void;
 };
 
 const Catalog = () => {
     return (
-        <main className="main">
-            <div className="catalog">
-                <FiltersBlock />
-                <ProductsBlock />
-            </div>
-        </main>
+        <div className="catalog">
+            <FiltersBlock />
+            <ProductsBlock />
+        </div>
     );
 };
 

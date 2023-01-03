@@ -14,7 +14,7 @@ export type UniqueFiltersType = {
     currentAmount: number;
 }[];
 
-export type ICartItem = {
+export type CartItemType = {
     product: IProduct;
     amount: number;
 };
@@ -53,13 +53,13 @@ export type FilterItemType = {
 
 export type HeaderType = {
     cart: CartClass;
-    totalItems: number;
+    totalProducts: number;
 };
 
 export type LayoutType = {
     children: React.ReactNode;
     cart: CartClass;
-    totalItems: number;
+    totalProducts: number;
 };
 
 export type catalogType = {
@@ -73,5 +73,5 @@ export type catalogType = {
     stockRangeVals: MinmaxType;
     db: DBhandler;
     cart?: CartClass;
-    setTotalItems?: (number: number) => void;
+    setTotalProducts: (number: number) => void;
 };

@@ -12,4 +12,9 @@
     display: flex;
     justify-content: space-between;
   }
+  &__empty{
+    display: flex;
+    font-size: 6rem;
+    align-items: center;
+  }
 }

@@ -22,12 +22,10 @@ export type catalogType = {
 
 const Catalog = () => {
     return (
-        <main className="main">
-            <div className="catalog">
-                <FiltersBlock />
-                <ProductsBlock />
-            </div>
-        </main>
+        <div className="catalog">
+            <FiltersBlock />
+            <ProductsBlock />
+        </div>
     );
 };
 

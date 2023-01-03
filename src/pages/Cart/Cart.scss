@@ -12,7 +12,9 @@
     display: flex;
     justify-content: space-between;
   }
-  &__empty{ 
-    font-size: 4rem;
+  &__empty{
+    display: flex;
+    font-size: 6rem;
+    align-items: center;
   }
 }

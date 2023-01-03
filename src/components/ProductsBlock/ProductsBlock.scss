@@ -1,5 +1,6 @@
 .products {
   width: 75%;
+  user-select: none;
   &__options{
     display: flex;
     justify-content: space-between;

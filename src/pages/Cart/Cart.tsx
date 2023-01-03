@@ -50,16 +50,14 @@ const Cart = () => {
         setItemsPerPage(+event.target.value);
         console.log('totalPages', totalPages);
         // setCurrentPage(Math.floor(cart.currentProducts.length / itemsPerPage));
-        console.log('11111', currentPage);
+        console.log('currentPage', currentPage);
         //TODO!!! если меняется значение итемов на странице то надо как-то менять нахождение на текущей странице
-        if (currentPage === totalPages) {
+        if (currentPage === totalPages && currentPage > 1) {
             console.log('inside', totalPages);
             // setCurrentPage(Math.floor(cart.currentProducts.length / itemsPerPage));
+            setCurrentPage(currentPage - 1);
         }
     };
-    // const openModal = () => {
-    //     setModal(true);
-    // };
 
     return (
         <div className="cart">

@@ -1,48 +1,39 @@
 /* eslint-disable prettier/prettier */
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import DBhandler from '../../api/database';
 import Button from '../../components/Button';
-import Layout from '../../components/Layout';
+import { StoreContext } from '../../context';
 import { IProduct } from '../../interfaces/products';
+import Error404 from '../Page404';
 import './ProductDescription.scss';
 
 
 const ProductDescription = () => {
-    // const [searchParams] = useSearchParams();
-    // console.log('ProductDescription', useParams(), searchParams.entries(), parseInt(useParams().id));
-    // let arr = [];
-    // for (const entry of searchParams.entries()) {
-    //     const [par, val] = entry;
-    //     arr.push({
-    //         name: par,
-    //         value: val,
-    //     });
-    //   }
-    //   console.table(arr);
-    // const [cartName, setCartName] = useState('Add to Cart');
+    const {database} = useContext(StoreContext);
     const [productInfo, setProductInfo] = useState<IProduct>();
-    const navigate = useNavigate();
-    const id: number = Number(useParams().id);
-    if(id && !isNaN(id) && id > 0 && id <= 100) {
-        const db = new DBhandler;
-        const data = db.loadOne(new URL('https://dummyjson.com/products/'), id);
-
+    const id = Number(useParams().id);
+    const[err, setErr] = useState(false);
+    if(id
+        && !isNaN(id)
+        && id >= 0
+        && id <= 100) {
+        const data = database.loadOne(new URL('https://dummyjson.com/products/'), id);
         useEffect( () => {
             data.then((readyProduct: IProduct) => {
                 setProductInfo(readyProduct);
-                console.log(productInfo);
-        });
+        }).catch((err: Error) => console.log(err.message));
         }, []);
 
     } else {
         useEffect(() => {
-            return navigate('/notfound');
+            setErr(true);
         }, []);
     }
 
     return (
-            <main className="main">
+           <main className="main">
+                {err && (<Error404 />) }
                 { productInfo && (<div className="product-page">
                     <div className="product-page__path">
                         <Link to="/" className="product-page__link">Store</Link>
@@ -56,7 +47,7 @@ const ProductDescription = () => {
                             <div className="product-page__images">
                                 <div
                                     className="product-page__main-img"
-                                    style={{background: `transparent url(${productInfo.thumbnail}) no-repeat center`,
+                                    style={{background: `transparent url(${productInfo.thumbnail.toString()}) no-repeat center`,
                                         backgroundSize: `cover`,
                                         minWidth: `60%`,
                                         minHeight: `80%`}}>

@@ -17,7 +17,7 @@ export default class DBhandler {
     public db: IProduct[];
     private categoryCriteria: string[];
     private brandCriteria: string[];
-    private searchCriteria: string;
+    public searchCriteria: string;
     private priceRange: MinmaxType;
     private stock: MinmaxType;
 
@@ -123,7 +123,7 @@ export default class DBhandler {
             this.brandCriteria.push(String(value).toLowerCase());
         }
         if (key === 'search') {
-            this.searchCriteria += value;
+            this.searchCriteria = value as string;
         }
         if (key === 'price') {
             this.priceRange = value as MinmaxType;
@@ -176,7 +176,7 @@ export default class DBhandler {
                         return true;
                     }
                 }
-
+                console.log(this.searchCriteria, filtered);
                 return false;
             });
         }
@@ -188,5 +188,16 @@ export default class DBhandler {
         filtered = filtered.filter((item: IProduct) => this.stock.max >= item.stock);
 
         return filtered;
+    }
+
+    public hasFilter(whatCriteria: 'category' | 'brand' | 'search', whatValue?: string): boolean {
+        let ans = false;
+        if (whatCriteria === 'category' && whatValue) {
+            ans = this.categoryCriteria.includes(whatValue);
+        }
+        if (whatCriteria === 'brand' && whatValue) {
+            ans = this.brandCriteria.includes(whatValue);
+        }
+        return ans;
     }
 }

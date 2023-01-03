@@ -1,27 +1,24 @@
 import React, { useContext, useState } from 'react';
 import './ProductsBlock.scss';
-// import Button from '../Button';
-// import ICatalog from './interfaces/catalog';
 import ProductCard from '../ProductCard';
 import { StoreContext } from '../../context';
 
 const ProductsBlock = () => {
-    // const { products, cart, setTotalProducts} = props;
-    const { products, cart, setTotalProducts } = useContext(StoreContext);
+    const { products, cart, setTotalProducts, setCatalogStates, setQueryFilter, database } = useContext(StoreContext);
     const [view, setView] = useState('grid');
     const productItemsClasses = ['products__items'];
-    // console.log('ProductsBlock', props);
-    // console.log('ProductsBlockCART', cart);
-    // const log = (event: React.MouseEvent<HTMLElement>) => {
-    //     console.log(event.currentTarget);
-    // };
     const changeView = (newView: string) => {
         setView(newView);
     };
     if (view === 'list') {
         productItemsClasses.push('products__items_list');
     }
-    // console.log('classes', productItemsClasses);
+    const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+        database.addFilterField('search', event.target.value);
+        setQueryFilter('search', String(event.target.value));
+        const filtered = database.runFilter();
+        setCatalogStates(filtered, 'both');
+    };
     return (
         <div className="products">
             <div className="products__options">
@@ -38,7 +35,13 @@ const ProductsBlock = () => {
                 </select>
                 <div className="products__amount">Found items: {products.length}</div>
                 <div className="products__search-bar">
-                    <input className="products__search" type="search" placeholder="Search product" />
+                    <input
+                        className="products__search"
+                        type="search"
+                        placeholder="Search product"
+                        onChange={onSearch}
+                        value={database.searchCriteria}
+                    />
                 </div>
                 <div className="products__view-wrapper">
                     <div

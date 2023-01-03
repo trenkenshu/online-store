@@ -1,32 +1,34 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { StoreContext } from '../../context';
 import './PromoBlock.scss';
 
 type PromoBlockType = {
     text: string;
     btnName: string;
-    // onClick: () => void;
-    promoAdd: boolean;
-    setPromoAdd: (data: boolean) => void;
+    promo: boolean;
+    setPromo: (data: boolean) => void;
+
+    discount: number;
+    setDiscount: (num: number) => void;
 };
 const PromoBlock = (props: PromoBlockType) => {
-    const { cart } = useContext(StoreContext);
-    const { text, btnName, promoAdd, setPromoAdd } = props;
+    // const { totalSum } = useContext(StoreContext);
+    const { text, btnName, promo, setPromo, discount, setDiscount } = props;
 
     const applyDiscount = () => {
-        console.log('applied', addDiscountToTotalSum(10));
-        cart.totalSum = addDiscountToTotalSum(10);
-        setPromoAdd(true);
+        setPromo(true);
+        setDiscount(discount + 10);
+        // setNewTotalSum(newTotalSum - getDiscountAmount(10));
     };
-    const addDiscountToTotalSum = (num: number) => {
-        const newSum = cart.totalSum - (cart.totalSum * num) / 100;
-        return newSum;
-    };
+    // const getDiscountAmount = (discount: number) => {
+    //     const discountAmount = (cart.totalSum * discount) / 100;
+    //     return discountAmount;
+    // };
 
     return (
         <div className="promo__sale-block">
             <div className="promo__sale-text">{text}</div>
-            {!promoAdd && (
+            {!promo && (
                 <div className="promo__add-btn" onClick={applyDiscount}>
                     {btnName}
                 </div>

@@ -40,14 +40,13 @@ class CartClass {
             const itemTotalPrice = el.product.price * el.amount;
             this.totalSum += itemTotalPrice;
         });
-        console.log('fulltotal', this.totalSum);
+        // console.log('fulltotal', this.totalSum);
         return this.totalSum;
     }
     public getTotalProducts() {
         const itemCounter = this.currentProducts.map((el) => el.amount);
         this.totalProducts = itemCounter.reduce((total, value) => total + value, 0);
-        // console.log('itemCounter', itemCounter);
-        console.log('totalProducts', this.totalProducts);
+        // console.log('totalProducts', this.totalProducts);
         return this.totalProducts;
     }
 }

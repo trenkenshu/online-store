@@ -3,11 +3,15 @@ import { CartItemType } from '../../api/cart';
 import CartHeader from '../../components/CartHeader';
 import CartItem from '../../components/CartItem';
 import CartSummary from '../../components/CartSummary';
+import Modal from '../../components/Modal';
 import { StoreContext } from '../../context';
 import './Cart.scss';
 
 const Cart = () => {
-    const { cart, totalProducts, setTotalProducts, setTotalSum } = useContext(StoreContext);
+    const { cart, totalSum, setTotalProducts, setTotalSum } = useContext(StoreContext);
+    // const [newTotalSum, setNewTotalSum] = useState(totalSum);
+    const [modal, setModal] = useState(false);
+
     //Pagination
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(3);
@@ -53,6 +57,10 @@ const Cart = () => {
             // setCurrentPage(Math.floor(cart.currentProducts.length / itemsPerPage));
         }
     };
+    // const openModal = () => {
+    //     setModal(true);
+    // };
+
     return (
         <div className="cart">
             <div className="cart__list">
@@ -77,7 +85,8 @@ const Cart = () => {
                     />
                 ))}
             </div>
-            <CartSummary totalProducts={totalProducts} />
+            <CartSummary setModal={setModal} />
+            {modal && <Modal setModal={setModal} />}
         </div>
     );
 };

@@ -33,6 +33,9 @@
   }
   &__total{
     font-size: 2.2rem;
+    &_old{
+      text-decoration: line-through;
+    }
   }
   &__text{
     font-size: 2rem;
@@ -58,6 +61,11 @@
     color: black;
     font-size: 2rem;
     cursor: pointer;
+    transition: background-color .3s ease-in,color .3s ease-in;
+    &:hover{
+      background-color: darkred;
+      color:#ffe600;
+    }
   }
   &__discount_aplied {
     display: flex;

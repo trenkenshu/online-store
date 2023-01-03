@@ -1,24 +1,25 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { StoreContext } from '../../context';
 import PromoBlock from '../PromoBlock';
 import './CartSummary.scss';
 
 type CartSummaryType = {
-    totalProducts: number;
+    setModal: (data: boolean) => void;
 };
 const CartSummary = (props: CartSummaryType) => {
-    const { cart } = useContext(StoreContext);
-    const { totalProducts } = props;
+    const { cart, totalSum, totalProducts } = useContext(StoreContext);
+    const { setModal } = props;
     const [searchQuery, setSearchQuery] = useState('');
-    const [promoAdd, setPromoAdd] = useState(false);
     const [rsPromo, setRsPromo] = useState(false);
     const [epamPromo, setEpamPromo] = useState(false);
+    const [discount, setDiscount] = useState(0);
 
-    // useEffect(() => {
-    //     console.log('effect summary', searchQuery);
-    // }, [searchQuery]);
-    // console.log('searchQUERY', searchQuery);
-    //TODO!!! изменение тоталсуммы после скидок
+    const getDiscount = () => (100 - discount) / 100;
+
+    const cancelDiscount = (setPromo: (data: boolean) => void) => {
+        setPromo(false);
+        setDiscount(discount - 10);
+    };
     return (
         <div className="cart__summary">
             <h2 className="cart__title">Summary</h2>
@@ -29,18 +30,20 @@ const CartSummary = (props: CartSummaryType) => {
                 </div>
                 <div className="cart__price">
                     <div className="cart__text">Total:</div>
-                    <div className="cart__total">€{cart.totalSum}</div>
+                    <div className={rsPromo || epamPromo ? 'cart__total cart__total_old' : 'cart__total'}>
+                        €{totalSum.toFixed(2)}
+                    </div>
                 </div>
                 {(rsPromo || epamPromo) && (
                     <div className="cart__price">
                         <div className="cart__text">Total:</div>
-                        <div className="cart__total">€{cart.totalSum}</div>
+                        <div className="cart__total">€{(totalSum * getDiscount()).toFixed(2)}</div>
                     </div>
                 )}
                 {rsPromo && (
                     <div className="cart__discount_aplied">
                         <div className="cart__discount-text">Rolling Scopes School - 10%</div>
-                        <div className="cart__discount-btn" onClick={() => setRsPromo(false)}>
+                        <div className="cart__discount-btn" onClick={() => cancelDiscount(setRsPromo)}>
                             DROP
                         </div>
                     </div>
@@ -48,7 +51,7 @@ const CartSummary = (props: CartSummaryType) => {
                 {epamPromo && (
                     <div className="cart__discount_aplied">
                         <div className="cart__discount-text">EPAM - 10%</div>
-                        <div className="cart__discount-btn" onClick={() => setEpamPromo(false)}>
+                        <div className="cart__discount-btn" onClick={() => cancelDiscount(setEpamPromo)}>
                             DROP
                         </div>
                     </div>
@@ -66,20 +69,26 @@ const CartSummary = (props: CartSummaryType) => {
                         <PromoBlock
                             text={'Rolling Scopes School - 10% '}
                             btnName={'ADD'}
-                            promoAdd={rsPromo}
-                            setPromoAdd={setRsPromo}
+                            promo={rsPromo}
+                            setPromo={setRsPromo}
+                            discount={discount}
+                            setDiscount={setDiscount}
                         />
                     )}
                     {searchQuery.toLowerCase() === 'epm' && (
                         <PromoBlock
                             text={'EPAM - 10% '}
                             btnName={'ADD'}
-                            promoAdd={epamPromo}
-                            setPromoAdd={setEpamPromo}
+                            promo={epamPromo}
+                            setPromo={setEpamPromo}
+                            discount={discount}
+                            setDiscount={setDiscount}
                         />
                     )}
                 </div>
-                <button className="cart__btn">Buy Now</button>
+                <button className="cart__btn" onClick={() => setModal(true)}>
+                    Buy Now
+                </button>
             </div>
         </div>
     );

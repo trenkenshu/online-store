@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import React, { useContext, useEffect, useState } from 'react';
-import CartClass from '../../api/cart';
 import './Header.scss';
 import { StoreContext } from '../../context';
 

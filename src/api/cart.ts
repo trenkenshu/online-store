@@ -43,7 +43,7 @@ class CartClass {
         // console.log('fulltotal', this.totalSum);
         return this.totalSum;
     }
-    public getTotalProducts() {
+    public getTotalProducts(): number {
         const itemCounter = this.currentProducts.map((el) => el.amount);
         this.totalProducts = itemCounter.reduce((total, value) => total + value, 0);
         // console.log('totalProducts', this.totalProducts);

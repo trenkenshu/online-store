@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react';
 import Cart from '../pages/Cart';
 import Catalog from '../pages/Catalog';
@@ -10,6 +11,7 @@ import CartClass from '../api/cart';
 import { IProduct } from '../interfaces/products';
 import { BrowserRouter } from 'react-router-dom';
 import { StoreContext } from '../context';
+import { addQueryFilter, removeQueryFilter, setQueryFilter } from './FiltersBlock/FiltersBlock';
 import '../scss/App.scss';
 
 export interface StoreType {
@@ -26,8 +28,14 @@ export interface StoreType {
     setTotalProducts: (number: number) => void;
     totalSum: number;
     setTotalSum: (number: number) => void;
-    setCatalogStates: (data: IProduct[], withRanges: 'both' | 'stock' | 'price') => void;
+    setCatalogStates: (data: IProduct[], withRanges: rangesType) => void;
+    addQueryFilter: (name: string, value: string) => void;
+    setQueryFilter: (name: string, value: MinmaxType | string) => void;
+    removeQueryFilter: (name: string, value: string) => void;
+
 }
+
+type rangesType = 'both' | 'stock' | 'price' | 'none';
 
 const db = new DBhandler();
 const data: Promise<IProduct[]> = db.load(new URL('https://dummyjson.com/products?limit=100'));
@@ -44,29 +52,72 @@ const App = () => {
     const [totalProducts, setTotalProducts] = useState(cart.getTotalProducts());
     const [totalSum, setTotalSum] = useState(cart.calculateTotalSum());
 
-    const setCatalogStates = (data: IProduct[], withRanges: 'both' | 'stock' | 'price'): void => {
-        console.log(db.uniqueFilterFields(data, 'category'));
+    const setCatalogStates = (data: IProduct[], withRanges: rangesType): void => {
         setProducts(data);
         setCategories(db.uniqueFilterFields(data, 'category'));
         setBrands(db.uniqueFilterFields(data, 'brand'));
+
         switch (withRanges) {
             case 'price':
-                setPriceRangeVals(db.minMax(data, 'price'));
+                let minmax: MinmaxType = db.minMax(data, 'price');
+                setPriceRangeVals(minmax);
                 break;
             case 'stock':
+                minmax = db.minMax(data, 'stock');
                 setStockRangeVals(db.minMax(data, 'stock'));
                 break;
             case 'both':
                 setPriceRangeVals(db.minMax(data, 'price'));
                 setStockRangeVals(db.minMax(data, 'stock'));
                 break;
+            case 'none':
+
+                break;
         }
     };
+
+    const parseQueryFilters = (): rangesType => {
+        let ans: rangesType = 'both';
+        const url = new URL(window.location.href);
+        for (const [key, value] of url.searchParams.entries()) {
+            if (key === 'price') {
+                const val = {
+                    min: Number(value.split('↕')[0]),
+                    max: Number(value.split('↕')[1]),
+                };
+                db.addFilterField(key, val);
+                setPriceRangeVals(val);
+                ans = ans === 'both'
+                    ? 'stock'
+                    : 'none';
+
+            } else if (key === 'stock') {
+                const val = {
+                    min: Number(value.split('↕')[0]),
+                    max: Number(value.split('↕')[1]),
+                };
+                db.addFilterField(key, val);
+                setStockRangeVals(val);
+                ans = ans === 'both'
+                    ? 'price'
+                    : 'none';
+
+            } else {
+                db.addFilterField(key, value);
+            }
+        };
+
+        return ans;
+    }
+
+
     useEffect(() => {
         data.then((readyArray) => {
+            const whatToRange = parseQueryFilters();
+            const filtered = db.runFilter();
             setPriceRange(db.minMax(readyArray, 'price'));
             setStockRange(db.minMax(readyArray, 'stock'));
-            setCatalogStates(readyArray, 'both');
+            setCatalogStates(filtered, whatToRange);
         }).catch((error: Error) => console.log(error.message));
     }, []);
 
@@ -85,6 +136,9 @@ const App = () => {
         totalSum: totalSum,
         setTotalSum: setTotalSum,
         setCatalogStates: setCatalogStates,
+        addQueryFilter: addQueryFilter,
+        removeQueryFilter: removeQueryFilter,
+        setQueryFilter: setQueryFilter
     };
 
     return (
@@ -105,7 +159,7 @@ const App = () => {
                                     )
                                 }
                             />
-                            <Route path="/notfound" element={<Error404 />} />
+                            <Route path="/*" element={<Error404 />} />
                         </Routes>
                     </Layout>
                 </BrowserRouter>

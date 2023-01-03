@@ -11,24 +11,31 @@ type minMaxForFilterType = {
     db: DBhandler;
     action: 'price' | 'stock';
     setCatalogStates: (data: IProduct[], withRanges: 'both' | 'stock' | 'price') => void;
+    setQueryFilter: (name: string, value: MinmaxType) => void;
 };
 
-const DualSlider: FC<minMaxForFilterType> = ({ min, max, minVal, maxVal, setCatalogStates, db, action }) => {
+const DualSlider: FC<minMaxForFilterType> = ({
+    min,
+    max,
+    minVal,
+    maxVal,
+    setCatalogStates,
+    setQueryFilter,
+    db,
+    action,
+}) => {
     // console.log('dual', minVal, maxVal);
     const [minInputVal, setMinInputVal] = useState(min);
     const [maxInputVal, setMaxInputVal] = useState(max);
     const minValRef = useRef(min);
     const maxValRef = useRef(max);
     const range = useRef<HTMLDivElement>(null);
-
-    /*useEffect(() => {
-        setMinInputVal(min);
-        setMaxInputVal(max);
-    }, [min, max]);*/
+    let clicked = false;
 
     useEffect(() => {
         if (minVal === 0) {
             setMinInputVal(min);
+            // setQueryFilter('min' + action, min.toString());
             db.addFilterField<MinmaxType>(action, {
                 min: min,
                 max: max,
@@ -36,9 +43,11 @@ const DualSlider: FC<minMaxForFilterType> = ({ min, max, minVal, maxVal, setCata
             setCatalogStates(db.runFilter(), action === 'stock' ? 'price' : 'stock');
         } else {
             setMinInputVal(minVal);
+            // setQueryFilter('min' + action, minVal.toString());
         }
         if (maxVal === 0) {
             setMaxInputVal(max);
+            // setQueryFilter('max' + action, max.toString());
             db.addFilterField<MinmaxType>(action, {
                 min: min,
                 max: max,
@@ -46,6 +55,7 @@ const DualSlider: FC<minMaxForFilterType> = ({ min, max, minVal, maxVal, setCata
             setCatalogStates(db.runFilter(), action === 'stock' ? 'price' : 'stock');
         } else {
             setMaxInputVal(maxVal);
+            // setQueryFilter('max' + action, maxVal.toString());
         }
     }, [minVal, maxVal]);
 
@@ -63,14 +73,26 @@ const DualSlider: FC<minMaxForFilterType> = ({ min, max, minVal, maxVal, setCata
                 value={minInputVal}
                 onChange={(event: ChangeEvent<HTMLInputElement>) => {
                     const value = Math.min(Number(event.target.value), maxInputVal - 1);
+                    clicked = true;
+
                     db.addFilterField<MinmaxType>(action, {
                         min: value,
                         max: maxInputVal,
                     });
+
                     setCatalogStates(db.runFilter(), action === 'stock' ? 'price' : 'stock');
                     setMinInputVal(value);
                     minValRef.current = value;
+                    if (clicked) {
+                        setQueryFilter(action, {
+                            min: value,
+                            max: maxInputVal,
+                        });
+                    }
                 }}
+                // onMouseUp={(event: React.MouseEventHandler<HTMLInputElement>) => {
+                //     setQueryFilter('min' + action, event.target.value.toString());
+                // }}
                 className="slider__thumb slider__thumb-left"
                 style={{ zIndex: minInputVal > max - 100 ? '5' : '3' }}
             />
@@ -81,6 +103,7 @@ const DualSlider: FC<minMaxForFilterType> = ({ min, max, minVal, maxVal, setCata
                 value={maxInputVal}
                 onChange={(event: ChangeEvent<HTMLInputElement>) => {
                     const value = Math.max(Number(event.target.value), minInputVal + 1);
+                    clicked = true;
                     db.addFilterField<MinmaxType>(action, {
                         min: minInputVal,
                         max: value,
@@ -88,6 +111,11 @@ const DualSlider: FC<minMaxForFilterType> = ({ min, max, minVal, maxVal, setCata
                     setCatalogStates(db.runFilter(), action === 'stock' ? 'price' : 'stock');
                     setMaxInputVal(value);
                     maxValRef.current = value;
+                    if (clicked)
+                        setQueryFilter(action, {
+                            min: minInputVal,
+                            max: value,
+                        });
                 }}
                 className="slider__thumb slider__thumb-right"
             />

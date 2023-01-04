@@ -6,30 +6,40 @@ import { StoreContext } from '../../context';
 const ProductsBlock = () => {
     const { products, cart, setTotalProducts, setCatalogStates, setQueryFilter, database } = useContext(StoreContext);
     const [view, setView] = useState('grid');
-    const [selected, setSelected] = useState(1);
+    const [selected, setSelected] = useState(database.sort);
     const productItemsClasses = ['products__items'];
-    const changeView = (newView: string) => {
-        setView(newView);
-    };
+    // const changeView = (newView: string) => {
+    //     setView(newView);
+    // };
     if (view === 'list') {
         productItemsClasses.push('products__items_list');
     }
     const onSearch = (event: React.ChangeEvent<HTMLInputElement>): void => {
         database.addFilterField('search', event.target.value);
-        setQueryFilter('search', String(event.target.value));
+        setQueryFilter('search', event.target.value);
         const filtered = database.runFilter();
         setCatalogStates(filtered, 'both');
     };
 
     const onSort = (event: React.ChangeEvent<HTMLSelectElement>): void => {
-        database.addFilterField('sort', String(event.target.value));
+        database.addFilterField('sort', event.target.value);
         setQueryFilter('sort', String(event.target.value));
-        setSelected(Number(event.target.value));
+        setSelected(event.target.value);
         setCatalogStates(database.runFilter(), 'none');
     };
 
+    const onChangeView = (event: React.MouseEvent<HTMLElement>) => {
+        const el = event.target as HTMLElement;
+        if (el.id) {
+            setView(el.id);
+            setQueryFilter('view', el.id);
+            database.addFilterField('view', el.id);
+        }
+    };
+
     useEffect(() => {
-        setSelected(Number(database.sort));
+        setView(database.view);
+        setSelected(database.sort);
     }, [products]);
 
     return (
@@ -59,13 +69,15 @@ const ProductsBlock = () => {
                 <div className="products__view-wrapper">
                     <div
                         className={view === 'grid' ? 'products__view products__view_active' : 'products__view'}
-                        onClick={() => changeView('grid')}
+                        id={'grid'}
+                        onClick={onChangeView}
                     >
                         Grid
                     </div>
                     <div
                         className={view === 'list' ? 'products__view products__view_active' : 'products__view'}
-                        onClick={() => changeView('list')}
+                        id={'list'}
+                        onClick={onChangeView}
                     >
                         List
                     </div>

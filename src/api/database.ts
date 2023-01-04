@@ -19,6 +19,7 @@ export default class DBhandler {
     public brandCriteria: string[];
     public searchCriteria: string;
     public sort: string;
+    public view: 'grid' | 'list';
     private priceRange: MinmaxType;
     private stock: MinmaxType;
 
@@ -36,6 +37,7 @@ export default class DBhandler {
             max: Infinity,
         };
         this.sort = '1';
+        this.view = 'grid';
     }
 
     //////////////////  LOAD  //////////////////////////
@@ -116,10 +118,6 @@ export default class DBhandler {
     ////////// METHOD TO ADD SEARCH CRITERIA  ////////// TODO type
 
     public addFilterField<T>(key: string, value: T): void {
-        // console.log('key', key);
-        // console.log('value', value);
-        // console.log('categoryCriteria', this.categoryCriteria);
-        // console.log('brandCriteria', this.brandCriteria);
         if (key === 'category' && !this.categoryCriteria.includes(String(value))) {
             this.categoryCriteria.push(String(value).toLowerCase());
         }
@@ -137,6 +135,9 @@ export default class DBhandler {
         }
         if (key === 'sort') {
             this.sort = value as string;
+        }
+        if (key === 'view') {
+            this.view = value as 'grid' | 'list';
         }
     }
 
@@ -183,7 +184,6 @@ export default class DBhandler {
                         return true;
                     }
                 }
-                console.log(this.searchCriteria, filtered);
                 return false;
             });
         }

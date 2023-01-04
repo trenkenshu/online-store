@@ -32,6 +32,7 @@ export interface StoreType {
     addQueryFilter: (name: string, value: string) => void;
     setQueryFilter: (name: string, value: MinmaxType | string) => void;
     removeQueryFilter: (name: string, value: string) => void;
+    parseQueryFilters: () => rangesType;
 
 }
 
@@ -54,6 +55,7 @@ const App = () => {
 
     const setCatalogStates = (data: IProduct[], withRanges: rangesType): void => {
         setProducts(data);
+
         setCategories(db.uniqueFilterFields(data, 'category'));
         setBrands(db.uniqueFilterFields(data, 'brand'));
 
@@ -110,7 +112,6 @@ const App = () => {
         return ans;
     }
 
-
     useEffect(() => {
         data.then((readyArray) => {
             const whatToRange = parseQueryFilters();
@@ -138,7 +139,8 @@ const App = () => {
         setCatalogStates: setCatalogStates,
         addQueryFilter: addQueryFilter,
         removeQueryFilter: removeQueryFilter,
-        setQueryFilter: setQueryFilter
+        setQueryFilter: setQueryFilter,
+        parseQueryFilters: parseQueryFilters,
     };
 
     return (

@@ -15,9 +15,10 @@ export type UniqueFiltersType = {
 
 export default class DBhandler {
     public db: IProduct[];
-    private categoryCriteria: string[];
-    private brandCriteria: string[];
+    public categoryCriteria: string[];
+    public brandCriteria: string[];
     public searchCriteria: string;
+    public sort: string;
     private priceRange: MinmaxType;
     private stock: MinmaxType;
 
@@ -34,6 +35,7 @@ export default class DBhandler {
             min: 0,
             max: Infinity,
         };
+        this.sort = '1';
     }
 
     //////////////////  LOAD  //////////////////////////
@@ -44,7 +46,7 @@ export default class DBhandler {
             try {
                 const ans = await fetch(url);
                 const json = (await ans.json());
-                ansData = json.products ;
+                ansData = json.products;
                 this.db = await ansData;
                 this.db.forEach((item) => {
                     item.brand = item.brand.charAt(0).toUpperCase() + item.brand.slice(1).toLowerCase();
@@ -73,6 +75,8 @@ export default class DBhandler {
     public uniqueFilterFields(dataBase: IProduct[], criteria: string): UniqueFiltersType {
         const ans: UniqueFiltersType = [];
         const allByCriteria: string[] = [];
+        //const dbUnsorted = this.db.slice(0);
+        //dbUnsorted.sort((a, b) => a.id - b.id);
 
         this.db.forEach((item: IProduct) =>
             allByCriteria.push(
@@ -131,6 +135,9 @@ export default class DBhandler {
         if (key === 'stock') {
             this.stock = value as MinmaxType;
         }
+        if (key === 'sort') {
+            this.sort = value as string;
+        }
     }
 
     /////////  METHOD TO REMOVE SEARCH CRITERIA  ////////
@@ -187,6 +194,30 @@ export default class DBhandler {
         filtered = filtered.filter((item: IProduct) => this.stock.min <= item.stock);
         filtered = filtered.filter((item: IProduct) => this.stock.max >= item.stock);
 
+        switch (this.sort) {
+            case '2':
+                filtered.sort((a, b) => b.price - a.price);
+                break;
+            case '3':
+                filtered.sort((a, b) => a.price - b.price);
+                break;
+            case '4':
+                filtered.sort((a, b) => b.rating - a.rating);
+                break;
+            case '5':
+                filtered.sort((a, b) => a.rating - b.rating);
+                break;
+            case '6':
+                filtered.sort((a, b) => b.discountPercentage - a.discountPercentage);
+                break;
+            case '7':
+                filtered.sort((a, b) => a.discountPercentage - b.discountPercentage);
+                break;
+            default:
+                filtered.sort((a, b) => a.id - b.id);
+                break;
+        }
+
         return filtered;
     }
 
@@ -199,5 +230,14 @@ export default class DBhandler {
             ans = this.brandCriteria.includes(whatValue);
         }
         return ans;
+    }
+
+    public resetFilter(): void {
+        this.categoryCriteria = [];
+        this.brandCriteria = [];
+        this.searchCriteria = '';
+        this.priceRange = this.minMax(this.db, 'price');
+        this.stock = this.minMax(this.db, 'stock');
+        //console.log(this.categoryCriteria, this.brandCriteria, this.searchCriteria, this.priceRange, this.stock);
     }
 }

@@ -25,9 +25,16 @@ const Modal = (props: ModalType) => {
     const [addressError, setaddressError] = useState(true);
     const [isFormValid, setIsFormValid] = useState(false);
     //Credit Card
+    const [logo, setLogo] = useState('');
     const [creditCardNumber, setCreditCardNumber] = useState('');
     const [creditCardNumberFocus, setCreditCardNumberFocus] = useState(false);
     const [creditCardNumberError, setCreditCardNumberError] = useState(true);
+    const [creditCardValidDate, setCreditCardValidDate] = useState('');
+    const [creditCardValidDateFocus, setCreditCardValidDateFocus] = useState(false);
+    const [creditCardValidDateError, setCreditCardValidDateError] = useState(true);
+    const [creditCardCvv, setCreditCardCvv] = useState('');
+    const [creditCardCvvFocus, setCreditCardCvvFocus] = useState(false);
+    const [creditCardCvvError, setCreditCardCvvError] = useState(true);
 
     useEffect(() => {
         if (fullNameError || phoneNumberError || addressError || emailError) {
@@ -88,20 +95,69 @@ const Modal = (props: ModalType) => {
 
     const creditNumberHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value.replace(/[^\d]/g, '');
-        console.log('CreditCardNumber', value);
+        console.log('CreditCardNumber', value.split(''));
         const valueArray: string[] = [];
         const size = 4;
-        console.log(value.split(''));
-        if (value.length >= 0 && value.length < 16) {
+        if (value.length >= 0 && value.length <= 16) {
             for (let i = 0; i < value.length / size; i++) {
                 valueArray.push(value.slice(i * size, i * size + size));
             }
             setCreditCardNumber(valueArray.join(' '));
         }
+        //validation
+        if (value.length > 16) {
+            return false;
+        }
         if (value.length === 16) {
             setCreditCardNumberError(false);
         } else {
             setCreditCardNumberError(true);
+        }
+        // console.log(valueArray.join('').length);
+        //set logo
+        if (value[0] === '4') {
+            setLogo('visa');
+        } else if (value[0] === '5') {
+            setLogo('mastercard');
+        } else if (value[0] === '3') {
+            setLogo('americanexpress');
+        } else {
+            setLogo('nologo');
+        }
+    };
+
+    const creditValidDateHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+        let value = event.target.value;
+        if (value.length >= 0 && value.length <= 5) {
+            if (value.length === 2) {
+                value = value + '/';
+            }
+            setCreditCardValidDate(value);
+        }
+        //validation
+        const [month, years] = value.split('/');
+
+        if (value.length > 5) {
+            // value = value.slice(0, 5);
+            return false;
+        }
+        if (value.match(/\d/g) && value.length === 5 && +month <= 12 && +years >= 23) {
+            setCreditCardValidDateError(false);
+        } else {
+            setCreditCardValidDateError(true);
+        }
+        console.log(value.split(''));
+    };
+    const creditCvvHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value.replace(/[^\d]/g, '');
+        if (value.length >= 0 && value.length < 4) {
+            setCreditCardCvv(value);
+        }
+        if (value.length > 3) return false;
+        if (value.length === 3) {
+            setCreditCardCvvError(false);
+        } else {
+            setCreditCardCvvError(true);
         }
     };
 
@@ -122,6 +178,12 @@ const Modal = (props: ModalType) => {
             case 'card-number':
                 setCreditCardNumberFocus(true);
                 break;
+            case 'card-valid-date':
+                setCreditCardValidDateFocus(true);
+                break;
+            case 'card-cvv':
+                setCreditCardCvvFocus(true);
+                break;
         }
     };
 
@@ -129,6 +191,7 @@ const Modal = (props: ModalType) => {
         event.preventDefault();
         console.log('submitted');
         setModal(false);
+        //проверять ошибки и если к каждой добавлять фокус тру
     };
 
     return (
@@ -181,13 +244,22 @@ const Modal = (props: ModalType) => {
                     <div className="modal__card-details">
                         <h2 className="modal__title">Credit card details</h2>
                         <BankCard
+                            logo={logo}
+                            blurHandler={blurHandler}
                             creditCardNumber={creditCardNumber}
                             creditNumberHandler={creditNumberHandler}
-                            blurHandler={blurHandler}
+                            creditCardValidDate={creditCardValidDate}
+                            creditValidDateHandler={creditValidDateHandler}
+                            creditCardCvv={creditCardCvv}
+                            creditCvvHandler={creditCvvHandler}
                         />
                         {creditCardNumberFocus && creditCardNumberError && (
                             <div className="modal__error">Card number error</div>
                         )}
+                        {creditCardValidDateFocus && creditCardValidDateError && (
+                            <div className="modal__error">Valid date error</div>
+                        )}
+                        {creditCardCvvFocus && creditCardCvvError && <div className="modal__error">CVV error</div>}
                     </div>
                     <button className="modal__btn" type="submit" disabled={!isFormValid}>
                         Confirm

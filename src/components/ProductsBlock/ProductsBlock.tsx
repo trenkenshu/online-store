@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import './ProductsBlock.scss';
 import ProductCard from '../ProductCard';
 import { StoreContext } from '../../context';
@@ -6,23 +6,46 @@ import { StoreContext } from '../../context';
 const ProductsBlock = () => {
     const { products, cart, setTotalProducts, setCatalogStates, setQueryFilter, database } = useContext(StoreContext);
     const [view, setView] = useState('grid');
+    const [selected, setSelected] = useState(database.sort);
     const productItemsClasses = ['products__items'];
-    const changeView = (newView: string) => {
-        setView(newView);
-    };
+    // const changeView = (newView: string) => {
+    //     setView(newView);
+    // };
     if (view === 'list') {
         productItemsClasses.push('products__items_list');
     }
-    const onSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const onSearch = (event: React.ChangeEvent<HTMLInputElement>): void => {
         database.addFilterField('search', event.target.value);
-        setQueryFilter('search', String(event.target.value));
+        setQueryFilter('search', event.target.value);
         const filtered = database.runFilter();
         setCatalogStates(filtered, 'both');
     };
+
+    const onSort = (event: React.ChangeEvent<HTMLSelectElement>): void => {
+        database.addFilterField('sort', event.target.value);
+        setQueryFilter('sort', String(event.target.value));
+        setSelected(event.target.value);
+        setCatalogStates(database.runFilter(), 'none');
+    };
+
+    const onChangeView = (event: React.MouseEvent<HTMLElement>) => {
+        const el = event.target as HTMLElement;
+        if (el.id) {
+            setView(el.id);
+            setQueryFilter('view', el.id);
+            database.addFilterField('view', el.id);
+        }
+    };
+
+    useEffect(() => {
+        setView(database.view);
+        setSelected(database.sort);
+    }, [products]);
+
     return (
         <div className="products">
             <div className="products__options">
-                <select className="products__sort" value={1}>
+                <select className="products__sort" value={selected} onChange={onSort}>
                     <option value="1" disabled>
                         Sort options:
                     </option>
@@ -46,13 +69,15 @@ const ProductsBlock = () => {
                 <div className="products__view-wrapper">
                     <div
                         className={view === 'grid' ? 'products__view products__view_active' : 'products__view'}
-                        onClick={() => changeView('grid')}
+                        id={'grid'}
+                        onClick={onChangeView}
                     >
                         Grid
                     </div>
                     <div
                         className={view === 'list' ? 'products__view products__view_active' : 'products__view'}
-                        onClick={() => changeView('list')}
+                        id={'list'}
+                        onClick={onChangeView}
                     >
                         List
                     </div>

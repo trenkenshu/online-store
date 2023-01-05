@@ -1,11 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from '../Button/Button';
 import DualSlider from '../DualSlider';
 import Filter from '../Filter';
 import FilterItem from '../FilterItem';
 import './FilterBlock.scss';
 import { StoreContext } from '../../context';
-import { useSearchParams } from 'react-router-dom';
 import { MinmaxType } from '../../api/database';
 
 export const setQueryFilter = (name: string, value: string | MinmaxType): void => {
@@ -42,23 +41,42 @@ export const removeQueryFilter = (name: string, value: string) => {
     window.history.replaceState(null, '', newUrl);
 };
 
+export const resetQueryFilter = (): void => {
+    window.history.replaceState(null, '', window.location.pathname);
+};
+
 const FiltersBlock = () => {
-    const { categories, brands, priceRange, stockRange, priceRangeVals, stockRangeVals, database, setCatalogStates } =
-        useContext(StoreContext);
-    const reset = () => console.log(`reset`);
-    const copy = () => console.log(`copy`);
-    const [searchParams] = useSearchParams();
-    console.log([...searchParams.getAll('category')]);
-    /*const sp: {
-        [key: string]: string;
-    } = {};
-    for (const entry of searchParams.entries()) {
-        sp[entry[0]] = entry[1];
-    }
-    console.log(sp);*/
-    const newUrl = new URL(window.location.href);
-    window.history.replaceState(null, '', newUrl);
-    console.log(newUrl.searchParams.getAll('trert'));
+    // eslint-disable-next-line prettier/prettier
+    const {
+        categories,
+        brands,
+        priceRange,
+        stockRange,
+        priceRangeVals,
+        stockRangeVals,
+        database,
+        setCatalogStates,
+        // eslint-disable-next-line prettier/prettier
+    } = useContext(StoreContext);
+
+    const [filtered, setFiltered] = useState(
+        Boolean(database.categoryCriteria.length) || Boolean(database.brandCriteria.length)
+    );
+
+    const reset = () => {
+        database.resetFilter();
+        resetQueryFilter();
+        const unfiltered = database.runFilter();
+        setCatalogStates(unfiltered, 'both');
+        setFiltered((prev) => !prev);
+    };
+
+    const copy = () => {
+        const url = new URL(window.location.href);
+        navigator.clipboard.writeText(url.toString()).catch((err) => {
+            console.error('cant copy: ', err);
+        });
+    };
 
     return (
         <div className="filters">
@@ -80,6 +98,8 @@ const FiltersBlock = () => {
                                 setCatalogStates={setCatalogStates}
                                 addQueryFilter={addQueryFilter}
                                 removeQueryFilter={removeQueryFilter}
+                                filtered={filtered}
+                                setFiltered={setFiltered}
                             />
                         )
                     )}
@@ -99,6 +119,8 @@ const FiltersBlock = () => {
                                 setCatalogStates={setCatalogStates}
                                 addQueryFilter={addQueryFilter}
                                 removeQueryFilter={removeQueryFilter}
+                                filtered={filtered}
+                                setFiltered={setFiltered}
                             />
                         )
                     )}

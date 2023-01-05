@@ -17,8 +17,18 @@ const Cart = () => {
     const [itemsPerPage, setItemsPerPage] = useState(3);
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    // const indexOfFirstItem = (currentPage - 1) * itemsPerPage;
+    // const indexOfLastItem = indexOfFirstItem + itemsPerPage;
     const totalPages = Math.ceil(cart.currentProducts.length / itemsPerPage);
     const currentCartList = cart.currentProducts.slice(indexOfFirstItem, indexOfLastItem);
+
+    useEffect(() => {
+        console.log('useEffect on itemsPerPage', itemsPerPage);
+        if (currentPage > totalPages && currentPage > 1) {
+            // console.log('inside', totalPages);
+            setCurrentPage(Math.ceil(cart.currentProducts.length / itemsPerPage));
+        }
+    }, [itemsPerPage]);
 
     const increaseAmount = (id: number) => {
         const cartItem = cart.currentProducts.find((el) => el.product.id === id);
@@ -47,16 +57,11 @@ const Cart = () => {
         }
     };
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setItemsPerPage(+event.target.value);
-        console.log('totalPages', totalPages);
-        // setCurrentPage(Math.floor(cart.currentProducts.length / itemsPerPage));
-        console.log('currentPage', currentPage);
-        //TODO!!! если меняется значение итемов на странице то надо как-то менять нахождение на текущей странице
-        if (currentPage === totalPages && currentPage > 1) {
-            console.log('inside', totalPages);
-            // setCurrentPage(Math.floor(cart.currentProducts.length / itemsPerPage));
-            setCurrentPage(currentPage - 1);
+        let value = +event.target.value;
+        if (value < 1) {
+            value = 1;
         }
+        setItemsPerPage(value);
     };
 
     return (

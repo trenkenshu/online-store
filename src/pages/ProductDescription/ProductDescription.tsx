@@ -52,7 +52,9 @@ const ProductDescription = () => {
                                         minWidth: `60%`,
                                         minHeight: `80%`}}>
                                 </div>
-                                <div className="product-page__other-imgs">other-imgs</div>
+                                <div className="product-page__other-imgs">{productInfo.images.map((el: URL) => 
+                                    (<div className='product-page__other-image' style={{backgroundImage: `url(${el.toString()})`}}></div>)
+                                )}</div>
                             </div>
                             <div className="product-page__details">
                                 <div className="product-page__details-top">
@@ -69,7 +71,7 @@ const ProductDescription = () => {
                                     <Button
                                         name="Buy now"
                                         onClick={() => {
-                                            console.log('111');
+                                            console.log('Buy now');
                                         }}
                                     ></Button>
                                 </div>

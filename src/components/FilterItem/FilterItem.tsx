@@ -1,5 +1,5 @@
-import React from 'react';
-import DBhandler, { MinmaxType } from '../../api/database';
+import React, { useState, useEffect } from 'react';
+import DBhandler from '../../api/database';
 import { IProduct } from '../../interfaces/products';
 import './FilterItem.scss';
 
@@ -12,6 +12,8 @@ export type FilterItemType = {
     setCatalogStates: (data: IProduct[], withRanges: 'both' | 'stock' | 'price') => void;
     removeQueryFilter: (name: string, value: string) => void;
     addQueryFilter: (name: string, value: string) => void;
+    filtered: boolean;
+    setFiltered: (isFiltered: boolean) => void;
 };
 const FilterItem = (props: FilterItemType) => {
     const {
@@ -23,7 +25,10 @@ const FilterItem = (props: FilterItemType) => {
         setCatalogStates,
         addQueryFilter,
         removeQueryFilter,
+        filtered,
     } = props;
+
+    const [checked, setChecked] = useState(db.hasFilter(filterName, searchQuery.toLowerCase()));
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         if (event.target.checked) {
@@ -31,14 +36,21 @@ const FilterItem = (props: FilterItemType) => {
             db.addFilterField<string>(filterName, searchQuery);
             const filterData = db.runFilter();
             setCatalogStates(filterData, 'both');
+            setChecked(db.hasFilter(filterName, searchQuery.toLowerCase()));
+            console.log(currentAmount);
         } else {
             removeQueryFilter(filterName, searchQuery);
             db.removeFilterField(filterName, searchQuery);
             const filterData = db.runFilter();
             setCatalogStates(filterData, 'both');
+            setChecked(db.hasFilter(filterName, searchQuery.toLowerCase()));
+            console.log(currentAmount);
         }
     };
-    const checked = db.hasFilter(filterName, searchQuery.toLowerCase());
+
+    useEffect(() => {
+        setChecked(db.hasFilter(filterName, searchQuery.toLowerCase()));
+    }, [filtered]);
 
     return (
         <div className={currentAmount === 0 ? 'filter__item filter__item_empty' : 'filter__item'}>
@@ -46,7 +58,7 @@ const FilterItem = (props: FilterItemType) => {
                 <input
                     type="checkbox"
                     className="filter__checkbox"
-                    defaultChecked={checked}
+                    checked={checked}
                     id={searchQuery}
                     onChange={handleChange}
                 ></input>

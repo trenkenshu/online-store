@@ -1,5 +1,6 @@
-import { type } from 'os';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { StoreContext } from '../../context';
 import BankCard from '../BankCard';
 import ModalInputBlock from '../ModalInputBlock';
 import './Modal.scss';
@@ -9,7 +10,9 @@ type ModalType = {
 };
 
 const Modal = (props: ModalType) => {
+    const { cart, setTotalProducts, setTotalSum, setIsOrderSumbitted } = useContext(StoreContext);
     const { setModal } = props;
+    const navigate = useNavigate();
     //For personal details
     const [fullName, setFullName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -37,12 +40,28 @@ const Modal = (props: ModalType) => {
     const [creditCardCvvError, setCreditCardCvvError] = useState(true);
 
     useEffect(() => {
-        if (fullNameError || phoneNumberError || addressError || emailError) {
+        if (
+            fullNameError ||
+            phoneNumberError ||
+            addressError ||
+            emailError ||
+            creditCardNumberError ||
+            creditCardValidDateError ||
+            creditCardCvvError
+        ) {
             setIsFormValid(false);
         } else {
             setIsFormValid(true);
         }
-    }, [fullNameError, phoneNumberError, addressError, emailError]);
+    }, [
+        fullNameError,
+        phoneNumberError,
+        addressError,
+        emailError,
+        creditCardNumberError,
+        creditCardValidDateError,
+        creditCardCvvError,
+    ]);
 
     const emailHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(event.target.value);
@@ -190,8 +209,26 @@ const Modal = (props: ModalType) => {
     const handleSumbit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         console.log('submitted');
-        setModal(false);
-        //проверять ошибки и если к каждой добавлять фокус тру
+        //check validations
+        fullNameError === true ? setFullNameFocus(true) : setFullNameFocus(false);
+        phoneNumberError === true ? setPhoneNumberFocus(true) : setPhoneNumberFocus(false);
+        addressError === true ? setAddressFocus(true) : setAddressFocus(false);
+        emailError === true ? setEmailFocus(true) : setEmailFocus(false);
+        creditCardNumberError === true ? setCreditCardNumberFocus(true) : setCreditCardNumberFocus(false);
+        creditCardValidDateError === true ? setCreditCardValidDateFocus(true) : setCreditCardValidDateFocus(false);
+        creditCardCvvError === true ? setCreditCardCvvFocus(true) : setCreditCardCvvFocus(true);
+
+        if (isFormValid) {
+            setIsOrderSumbitted(true);
+            cart.currentProducts = [];
+            setTotalProducts(cart.getTotalProducts());
+            setTotalSum(cart.calculateTotalSum());
+            setTimeout(() => {
+                setIsOrderSumbitted(false);
+                navigate('/');
+            }, 3000);
+            setModal(false);
+        }
     };
 
     return (
@@ -261,7 +298,7 @@ const Modal = (props: ModalType) => {
                         )}
                         {creditCardCvvFocus && creditCardCvvError && <div className="modal__error">CVV error</div>}
                     </div>
-                    <button className="modal__btn" type="submit" disabled={!isFormValid}>
+                    <button className="modal__btn" type="submit">
                         Confirm
                     </button>
                 </form>

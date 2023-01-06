@@ -7,9 +7,16 @@ import { StoreContext } from '../../context';
 // import { IProduct } from '../../interfaces/products';
 
 const ProductCard = (props: IProductCard) => {
-    const { product, cart, setTotalProducts } = props;
+    const { product, cart, setTotalProducts, isInCart } = props;
     const { setTotalSum } = useContext(StoreContext);
-    const [addButton, setAddButton] = useState(true);
+    const [addButton, setAddButton] = useState(!isInCart);
+    // if (cart?.currentProducts.some((el) => el.product.id === id)) {
+    //     setAddButton(false);
+    //     console.log(
+    //         'id',
+    //         cart?.currentProducts.find((el) => el.product.id === id)
+    //     );
+    // }
 
     const addToCart = () => {
         console.log('productObject', product);
@@ -18,6 +25,7 @@ const ProductCard = (props: IProductCard) => {
         cart && cart.calculateTotalSum();
         cart && setTotalProducts && setTotalProducts(cart.getTotalProducts());
         cart && setTotalSum(cart.calculateTotalSum());
+        localStorage.setItem('cartCurrentProducts', JSON.stringify(cart?.currentProducts));
     };
     const dropFromCart = () => {
         console.log('dropFromCart');
@@ -26,10 +34,8 @@ const ProductCard = (props: IProductCard) => {
         cart && cart.calculateTotalSum();
         cart && setTotalProducts && setTotalProducts(cart.getTotalProducts());
         cart && setTotalSum(cart.calculateTotalSum());
+        localStorage.setItem('cartCurrentProducts', JSON.stringify(cart?.currentProducts));
     };
-    // const openProductPage = () => {
-    //     console.log('details=>productID', product.id);
-    // };
 
     return (
         <div className={addButton ? 'product__card' : 'product__card product__card_active'}>

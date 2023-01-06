@@ -85,7 +85,13 @@ const ProductsBlock = () => {
             </div>
             <div className={productItemsClasses.join(' ')}>
                 {products.map((product) => (
-                    <ProductCard product={product} cart={cart} setTotalProducts={setTotalProducts} key={product.id} />
+                    <ProductCard
+                        product={product}
+                        cart={cart}
+                        setTotalProducts={setTotalProducts}
+                        isInCart={cart.currentProducts.some((el) => el.product.id === product.id)}
+                        key={product.id}
+                    />
                 ))}
             </div>
         </div>

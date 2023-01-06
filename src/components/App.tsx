@@ -33,7 +33,8 @@ export interface StoreType {
     setQueryFilter: (name: string, value: MinmaxType | string) => void;
     removeQueryFilter: (name: string, value: string) => void;
     parseQueryFilters: () => rangesType;
-
+    isOrderSumbitted: boolean;
+    setIsOrderSumbitted: (data: boolean) => void;
 }
 
 type rangesType = 'both' | 'stock' | 'price' | 'none';
@@ -52,6 +53,7 @@ const App = () => {
     const [stockRangeVals, setStockRangeVals] = useState<MinmaxType>({ min: 0, max: Infinity });
     const [totalProducts, setTotalProducts] = useState(cart.getTotalProducts());
     const [totalSum, setTotalSum] = useState(cart.calculateTotalSum());
+    const [isOrderSumbitted, setIsOrderSumbitted] = useState(false);
 
     const setCatalogStates = (data: IProduct[], withRanges: rangesType): void => {
         setProducts(data);
@@ -141,6 +143,8 @@ const App = () => {
         removeQueryFilter: removeQueryFilter,
         setQueryFilter: setQueryFilter,
         parseQueryFilters: parseQueryFilters,
+        isOrderSumbitted: isOrderSumbitted,
+        setIsOrderSumbitted:setIsOrderSumbitted,
     };
 
     return (
@@ -153,13 +157,7 @@ const App = () => {
                             <Route path="/:id" element={<ProductDescription />} />
                             <Route
                                 path="/cart"
-                                element={
-                                    cart.currentProducts.length === 0 ? (
-                                        <div className="cart__empty">Cart is empty ☹️</div>
-                                    ) : (
-                                        <Cart />
-                                    )
-                                }
+                                element={<Cart />}
                             />
                             <Route path="/*" element={<Error404 />} />
                         </Routes>

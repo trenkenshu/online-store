@@ -58,6 +58,7 @@ const App = () => {
     const [stockRangeVals, setStockRangeVals] = useState<MinmaxType>({ min: 0, max: Infinity });
     const [isOrderSumbitted, setIsOrderSumbitted] = useState(false);
     const [modal, setModal] = useState(false);
+    const [loaded, setLoaded] = useState(false);
 
     const setCatalogStates = (data: IProduct[], withRanges: rangesType): void => {
         setProducts(data);
@@ -151,6 +152,7 @@ const App = () => {
             setPriceRange(db.minMax(readyArray, 'price'));
             setStockRange(db.minMax(readyArray, 'stock'));
             setCatalogStates(filtered, whatToRange);
+            setLoaded(true);
         }).catch((error: Error) => console.log(error.message));
     }, []);
 
@@ -183,7 +185,7 @@ const App = () => {
     };
 
     return (
-        <>
+        <>  <div className={'loader ' + (loaded ? 'loaded' : 'notLoaded')} ></div>
             <StoreContext.Provider value={store}>
                 <BrowserRouter>
                     <Layout>

@@ -4,13 +4,17 @@ import ProductCard from '../ProductCard';
 import { StoreContext } from '../../context';
 
 const ProductsBlock = () => {
-    const { products, cart, setTotalProducts, setCatalogStates, setQueryFilter, database } = useContext(StoreContext);
+    const { products, cart, setTotalProducts, setCatalogStates, setQueryFilter, database, loadCartProductsLS } =
+        useContext(StoreContext);
     const [view, setView] = useState('grid');
     const [selected, setSelected] = useState(database.sort);
     const productItemsClasses = ['products__items'];
     // const changeView = (newView: string) => {
     //     setView(newView);
     // };
+    // const cartCurrentProductsLS = loadCartProductsLS();
+    // console.log('ProductBlockLS', cartCurrentProductsLS);
+    // cart.currentProducts = cartCurrentProductsLS.length > 0 ? cartCurrentProductsLS : cart.currentProducts;
     if (view === 'list') {
         productItemsClasses.push('products__items_list');
     }

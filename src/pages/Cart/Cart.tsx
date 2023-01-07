@@ -1,5 +1,4 @@
 import React, { ChangeEvent, useContext, useEffect, useState } from 'react';
-import { currentProductsType } from '../../api/cart';
 import CartHeader from '../../components/CartHeader';
 import CartItem from '../../components/CartItem';
 import CartSummary from '../../components/CartSummary';
@@ -8,18 +7,9 @@ import { StoreContext } from '../../context';
 import './Cart.scss';
 
 const Cart = () => {
-    const { cart, setTotalProducts, setTotalSum, isOrderSumbitted } = useContext(StoreContext);
-    const [modal, setModal] = useState(false);
+    const { cart, setTotalProducts, setTotalSum, isOrderSumbitted, modal } = useContext(StoreContext);
     // const [timeLeft, setTimeLeft] = useState(3);
-    // const [cart1, setCart1] = useState(false);
-    //get from LS
-    const cartCurrentProductsLS = JSON.parse(
-        localStorage.getItem('cartCurrentProducts') ?? ''
-    ) as currentProductsType[];
-    console.log('ls', cartCurrentProductsLS);
-    cart.currentProducts = cartCurrentProductsLS.length > 0 ? cartCurrentProductsLS : cart.currentProducts;
-    setTotalSum(cart.calculateTotalSum());
-    setTotalProducts(cart.getTotalProducts());
+
     //Pagination
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(3);
@@ -149,8 +139,8 @@ const Cart = () => {
                             />
                         ))}
                     </div>
-                    <CartSummary setModal={setModal} />
-                    {modal && <Modal setModal={setModal} />}
+                    <CartSummary />
+                    {modal && <Modal />}
                 </div>
             )}
         </>

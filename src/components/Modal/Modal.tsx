@@ -5,13 +5,13 @@ import BankCard from '../BankCard';
 import ModalInputBlock from '../ModalInputBlock';
 import './Modal.scss';
 
-type ModalType = {
-    setModal: (data: boolean) => void;
-};
+// type ModalType = {
+//     setModal: (data: boolean) => void;
+// };
 
-const Modal = (props: ModalType) => {
-    const { cart, setTotalProducts, setTotalSum, setIsOrderSumbitted } = useContext(StoreContext);
-    const { setModal } = props;
+const Modal = () => {
+    const { cart, setTotalProducts, setTotalSum, setIsOrderSumbitted, setModal } = useContext(StoreContext);
+
     const navigate = useNavigate();
     //For personal details
     const [fullName, setFullName] = useState('');

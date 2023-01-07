@@ -9,9 +9,9 @@ import { StoreContext } from '../../context';
 const ProductCard = (props: IProductCard) => {
     const { product, cart, setTotalProducts, isInCart } = props;
     const { setTotalSum } = useContext(StoreContext);
-    const [addButton, setAddButton] = useState(!isInCart);
+    const [addToCartBtn, setAddToCartBtn] = useState(!isInCart);
     // if (cart?.currentProducts.some((el) => el.product.id === id)) {
-    //     setAddButton(false);
+    //     setAddToCartBtn(false);
     //     console.log(
     //         'id',
     //         cart?.currentProducts.find((el) => el.product.id === id)
@@ -21,7 +21,7 @@ const ProductCard = (props: IProductCard) => {
     const addToCart = () => {
         console.log('productObject', product);
         cart && cart.add({ product: product, amount: 1 });
-        setAddButton(false);
+        setAddToCartBtn(false);
         cart && cart.calculateTotalSum();
         cart && setTotalProducts && setTotalProducts(cart.getTotalProducts());
         cart && setTotalSum(cart.calculateTotalSum());
@@ -30,7 +30,7 @@ const ProductCard = (props: IProductCard) => {
     const dropFromCart = () => {
         console.log('dropFromCart');
         cart && cart.remove(product.id);
-        setAddButton(true);
+        setAddToCartBtn(true);
         cart && cart.calculateTotalSum();
         cart && setTotalProducts && setTotalProducts(cart.getTotalProducts());
         cart && setTotalSum(cart.calculateTotalSum());
@@ -38,7 +38,7 @@ const ProductCard = (props: IProductCard) => {
     };
 
     return (
-        <div className={addButton ? 'product__card' : 'product__card product__card_active'}>
+        <div className={addToCartBtn ? 'product__card' : 'product__card product__card_active'}>
             <div className="product__info">
                 <div className="product__body">
                     <Link className="product__link-img" to={`/${product.id}`}>
@@ -71,8 +71,8 @@ const ProductCard = (props: IProductCard) => {
                 </div>
                 <div className="product__btns">
                     <Button
-                        name={addButton ? 'Add to Cart' : 'Drop from Cart'}
-                        onClick={addButton ? addToCart : dropFromCart}
+                        name={addToCartBtn ? 'Add to Cart' : 'Drop from Cart'}
+                        onClick={addToCartBtn ? addToCart : dropFromCart}
                     ></Button>
                     <Link className="btn" to={`/${product.id}`}>
                         Details

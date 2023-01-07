@@ -147,26 +147,24 @@ const Modal = () => {
 
     const creditValidDateHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         let value = event.target.value;
-        if (value.length >= 0 && value.length <= 5) {
-            if (value.length === 2) {
-                value = value + '/';
-            }
-            setCreditCardValidDate(value);
-        }
-        //validation
-        const [month, years] = value.split('/');
 
-        if (value.length > 5) {
-            // value = value.slice(0, 5);
-            return false;
+        if (value.match(/\d/g) && value.length === 2 && creditCardValidDate.length === 1) {
+            value = value + '/';
+        } else if (value.match(/\d/g) && value.length === 3 && creditCardValidDate.length === 2) {
+            value = value.slice(0, 2) + '/' + value.slice(2);
         }
-        if (value.match(/\d/g) && value.length === 5 && +month <= 12 && +years >= 23) {
+        if (value.length < 6) {
+            setCreditCardValidDate(value);
+        } else {
+            value = value.slice(0, -1);
+        }
+        if (value.match(/^(0[2-9]|1[0-2])\/(2[3-9]|[3-9][0-9])$/g)) {
             setCreditCardValidDateError(false);
         } else {
             setCreditCardValidDateError(true);
         }
-        console.log(value.split(''));
     };
+
     const creditCvvHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value.replace(/[^\d]/g, '');
         if (value.length >= 0 && value.length < 4) {
@@ -221,6 +219,7 @@ const Modal = () => {
         if (isFormValid) {
             setIsOrderSumbitted(true);
             cart.currentProducts = [];
+            localStorage.setItem('cartCurrentProducts', '');
             setTotalProducts(cart.getTotalProducts());
             setTotalSum(cart.calculateTotalSum());
             setTimeout(() => {

@@ -10,6 +10,7 @@ const ProductPage = () => {
     const { cart, database, setModal, addToCart, dropFromCart, setTotalProducts, setTotalSum } =
         useContext(StoreContext);
     const [product, setProduct] = useState<IProduct>();
+    const [gal, setGal] = useState<string[]>([]);
     const id = Number(useParams().id);
     const [err, setErr] = useState(false);
     const navigate = useNavigate();
@@ -18,8 +19,27 @@ const ProductPage = () => {
         const data = database.loadOne(new URL('https://dummyjson.com/products/'), id);
         useEffect(() => {
             data.then((readyProduct: IProduct) => {
+                const allImgsPromices: Promise<Response>[] = [];
+                for (let i = 0; i < readyProduct.images.length; i++) {
+                    allImgsPromices.push(fetch(readyProduct.images[i]));
+                }
                 setProduct(readyProduct);
-            }).catch((err: Error) => console.log(err.message));
+                return Promise.all(allImgsPromices);
+            })
+                .then((imgsLoaded: Response[]) => {
+                    //console.log(imgsLoaded.toString());
+                    const uniqueImgs: string[] = [];
+                    const uniqueHeaders: string[] = [];
+                    imgsLoaded.forEach((el) => {
+                        const header = el.headers.get('content-length');
+                        if (header && !uniqueHeaders.includes(header.toString())) {
+                            uniqueHeaders.push(header.toString());
+                            uniqueImgs.push(el.url);
+                        }
+                        setGal(uniqueImgs);
+                    });
+                })
+                .catch((err: Error) => console.log(err.message));
         }, []);
     } else {
         useEffect(() => {
@@ -28,10 +48,10 @@ const ProductPage = () => {
     }
     const [inCart, setIncart] = useState(cart.currentProducts.some((el) => el.product.id === id));
     // const thumbnail = product?.thumbnail.toString() as string;
-    const [mainImage, setMainImage] = useState(product?.thumbnail.toString());
+    const [mainImage, setMainImage] = useState(product?.images[0].toString());
     console.log('boolean', Boolean(product?.id));
     useEffect(() => {
-        setMainImage(product?.thumbnail.toString());
+        setMainImage(product?.images[0].toString());
     }, [product]);
 
     const changeMainImg = (event: React.MouseEvent<HTMLElement>) => {
@@ -64,10 +84,10 @@ const ProductPage = () => {
                                     }}
                                 ></div>
                                 <div className="product-page__other-imgs">
-                                    {product.images.map((el: URL, index) => (
+                                    {gal.map((el: string, index) => (
                                         <div
                                             className="product-page__other-image"
-                                            style={{ backgroundImage: `url(${el.toString()})` }}
+                                            style={{ backgroundImage: `url(${el})` }}
                                             onClick={changeMainImg}
                                             key={index}
                                         ></div>

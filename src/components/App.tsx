@@ -7,7 +7,7 @@ import ProductDescription from '../pages/ProductDescription';
 import Layout from './Layout';
 import { Routes, Route } from 'react-router-dom';
 import DBhandler, { MinmaxType, UniqueFiltersType } from '../api/database';
-import CartClass from '../api/cart';
+import CartClass, { currentProductsType } from '../api/cart';
 import { IProduct } from '../interfaces/products';
 import { BrowserRouter } from 'react-router-dom';
 import { StoreContext } from '../context';
@@ -33,7 +33,11 @@ export interface StoreType {
     setQueryFilter: (name: string, value: MinmaxType | string) => void;
     removeQueryFilter: (name: string, value: string) => void;
     parseQueryFilters: () => rangesType;
-
+    isOrderSumbitted: boolean;
+    setIsOrderSumbitted: (data: boolean) => void;
+    loadCartProductsLS: () => currentProductsType[];
+    modal: boolean;
+    setModal: (data: boolean) => void;
 }
 
 type rangesType = 'both' | 'stock' | 'price' | 'none';
@@ -50,8 +54,9 @@ const App = () => {
     const [stockRange, setStockRange] = useState<MinmaxType>({ min: 0, max: Infinity });
     const [priceRangeVals, setPriceRangeVals] = useState<MinmaxType>({ min: 0, max: Infinity });
     const [stockRangeVals, setStockRangeVals] = useState<MinmaxType>({ min: 0, max: Infinity });
-    const [totalProducts, setTotalProducts] = useState(cart.getTotalProducts());
-    const [totalSum, setTotalSum] = useState(cart.calculateTotalSum());
+    const [isOrderSumbitted, setIsOrderSumbitted] = useState(false);
+    const [modal, setModal] = useState(false);
+
 
     const setCatalogStates = (data: IProduct[], withRanges: rangesType): void => {
         setProducts(data);
@@ -111,6 +116,20 @@ const App = () => {
 
         return ans;
     }
+    const loadCartProductsLS = (): currentProductsType[] => {
+        const cartProductsFromLS = JSON.parse(
+            localStorage.getItem('cartCurrentProducts') ?? ''
+        ) as currentProductsType[];
+        console.log('ls', cartProductsFromLS);
+        return cartProductsFromLS;
+    }
+
+    const cartCurrentProductsLS = loadCartProductsLS();
+    console.log('ProductBlockLS', cartCurrentProductsLS);
+    cart.currentProducts = cartCurrentProductsLS.length > 0 ? cartCurrentProductsLS : cart.currentProducts;
+    const [totalProducts, setTotalProducts] = useState(cart.getTotalProducts());
+    const [totalSum, setTotalSum] = useState(cart.calculateTotalSum());
+
 
     useEffect(() => {
         data.then((readyArray) => {
@@ -141,6 +160,11 @@ const App = () => {
         removeQueryFilter: removeQueryFilter,
         setQueryFilter: setQueryFilter,
         parseQueryFilters: parseQueryFilters,
+        isOrderSumbitted: isOrderSumbitted,
+        setIsOrderSumbitted:setIsOrderSumbitted,
+        loadCartProductsLS:loadCartProductsLS,
+        modal:modal,
+        setModal:setModal,
     };
 
     return (
@@ -153,13 +177,7 @@ const App = () => {
                             <Route path="/:id" element={<ProductDescription />} />
                             <Route
                                 path="/cart"
-                                element={
-                                    cart.currentProducts.length === 0 ? (
-                                        <div className="cart__empty">Cart is empty ☹️</div>
-                                    ) : (
-                                        <Cart />
-                                    )
-                                }
+                                element={<Cart />}
                             />
                             <Route path="/*" element={<Error404 />} />
                         </Routes>

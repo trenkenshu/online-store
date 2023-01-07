@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import './Header.scss';
 import { StoreContext } from '../../context';
 
@@ -8,12 +8,8 @@ import { StoreContext } from '../../context';
 //     totalProducts: number;
 // };
 const Header = () => {
-    // const { cart, totalProducts } = props;
-    const { cart, totalProducts, totalSum, setTotalSum } = useContext(StoreContext);
+    const { totalProducts, totalSum } = useContext(StoreContext);
 
-    // useEffect(() => {
-    //     setTotalSum(cart.calculateTotalSum());
-    // }, [totalProducts]);
     return (
         <header className="header">
             <h1 className="header__logo">

@@ -3,12 +3,12 @@ import { StoreContext } from '../../context';
 import PromoBlock from '../PromoBlock';
 import './CartSummary.scss';
 
-type CartSummaryType = {
-    setModal: (data: boolean) => void;
-};
-const CartSummary = (props: CartSummaryType) => {
-    const { cart, totalSum, totalProducts } = useContext(StoreContext);
-    const { setModal } = props;
+// type CartSummaryType = {
+//     setModal: (data: boolean) => void;
+// };
+const CartSummary = () => {
+    const { totalSum, totalProducts, setModal } = useContext(StoreContext);
+
     const [searchQuery, setSearchQuery] = useState('');
     const [rsPromo, setRsPromo] = useState(false);
     const [epamPromo, setEpamPromo] = useState(false);

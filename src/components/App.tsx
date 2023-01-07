@@ -1,9 +1,7 @@
-/* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react';
 import Cart from '../pages/Cart';
 import Catalog from '../pages/Catalog';
 import Error404 from '../pages/Page404';
-import ProductDescription from '../pages/ProductDescription';
 import Layout from './Layout';
 import { Routes, Route } from 'react-router-dom';
 import DBhandler, { MinmaxType, UniqueFiltersType } from '../api/database';
@@ -13,6 +11,8 @@ import { BrowserRouter } from 'react-router-dom';
 import { StoreContext } from '../context';
 import { addQueryFilter, removeQueryFilter, setQueryFilter } from './FiltersBlock/FiltersBlock';
 import '../scss/App.scss';
+import ProductPage from '../pages/ProductPage/ProductPage';
+import { AddDropCartType } from './ProductCard/ProductCard';
 
 export interface StoreType {
     database: DBhandler;
@@ -38,6 +38,8 @@ export interface StoreType {
     loadCartProductsLS: () => currentProductsType[];
     modal: boolean;
     setModal: (data: boolean) => void;
+    addToCart: (args: AddDropCartType) => void;
+    dropFromCart: (args: AddDropCartType) => void;
 }
 
 type rangesType = 'both' | 'stock' | 'price' | 'none';
@@ -56,7 +58,6 @@ const App = () => {
     const [stockRangeVals, setStockRangeVals] = useState<MinmaxType>({ min: 0, max: Infinity });
     const [isOrderSumbitted, setIsOrderSumbitted] = useState(false);
     const [modal, setModal] = useState(false);
-
 
     const setCatalogStates = (data: IProduct[], withRanges: rangesType): void => {
         setProducts(data);
@@ -78,7 +79,6 @@ const App = () => {
                 setStockRangeVals(db.minMax(data, 'stock'));
                 break;
             case 'none':
-
                 break;
         }
     };
@@ -94,10 +94,7 @@ const App = () => {
                 };
                 db.addFilterField(key, val);
                 setPriceRangeVals(val);
-                ans = ans === 'both'
-                    ? 'stock'
-                    : 'none';
-
+                ans = ans === 'both' ? 'stock' : 'none';
             } else if (key === 'stock') {
                 const val = {
                     min: Number(value.split('↕')[0]),
@@ -105,31 +102,47 @@ const App = () => {
                 };
                 db.addFilterField(key, val);
                 setStockRangeVals(val);
-                ans = ans === 'both'
-                    ? 'price'
-                    : 'none';
-
+                ans = ans === 'both' ? 'price' : 'none';
             } else {
                 db.addFilterField(key, value);
             }
-        };
+        }
 
         return ans;
-    }
+    };
+
+    const addToCart = ({ product, cart, setIncart, setTotalProducts, setTotalSum }: AddDropCartType) => {
+        console.log('productObject', product);
+        cart && cart.add({ product: product, amount: 1 });
+        setIncart(true);
+        cart && cart.calculateTotalSum();
+        cart && setTotalProducts && setTotalProducts(cart.getTotalProducts());
+        cart && setTotalSum(cart.calculateTotalSum());
+        localStorage.setItem('cartCurrentProducts', JSON.stringify(cart.currentProducts));
+    };
+    const dropFromCart = ({ product, cart, setIncart, setTotalProducts, setTotalSum }: AddDropCartType) => {
+        console.log('dropFromCart');
+        cart && cart.remove(product.id);
+        setIncart(false);
+        cart && cart.calculateTotalSum();
+        cart && setTotalProducts && setTotalProducts(cart.getTotalProducts());
+        cart && setTotalSum(cart.calculateTotalSum());
+        localStorage.setItem('cartCurrentProducts', JSON.stringify(cart?.currentProducts));
+    };
+
     const loadCartProductsLS = (): currentProductsType[] => {
         const cartProductsFromLS = JSON.parse(
-            localStorage.getItem('cartCurrentProducts') ?? ''
+            localStorage.getItem('cartCurrentProducts') ?? '[]'
         ) as currentProductsType[];
         console.log('ls', cartProductsFromLS);
         return cartProductsFromLS;
-    }
+    };
 
     const cartCurrentProductsLS = loadCartProductsLS();
     console.log('ProductBlockLS', cartCurrentProductsLS);
     cart.currentProducts = cartCurrentProductsLS.length > 0 ? cartCurrentProductsLS : cart.currentProducts;
     const [totalProducts, setTotalProducts] = useState(cart.getTotalProducts());
     const [totalSum, setTotalSum] = useState(cart.calculateTotalSum());
-
 
     useEffect(() => {
         data.then((readyArray) => {
@@ -161,10 +174,12 @@ const App = () => {
         setQueryFilter: setQueryFilter,
         parseQueryFilters: parseQueryFilters,
         isOrderSumbitted: isOrderSumbitted,
-        setIsOrderSumbitted:setIsOrderSumbitted,
-        loadCartProductsLS:loadCartProductsLS,
-        modal:modal,
-        setModal:setModal,
+        setIsOrderSumbitted: setIsOrderSumbitted,
+        loadCartProductsLS: loadCartProductsLS,
+        modal: modal,
+        setModal: setModal,
+        addToCart: addToCart,
+        dropFromCart: dropFromCart,
     };
 
     return (
@@ -174,11 +189,8 @@ const App = () => {
                     <Layout>
                         <Routes>
                             <Route path="/" element={<Catalog />} />
-                            <Route path="/:id" element={<ProductDescription />} />
-                            <Route
-                                path="/cart"
-                                element={<Cart />}
-                            />
+                            <Route path="/:id" element={<ProductPage />} />
+                            <Route path="/cart" element={<Cart />} />
                             <Route path="/*" element={<Error404 />} />
                         </Routes>
                     </Layout>

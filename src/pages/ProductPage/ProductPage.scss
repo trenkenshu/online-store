@@ -15,7 +15,9 @@
     color: white;
   }
   &__link {
+    text-decoration: none;
     text-transform: uppercase;
+    color: white;
   }
   &__info {
     display: flex;
@@ -26,22 +28,35 @@
     padding: 10px;
   }
   &__name {
+    background-color: black;
+    color: #ffe600;
+    border-radius: 10px;
     text-align: center;
     text-transform: uppercase;
+    padding: 5px;
   }
   &__data {
     display: flex;
+    gap: 20px;
   }
   &__images {
-    width: 50%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    flex: 1 1 50%;
+    gap: 20px;
+  }
+  &__main-img {
+    width: 100%;
+    height: 300px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border-radius: 10px;
   }
   &__other-imgs{
     display: flex;
     gap: 10px;
-    cursor: pointer;
   }
   &__other-image {
     width: 60px;
@@ -51,12 +66,21 @@
     background-position: center;
     border: 1px solid black;
     border-radius: 10px;
+    cursor: pointer;
+  }
+  &__details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1 1 50%;
   }
   &__details-top{
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-bottom: 20px;
+    font-size: 1.8rem;
+    align-items: center;
+    padding: 40px 0;
   }
   &__details-bottom{
     display: flex;
@@ -64,6 +88,10 @@
     align-items: center;
   }
   &__price {
-    font-size: 2.5rem;
+    font-size: 3.8rem;
+  }
+  & .btn {
+    padding: 15px;
+    font-size: 2rem;
   }
 }

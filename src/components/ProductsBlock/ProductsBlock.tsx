@@ -91,8 +91,6 @@ const ProductsBlock = () => {
                 {products.map((product) => (
                     <ProductCard
                         product={product}
-                        cart={cart}
-                        setTotalProducts={setTotalProducts}
                         isInCart={cart.currentProducts.some((el) => el.product.id === product.id)}
                         key={product.id}
                     />

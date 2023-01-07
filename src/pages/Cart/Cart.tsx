@@ -115,7 +115,7 @@ const Cart = () => {
                     </div>
                 </div>
             )}
-            {!isOrderSumbitted && cart.currentProducts.length && (
+            {!isOrderSumbitted && cart.currentProducts.length > 0 && (
                 <div className="cart">
                     <div className="cart__list">
                         <CartHeader

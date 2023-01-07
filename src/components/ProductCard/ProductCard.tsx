@@ -4,41 +4,50 @@ import Button from '../Button';
 import IProductCard from '../../interfaces/productCard';
 import { Link } from 'react-router-dom';
 import { StoreContext } from '../../context';
+import { IProduct } from '../../interfaces/products';
+import CartClass from '../../api/cart';
 // import { IProduct } from '../../interfaces/products';
 
+export type AddDropCartType = {
+    product: IProduct;
+    cart: CartClass;
+    setIncart: (data: boolean) => void;
+    setTotalProducts: (data: number) => void;
+    setTotalSum: (data: number) => void;
+};
+
 const ProductCard = (props: IProductCard) => {
-    const { product, cart, setTotalProducts, isInCart } = props;
-    const { setTotalSum } = useContext(StoreContext);
-    const [addToCartBtn, setAddToCartBtn] = useState(!isInCart);
+    const { product, isInCart } = props;
+    const { setTotalSum, cart, setTotalProducts, addToCart, dropFromCart } = useContext(StoreContext);
+    const [inCart, setIncart] = useState(isInCart);
     // if (cart?.currentProducts.some((el) => el.product.id === id)) {
-    //     setAddToCartBtn(false);
+    //     setIncart(false);
     //     console.log(
     //         'id',
     //         cart?.currentProducts.find((el) => el.product.id === id)
     //     );
     // }
-
-    const addToCart = () => {
-        console.log('productObject', product);
-        cart && cart.add({ product: product, amount: 1 });
-        setAddToCartBtn(false);
-        cart && cart.calculateTotalSum();
-        cart && setTotalProducts && setTotalProducts(cart.getTotalProducts());
-        cart && setTotalSum(cart.calculateTotalSum());
-        localStorage.setItem('cartCurrentProducts', JSON.stringify(cart?.currentProducts));
-    };
-    const dropFromCart = () => {
-        console.log('dropFromCart');
-        cart && cart.remove(product.id);
-        setAddToCartBtn(true);
-        cart && cart.calculateTotalSum();
-        cart && setTotalProducts && setTotalProducts(cart.getTotalProducts());
-        cart && setTotalSum(cart.calculateTotalSum());
-        localStorage.setItem('cartCurrentProducts', JSON.stringify(cart?.currentProducts));
-    };
+    // const addToCart = ({ product, cart, setIncart, setTotalProducts, setTotalSum }: AddDropCartType) => {
+    //     console.log('productObject', product);
+    //     cart && cart.add({ product: product, amount: 1 });
+    //     setIncart(false);
+    //     cart && cart.calculateTotalSum();
+    //     cart && setTotalProducts && setTotalProducts(cart.getTotalProducts());
+    //     cart && setTotalSum(cart.calculateTotalSum());
+    //     localStorage.setItem('cartCurrentProducts', JSON.stringify(cart.currentProducts));
+    // };
+    // const dropFromCart = ({ product, cart, setIncart, setTotalProducts, setTotalSum }: AddDropCartType) => {
+    //     console.log('dropFromCart');
+    //     cart && cart.remove(product.id);
+    //     setIncart(true);
+    //     cart && cart.calculateTotalSum();
+    //     cart && setTotalProducts && setTotalProducts(cart.getTotalProducts());
+    //     cart && setTotalSum(cart.calculateTotalSum());
+    //     localStorage.setItem('cartCurrentProducts', JSON.stringify(cart?.currentProducts));
+    // };
 
     return (
-        <div className={addToCartBtn ? 'product__card' : 'product__card product__card_active'}>
+        <div className={inCart ? 'product__card product__card_active' : 'product__card'}>
             <div className="product__info">
                 <div className="product__body">
                     <Link className="product__link-img" to={`/${product.id}`}>
@@ -71,12 +80,15 @@ const ProductCard = (props: IProductCard) => {
                 </div>
                 <div className="product__btns">
                     <Button
-                        name={addToCartBtn ? 'Add to Cart' : 'Drop from Cart'}
-                        onClick={addToCartBtn ? addToCart : dropFromCart}
+                        name={inCart ? 'Drop from Cart' : 'Add to Cart'}
+                        onClick={
+                            inCart
+                                ? () => dropFromCart({ product, cart, setIncart, setTotalProducts, setTotalSum })
+                                : () => addToCart({ product, cart, setIncart, setTotalProducts, setTotalSum })
+                        }
                     ></Button>
                     <Link className="btn" to={`/${product.id}`}>
                         Details
-                        {/* <Button name="Details" onClick={openProductPage}></Button> */}
                     </Link>
                 </div>
             </div>

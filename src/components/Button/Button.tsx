@@ -1,5 +1,4 @@
 import React from 'react';
-import { IProduct } from '../../interfaces/products';
 import './Button.scss';
 
 type ButtonType = {
@@ -11,7 +10,6 @@ type ButtonType = {
 
 const Button = (props: ButtonType) => {
     const { name, onClick, inCart } = props;
-    // console.log('button', props);
 
     return (
         <button className={inCart ? 'btn btn__drop' : 'btn btn__add'} onClick={() => onClick && onClick()}>

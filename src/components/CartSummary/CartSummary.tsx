@@ -3,9 +3,6 @@ import { StoreContext } from '../../context';
 import PromoBlock from '../PromoBlock';
 import './CartSummary.scss';
 
-// type CartSummaryType = {
-//     setModal: (data: boolean) => void;
-// };
 const CartSummary = () => {
     const { totalSum, totalProducts, setModal } = useContext(StoreContext);
 

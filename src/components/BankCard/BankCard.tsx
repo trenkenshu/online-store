@@ -43,7 +43,6 @@ const BankCard = (props: BankCardType) => {
                     name="card-number"
                     placeholder="Card number"
                     value={creditCardNumber}
-                    // maxLength={20}
                     onBlur={(event) => blurHandler(event)}
                     onChange={(event) => creditNumberHandler(event)}
                 ></input>
@@ -59,7 +58,6 @@ const BankCard = (props: BankCardType) => {
                         value={creditCardValidDate}
                         onBlur={(event) => blurHandler(event)}
                         onChange={(event) => creditValidDateHandler(event)}
-                        // maxLength={5}
                     ></input>
                 </div>
                 <div className="card__cvv">

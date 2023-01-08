@@ -3,10 +3,6 @@ import React, { useContext } from 'react';
 import './Header.scss';
 import { StoreContext } from '../../context';
 
-// type HeaderType = {
-//     cart: CartClass;
-//     totalProducts: number;
-// };
 const Header = () => {
     const { totalProducts, totalSum } = useContext(StoreContext);
 

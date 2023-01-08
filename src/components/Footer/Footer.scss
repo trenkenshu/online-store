@@ -4,8 +4,6 @@
   align-items: center;
   background-color: black;
   color: white;
-  // background-color: $bgColor;
-  // color: $mainTextColor;
   font-size: 1.6rem;
   width: 100%;
   padding: 10px 30px;
@@ -19,11 +17,9 @@
     display: inline-block;
     text-decoration: none;
     color: white;
-    // color: $mainTextColor;
     transition: all .3s ease-in;
     &:hover{
       color: rgb(255, 230, 0);
-      // color: $yellowColor;
     }
   }
   &__rs-logo{

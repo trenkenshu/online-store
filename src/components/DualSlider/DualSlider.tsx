@@ -1,10 +1,11 @@
-import React, { ChangeEvent, FC, useCallback, useEffect, useState, useRef, useContext } from 'react';
-import DBhandler, { MinmaxType } from '../../api/database';
+import React, { ChangeEvent, FC, useEffect, useState, useRef, useContext } from 'react';
+import DBhandler from '../../api/database';
 import { StoreContext } from '../../context';
 import { IProduct } from '../../interfaces/products';
+import { MinmaxType } from '../../interfaces/types';
 import './DualSlider.scss';
 
-type minMaxForFilterType = {
+type minMaxForRangeFilterType = {
     min: number;
     max: number;
     minVal: number;
@@ -15,7 +16,7 @@ type minMaxForFilterType = {
     setQueryFilter: (name: string, value: MinmaxType) => void;
 };
 
-const DualSlider: FC<minMaxForFilterType> = ({
+const DualSlider: FC<minMaxForRangeFilterType> = ({
     min,
     max,
     minVal,
@@ -25,7 +26,6 @@ const DualSlider: FC<minMaxForFilterType> = ({
     db,
     action,
 }) => {
-    // console.log('dual', minVal, maxVal);
     const [minInputVal, setMinInputVal] = useState(min);
     const [maxInputVal, setMaxInputVal] = useState(max);
     const minValRef = useRef(min);
@@ -37,7 +37,6 @@ const DualSlider: FC<minMaxForFilterType> = ({
     useEffect(() => {
         if (minVal === 0) {
             setMinInputVal(min);
-            // setQueryFilter('min' + action, min.toString());
             db.addFilterField<MinmaxType>(action, {
                 min: min,
                 max: max,
@@ -45,11 +44,9 @@ const DualSlider: FC<minMaxForFilterType> = ({
             setCatalogStates(db.runFilter(), action === 'stock' ? 'price' : 'stock');
         } else {
             setMinInputVal(minVal);
-            // setQueryFilter('min' + action, minVal.toString());
         }
         if (maxVal === 0) {
             setMaxInputVal(max);
-            // setQueryFilter('max' + action, max.toString());
             db.addFilterField<MinmaxType>(action, {
                 min: min,
                 max: max,
@@ -57,7 +54,6 @@ const DualSlider: FC<minMaxForFilterType> = ({
             setCatalogStates(db.runFilter(), action === 'stock' ? 'price' : 'stock');
         } else {
             setMaxInputVal(maxVal);
-            // setQueryFilter('max' + action, maxVal.toString());
         }
     }, [minVal, maxVal]);
 
@@ -92,9 +88,6 @@ const DualSlider: FC<minMaxForFilterType> = ({
                         });
                     }
                 }}
-                // onMouseUp={(event: React.MouseEventHandler<HTMLInputElement>) => {
-                //     setQueryFilter('min' + action, event.target.value.toString());
-                // }}
                 className="slider__thumb slider__thumb-left"
                 style={{ zIndex: minInputVal > max - 100 ? '5' : '3' }}
             />

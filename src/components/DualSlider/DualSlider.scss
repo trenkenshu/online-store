@@ -59,14 +59,11 @@
             width: 18px;
             margin-top: 4px;
             background-color: yellow;
-            // box-shadow: 0 0 1px 1px black;
+
             border-radius: 50%;
             pointer-events: all;
             cursor: pointer;
         }
-        // &-left {
-        //     z-index: 3;
-        // }
         &-right {
             z-index: 4;
         }

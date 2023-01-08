@@ -1,4 +1,4 @@
 import { createContext } from 'react';
-import { StoreType } from '../components/App';
+import { StoreType } from '../interfaces/store';
 
 export const StoreContext = createContext({} as StoreType);

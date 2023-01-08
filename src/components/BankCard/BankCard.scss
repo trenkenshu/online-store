@@ -5,7 +5,6 @@
   width: 50%;
   gap: 40px;
   font-size: 1.2rem;
-  // margin: 0 auto;
   padding: 20px;
   border-radius: 10px;
   background-color: darkred;
@@ -39,7 +38,6 @@
   }
   &__input{
     appearance: none;
-    // -moz-appearance: textfield;
     outline: none;
     border: 1px solid black;
     border-radius: 10px;
@@ -52,7 +50,6 @@
     &:hover,
     &:focus{
       appearance: none;
-      // -moz-appearance: textfield;
     }
   }
 
@@ -62,10 +59,6 @@
     text-align: center;
     font-size: 1.6rem;
   }
-  // &__bottom-info{
-  //   display: flex;
-  //   width: 100%;
-  // }
   &__input-valid,
   &__input-cvv{
     width: 50%;

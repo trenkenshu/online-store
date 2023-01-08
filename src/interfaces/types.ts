@@ -1,6 +1,20 @@
 import CartClass from '../api/cart';
-import DBhandler from '../api/database';
 import { IProduct } from './products';
+
+export type CartItemType = {
+    product: IProduct;
+    amount: number;
+    index: number;
+    increaseAmount: (id: number) => void;
+    decreaseAmount: (id: number) => void;
+    currentPage: number;
+    itemsPerPage: number;
+};
+
+export type CurrentProductsType = {
+    product: IProduct;
+    amount: number;
+};
 
 export type MinmaxType = {
     min: number;
@@ -14,64 +28,12 @@ export type UniqueFiltersType = {
     currentAmount: number;
 }[];
 
-export type CartItemType = {
+export type rangesType = 'both' | 'stock' | 'price' | 'none';
+
+export type AddDropCartType = {
     product: IProduct;
-    amount: number;
-};
-
-export type ButtonType = {
-    name?: string;
-    children?: React.ReactNode;
-    onClick?: () => void;
-    // product?: IProduct;
-};
-
-export type minMaxForFilterType = {
-    min: number;
-    max: number;
-    minVal: number;
-    maxVal: number;
-    db: DBhandler;
-    action: 'price' | 'stock';
-    setCatalogStates: (data: IProduct[], withRanges: 'both' | 'stock' | 'price') => void;
-};
-
-export type FilterType = {
-    name?: string;
-    children?: React.ReactNode;
-};
-
-export type FilterItemType = {
-    category?: string;
-    brand?: string;
-    maxAmount: number;
-    currentAmount: number;
-    db: DBhandler;
-    filterName: string;
-    setCatalogStates: (data: IProduct[], withRanges: 'both' | 'stock' | 'price') => void;
-};
-
-export type HeaderType = {
     cart: CartClass;
-    totalProducts: number;
-};
-
-export type LayoutType = {
-    children: React.ReactNode;
-    cart: CartClass;
-    totalProducts: number;
-};
-
-export type catalogType = {
-    products: IProduct[];
-    setCatalogStates: (data: IProduct[], withRanges: 'both' | 'stock' | 'price') => void;
-    categories: UniqueFiltersType;
-    brands: UniqueFiltersType;
-    priceRange: MinmaxType;
-    stockRange: MinmaxType;
-    priceRangeVals: MinmaxType;
-    stockRangeVals: MinmaxType;
-    db: DBhandler;
-    cart?: CartClass;
-    setTotalProducts: (number: number) => void;
+    setIncart: (data: boolean) => void;
+    setTotalProducts: (data: number) => void;
+    setTotalSum: (data: number) => void;
 };

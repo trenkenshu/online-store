@@ -1,19 +1,14 @@
 import React, { useContext, useState, useEffect } from 'react';
-import './ProductsBlock.scss';
 import ProductCard from '../ProductCard';
 import { StoreContext } from '../../context';
+import './ProductsBlock.scss';
 
 const ProductsBlock = () => {
     const { products, cart, setCatalogStates, setQueryFilter, database } = useContext(StoreContext);
     const [view, setView] = useState('grid');
     const [selected, setSelected] = useState(database.sort);
     const productItemsClasses = ['products__items'];
-    // const changeView = (newView: string) => {
-    //     setView(newView);
-    // };
-    // const cartCurrentProductsLS = loadCartProductsLS();
-    // console.log('ProductBlockLS', cartCurrentProductsLS);
-    // cart.currentProducts = cartCurrentProductsLS.length > 0 ? cartCurrentProductsLS : cart.currentProducts;
+
     if (view === 'list') {
         productItemsClasses.push('products__items_list');
     }

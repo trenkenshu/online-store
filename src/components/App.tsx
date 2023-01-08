@@ -112,16 +112,17 @@ const App = () => {
         return ans;
     };
 
-    const addToCart = ({ product, cart, setIncart, setTotalProducts, setTotalSum }: AddDropCartType) => {
-        console.log('productObject', product);
-        cart && cart.add({ product: product, amount: 1 });
+    const addToCart = (x: AddDropCartType): void => {
+        const { product, cart, setIncart, setTotalProducts, setTotalSum } = x;
+        cart.add({ product: product, amount: 1 });
         setIncart(true);
         cart && cart.calculateTotalSum();
         cart && setTotalProducts && setTotalProducts(cart.getTotalProducts());
         cart && setTotalSum(cart.calculateTotalSum());
         localStorage.setItem('cartCurrentProducts', JSON.stringify(cart.currentProducts));
     };
-    const dropFromCart = ({ product, cart, setIncart, setTotalProducts, setTotalSum }: AddDropCartType) => {
+    const dropFromCart = (x: AddDropCartType): void => {
+        const { product, cart, setIncart, setTotalProducts, setTotalSum } = x;
         console.log('dropFromCart');
         cart && cart.remove(product.id);
         setIncart(false);
@@ -132,10 +133,11 @@ const App = () => {
     };
 
     const loadCartProductsLS = (): currentProductsType[] => {
-        const cartProductsFromLS = JSON.parse(
-            localStorage.getItem('cartCurrentProducts') ?? '[]'
-        ) as currentProductsType[];
-        console.log('ls', cartProductsFromLS);
+        const ls = localStorage.getItem('cartCurrentProducts');
+        let cartProductsFromLS: currentProductsType[] = [];
+        if (typeof ls === 'string' && ls.length > 2) {
+            cartProductsFromLS = JSON.parse(ls) as currentProductsType[];
+        }
         return cartProductsFromLS;
     };
 
@@ -185,7 +187,8 @@ const App = () => {
     };
 
     return (
-        <>  <div className={'loader ' + (loaded ? 'loaded' : 'notLoaded')} ></div>
+        <>
+            <div className={'loader ' + (loaded ? 'loaded' : 'notLoaded')}></div>
             <StoreContext.Provider value={store}>
                 <BrowserRouter>
                     <Layout>

@@ -26,7 +26,7 @@ class CartClass {
     }
     public add(item: currentProductsType) {
         this.currentProducts.push(item);
-        console.log('addCurrPr', this.currentProducts);
+        return this.currentProducts.slice(0);
     }
     public remove(id: number) {
         const removedIndex = this.currentProducts.findIndex((el) => el.product.id === id);

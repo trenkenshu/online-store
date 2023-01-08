@@ -6,15 +6,15 @@ type ButtonType = {
     name?: string;
     children?: React.ReactNode;
     onClick?: () => void;
-    // product?: IProduct;
+    inCart: boolean;
 };
 
 const Button = (props: ButtonType) => {
-    const { name, onClick } = props;
+    const { name, onClick, inCart } = props;
     // console.log('button', props);
 
     return (
-        <button className="btn" onClick={() => onClick && onClick()}>
+        <button className={inCart ? 'btn btn__drop' : 'btn btn__add'} onClick={() => onClick && onClick()}>
             {name}
         </button>
     );

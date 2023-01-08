@@ -81,8 +81,14 @@ const FiltersBlock = () => {
     return (
         <div className="filters">
             <div className="filters__btns">
-                <Button name="Reset filters" onClick={reset}></Button>
-                <Button name="Copy link" onClick={copy}></Button>
+                {/* <Button name="Reset filters" onClick={reset}></Button>
+                <Button name="Copy link" onClick={copy}></Button> */}
+                <button className="filters__reset" onClick={reset}>
+                    Reset filters
+                </button>
+                <button className="filters__copy" onClick={copy}>
+                    Copy link
+                </button>
             </div>
             <Filter name="Category">
                 <div className="filter__list">

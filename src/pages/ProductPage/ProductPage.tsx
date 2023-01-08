@@ -47,11 +47,10 @@ const ProductPage = () => {
         }, []);
     }
     const [inCart, setIncart] = useState(cart.currentProducts.some((el) => el.product.id === id));
-    // const thumbnail = product?.thumbnail.toString() as string;
-    const [mainImage, setMainImage] = useState(product?.images[0].toString());
-    console.log('boolean', Boolean(product?.id));
+    const [mainImage, setMainImage] = useState(product?.thumbnail.toString());
+    // console.log('boolean', Boolean(product?.id));
     useEffect(() => {
-        setMainImage(product?.images[0].toString());
+        setMainImage(product?.thumbnail.toString());
     }, [product]);
 
     const changeMainImg = (event: React.MouseEvent<HTMLElement>) => {
@@ -60,6 +59,7 @@ const ProductPage = () => {
         console.log(imgUrl);
         setMainImage(imgUrl);
     };
+
     return (
         <>
             {err && <Error404 />}
@@ -106,6 +106,7 @@ const ProductPage = () => {
                                 <div className="product-page__details-bottom">
                                     <div className="product-page__price">€{product.price}</div>
                                     <Button
+                                        inCart={inCart}
                                         name={inCart ? 'Drop from Cart' : 'Add to Cart'}
                                         onClick={
                                             inCart
@@ -128,9 +129,9 @@ const ProductPage = () => {
                                         }
                                     ></Button>
                                     <Button
+                                        inCart={false}
                                         name="Buy now"
                                         onClick={() => {
-                                            console.log('Buy now');
                                             if (!cart.currentProducts.some((el) => el.product.id === id)) {
                                                 addToCart({
                                                     product,

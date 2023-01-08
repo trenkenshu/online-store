@@ -1,5 +1,6 @@
-import React, { ChangeEvent, FC, useCallback, useEffect, useState, useRef } from 'react';
+import React, { ChangeEvent, FC, useCallback, useEffect, useState, useRef, useContext } from 'react';
 import DBhandler, { MinmaxType } from '../../api/database';
+import { StoreContext } from '../../context';
 import { IProduct } from '../../interfaces/products';
 import './DualSlider.scss';
 
@@ -31,6 +32,7 @@ const DualSlider: FC<minMaxForFilterType> = ({
     const maxValRef = useRef(max);
     const range = useRef<HTMLDivElement>(null);
     let clicked = false;
+    const { products } = useContext(StoreContext);
 
     useEffect(() => {
         if (minVal === 0) {
@@ -120,8 +122,15 @@ const DualSlider: FC<minMaxForFilterType> = ({
                 className="slider__thumb slider__thumb-right"
             />
             <div className="slider__wrapper">
-                <div className="slider__from">{minInputVal}</div>
-                <div className="slider__to">{maxInputVal}</div>
+                <div className="slider__notfound" style={{ display: products.length ? 'none' : 'block' }}>
+                    Not found
+                </div>
+                <div className="slider__from" style={{ display: products.length ? 'block' : 'none' }}>
+                    {minInputVal}
+                </div>
+                <div className="slider__to" style={{ display: products.length ? 'block' : 'none' }}>
+                    {maxInputVal}
+                </div>
                 <div className="slider__track"></div>
                 <div ref={range} className="slider__range"></div>
             </div>

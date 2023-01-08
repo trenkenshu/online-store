@@ -43,13 +43,19 @@ export default class DBhandler {
     //////////////////  LOAD  //////////////////////////
 
     public async load(url: URL): Promise<IProduct[]> {
-        let ansData: Promise<IProduct[]>;
+        let ansData: IProduct[];
         if (this.db.length === 0) {
             try {
-                const ans = await fetch(url);
-                const json = (await ans.json());
-                ansData = json.products;
-                this.db = await ansData;
+                const ans: Response = await fetch(url);
+                const json = (await ans.json()) as Promise<{
+                    limit: number;
+                    skip: number;
+                    total: number;
+                    products: IProduct[];
+                }>;
+                //console.log(json);
+                ansData = (await json).products;
+                this.db = ansData;
                 this.db.forEach((item) => {
                     item.brand = item.brand.charAt(0).toUpperCase() + item.brand.slice(1).toLowerCase();
                 });
@@ -57,9 +63,7 @@ export default class DBhandler {
                 throw new Error('Cound not fetch from ' + url.toString());
             }
         } else {
-            ansData = new Promise((resolve) => {
-                resolve(this.db);
-            });
+            ansData = this.db;
         }
         return ansData;
     }
@@ -143,17 +147,20 @@ export default class DBhandler {
 
     /////////  METHOD TO REMOVE SEARCH CRITERIA  ////////
 
-    public removeFilterField(key: string, value: string): void {
-        // console.log(' removed ', key, value, this.categoryCriteria);
+    public removeFilterField(key: string, value: string): string[] {
+        let ans: string[] = [];
         if (key === 'category') {
             const position = this.categoryCriteria.indexOf(value.toLowerCase());
             // console.log(position);
             this.categoryCriteria.splice(position, 1);
+            ans = this.categoryCriteria;
         }
         if (key === 'brand') {
             const position = this.brandCriteria.indexOf(value.toLowerCase());
             this.brandCriteria.splice(position, 1);
+            ans = this.brandCriteria;
         }
+        return ans;
     }
 
     ///////////////  APPLY FILTERS  ///////////////////

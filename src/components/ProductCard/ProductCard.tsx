@@ -80,6 +80,7 @@ const ProductCard = (props: IProductCard) => {
                 </div>
                 <div className="product__btns">
                     <Button
+                        inCart={inCart}
                         name={inCart ? 'Drop from Cart' : 'Add to Cart'}
                         onClick={
                             inCart
@@ -87,7 +88,7 @@ const ProductCard = (props: IProductCard) => {
                                 : () => addToCart({ product, cart, setIncart, setTotalProducts, setTotalSum })
                         }
                     ></Button>
-                    <Link className="btn" to={`/${product.id}`}>
+                    <Link className="product__btn-details" to={`/${product.id}`}>
                         Details
                     </Link>
                 </div>

@@ -4,8 +4,7 @@ import ProductCard from '../ProductCard';
 import { StoreContext } from '../../context';
 
 const ProductsBlock = () => {
-    const { products, cart, setTotalProducts, setCatalogStates, setQueryFilter, database, loadCartProductsLS } =
-        useContext(StoreContext);
+    const { products, cart, setCatalogStates, setQueryFilter, database } = useContext(StoreContext);
     const [view, setView] = useState('grid');
     const [selected, setSelected] = useState(database.sort);
     const productItemsClasses = ['products__items'];
@@ -96,6 +95,7 @@ const ProductsBlock = () => {
                     />
                 ))}
             </div>
+            {products.length === 0 && <div className="products__notfound">Ooops, products not found 😱</div>}
         </div>
     );
 };

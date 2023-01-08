@@ -71,4 +71,12 @@
             z-index: 4;
         }
     }
+    &__notfound{
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0);
+        color: black;
+        font-size: 1.8rem;
+        margin-top: -40px;
+    }
 }

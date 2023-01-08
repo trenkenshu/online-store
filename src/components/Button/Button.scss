@@ -1,24 +1,31 @@
 .btn {
   padding: 10px;
-  border: 1px solid rgb(255, 230, 0);
-  // border: 1px solid $yellowColor;
+  // border: 1px solid rgb(255, 230, 0);
+  border: 1px solid black;
   border-radius: 10px;
   outline: none;
   font-size: 1.6rem;
-  background-color: black;
-  color: rgb(255, 230, 0);
-  // background-color: $bgColor;
-  // color: $yellowColor;
+  // background-color: black;
+  // color: rgb(255, 230, 0);
   cursor: pointer;
   white-space: nowrap;
   transition: background-color .3s ease-in,color .3s ease-in;
   text-decoration: none;
   text-align: center;
-  &:hover {
-    background-color: rgb(255, 230, 0);
-    color: black;
-    border-color: black;
-    // background-color: $yellowColor;
-    // color: $bgColor;
+  &__add {
+    background-color: black;
+    color: rgb(255, 230, 0);
+    &:hover {
+      background-color: rgb(255, 230, 0);
+      color: black;
+    }
+  }
+  &__drop {
+    background-color: #700000;
+    color: rgb(255, 230, 0);
+    &:hover {
+      background-color: rgb(204, 8, 8);
+      // color: rgb(255, 230, 0);
+    }
   }
 }

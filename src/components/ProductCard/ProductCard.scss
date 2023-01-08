@@ -51,4 +51,22 @@
     display: flex;
     justify-content: space-around;
   }
+  &__btn-details {
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+    outline: none;
+    font-size: 1.6rem;
+    background-color: black;
+    color: rgb(255, 230, 0);
+    white-space: nowrap;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color .3s ease-in,color .3s ease-in;
+    cursor: pointer;
+    &:hover {
+      background-color: rgb(255, 230, 0);
+      color: black;
+    }
+  }
 }

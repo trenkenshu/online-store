@@ -1,0 +1,8 @@
+/** @type {import('ts-jest').JestConfigWithTsJest} */
+// const { pathsToModuleNameMapper } = require('ts-jest/utils');
+// const { compilerOptions } = require('./tsconfig');
+
+module.exports = {
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+};

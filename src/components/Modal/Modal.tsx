@@ -10,7 +10,8 @@ import './Modal.scss';
 // };
 
 const Modal = () => {
-    const { cart, setTotalProducts, setTotalSum, setIsOrderSumbitted, setModal } = useContext(StoreContext);
+    const { cart, setTotalProducts, setTotalSum, setIsOrderSumbitted, setModal, database, setCatalogStates } =
+        useContext(StoreContext);
 
     const navigate = useNavigate();
     //For personal details
@@ -222,6 +223,9 @@ const Modal = () => {
             localStorage.setItem('cartCurrentProducts', '');
             setTotalProducts(cart.getTotalProducts());
             setTotalSum(cart.calculateTotalSum());
+            database.resetFilter();
+            const unfiltered = database.runFilter();
+            setCatalogStates(unfiltered, 'both');
             setTimeout(() => {
                 setIsOrderSumbitted(false);
                 navigate('/');

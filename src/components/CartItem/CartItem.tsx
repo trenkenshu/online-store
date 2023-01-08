@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CartItemType } from '../../api/cart';
-import { StoreContext } from '../../context';
+import { CartItemType } from '../../interfaces/types';
 import './CartItem.scss';
 
 const CartItem = (props: CartItemType) => {

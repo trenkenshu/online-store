@@ -27,7 +27,6 @@ const ProductPage = () => {
                 return Promise.all(allImgsPromices);
             })
                 .then((imgsLoaded: Response[]) => {
-                    //console.log(imgsLoaded.toString());
                     const uniqueImgs: string[] = [];
                     const uniqueHeaders: string[] = [];
                     imgsLoaded.forEach((el) => {
@@ -48,7 +47,6 @@ const ProductPage = () => {
     }
     const [inCart, setIncart] = useState(cart.currentProducts.some((el) => el.product.id === id));
     const [mainImage, setMainImage] = useState(product?.thumbnail.toString());
-    // console.log('boolean', Boolean(product?.id));
     useEffect(() => {
         setMainImage(product?.thumbnail.toString());
     }, [product]);
@@ -56,7 +54,6 @@ const ProductPage = () => {
     const changeMainImg = (event: React.MouseEvent<HTMLElement>) => {
         const target = event.target as HTMLElement;
         const imgUrl = target.style.backgroundImage.slice(5, -2);
-        console.log(imgUrl);
         setMainImage(imgUrl);
     };
 

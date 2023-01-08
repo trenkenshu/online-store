@@ -1,18 +1,5 @@
-import { FilterItemType } from '../components/FilterItem/FilterItem';
 import { IProduct } from '../interfaces/products';
-
-export type MinmaxType = {
-    min: number;
-    max: number;
-};
-
-export type UniqueFiltersType = {
-    category?: string;
-    brand?: string;
-    maxAmount: number;
-    currentAmount: number;
-}[];
-
+import { MinmaxType, UniqueFiltersType } from '../interfaces/types';
 export default class DBhandler {
     public db: IProduct[];
     public categoryCriteria: string[];
@@ -40,7 +27,7 @@ export default class DBhandler {
         this.view = 'grid';
     }
 
-    //////////////////  LOAD  //////////////////////////
+    //  LOAD //
 
     public async load(url: URL): Promise<IProduct[]> {
         let ansData: IProduct[];
@@ -53,7 +40,7 @@ export default class DBhandler {
                     total: number;
                     products: IProduct[];
                 }>;
-                //console.log(json);
+
                 ansData = (await json).products;
                 this.db = ansData;
                 this.db.forEach((item) => {
@@ -68,7 +55,7 @@ export default class DBhandler {
         return ansData;
     }
 
-    ///////////////// LOAD SINGLE PRODUCT /////////////////
+    // LOAD SINGLE PRODUCT //
 
     public async loadOne(url: URL, productId: number): Promise<IProduct> {
         const link = url.toString() + String(productId);
@@ -76,13 +63,11 @@ export default class DBhandler {
         return (await ans).json() as Promise<IProduct>;
     }
 
-    ////////  UNIQUE FIELDS FOR FILTERS WITH MAX  //////// TODO type
+    //  UNIQUE FIELDS FOR FILTERS WITH MAX  //
 
     public uniqueFilterFields(dataBase: IProduct[], criteria: string): UniqueFiltersType {
         const ans: UniqueFiltersType = [];
         const allByCriteria: string[] = [];
-        //const dbUnsorted = this.db.slice(0);
-        //dbUnsorted.sort((a, b) => a.id - b.id);
 
         this.db.forEach((item: IProduct) =>
             allByCriteria.push(
@@ -101,7 +86,7 @@ export default class DBhandler {
         return ans;
     }
 
-    ///////// METHOD TO HANDLE NUMERIC FILTERS RANGES ////////// TODO type
+    // METHOD TO HANDLE NUMERIC FILTERS RANGES //
 
     public minMax(db: IProduct[], priceOrStock: 'price' | 'stock'): MinmaxType {
         const filteredDB: IProduct[] = db.concat([]);
@@ -119,7 +104,7 @@ export default class DBhandler {
                   max: 0,
               };
     }
-    ////////// METHOD TO ADD SEARCH CRITERIA  ////////// TODO type
+    // METHOD TO ADD SEARCH CRITERIA  //
 
     public addFilterField<T>(key: string, value: T): void {
         if (key === 'category' && !this.categoryCriteria.includes(String(value))) {
@@ -145,13 +130,12 @@ export default class DBhandler {
         }
     }
 
-    /////////  METHOD TO REMOVE SEARCH CRITERIA  ////////
+    //  METHOD TO REMOVE SEARCH CRITERIA  //
 
     public removeFilterField(key: string, value: string): string[] {
         let ans: string[] = [];
         if (key === 'category') {
             const position = this.categoryCriteria.indexOf(value.toLowerCase());
-            // console.log(position);
             this.categoryCriteria.splice(position, 1);
             ans = this.categoryCriteria;
         }
@@ -163,11 +147,9 @@ export default class DBhandler {
         return ans;
     }
 
-    ///////////////  APPLY FILTERS  ///////////////////
+    //  APPLY FILTERS  //
 
     public runFilter(): IProduct[] {
-        // console.log('runFilter');
-        // console.log('thisDb', this.db);
         let filtered: IProduct[] = [];
         filtered = filtered.concat(this.db);
         if (this.categoryCriteria.length) {
@@ -245,6 +227,5 @@ export default class DBhandler {
         this.searchCriteria = '';
         this.priceRange = this.minMax(this.db, 'price');
         this.stock = this.minMax(this.db, 'stock');
-        //console.log(this.categoryCriteria, this.brandCriteria, this.searchCriteria, this.priceRange, this.stock);
     }
 }

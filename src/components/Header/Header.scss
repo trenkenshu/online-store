@@ -4,8 +4,6 @@
   align-items: center;
   background-color: black;
   color: white;
-  // background-color: $bgColor;
-  // color: $mainTextColor;
   width: 100%;
   padding: 10px 30px;
   &__logo {
@@ -14,18 +12,15 @@
     &:hover{
       & .yellow {
         color: white;
-        // color: $mainTextColor;
       }
       &  .header__logo-link {
         color: rgb(255, 230, 0);
-        // color: $yellowColor;
       }
     }
   }
   &__logo-link{
     text-decoration: none;
     color: white;
-    // color: $mainTextColor;
     font-weight: 400;
     font-style: italic;
     transition: all .3s ease-in;
@@ -58,13 +53,11 @@
     left: 50%;
     font-size: 2rem;
     color: black;
-    // color: $bgColor;
     transform: translate(-50%,0);
   }
   
   .yellow {
     transition: all .3s ease-in;
     color: rgb(255, 230, 0);
-    // color: $yellowColor;
   }
 }

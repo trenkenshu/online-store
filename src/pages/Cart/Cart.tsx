@@ -8,8 +8,7 @@ import './Cart.scss';
 
 const Cart = () => {
     const { cart, setTotalProducts, setTotalSum, isOrderSumbitted, modal } = useContext(StoreContext);
-    // const [timeLeft, setTimeLeft] = useState(3);
-
+    const [isClicked, setIsClicked] = useState(false);
     //Pagination
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(3);
@@ -20,30 +19,20 @@ const Cart = () => {
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    // const indexOfFirstItem = (currentPage - 1) * itemsPerPage;
-    // const indexOfLastItem = indexOfFirstItem + itemsPerPage;
     const totalPages = Math.ceil(cart.currentProducts.length / itemsPerPage);
     const currentCartList = cart.currentProducts.slice(indexOfFirstItem, indexOfLastItem);
-    console.log('currentCartList', cart.currentProducts);
 
     useEffect(() => {
-        console.log('useEffect on itemsPerPage', itemsPerPage);
         if (currentPage > totalPages && currentPage > 1) {
-            // console.log('inside', totalPages);
             setCurrentPage(Math.ceil(cart.currentProducts.length / itemsPerPage));
         }
     }, [itemsPerPage]);
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         setTimeLeft((prev) => prev - 1);
-    //         console.log(timeLeft);
-    //     }, 1000);
-    //     return () => clearInterval(interval);
-    // }, []);
+
     useEffect(() => {
-        console.log('setQuery');
-        setCartQueryParams('itemsPerPage', String(itemsPerPage));
-        setCartQueryParams('currentPage', String(currentPage));
+        if (isClicked) {
+            setCartQueryParams('itemsPerPage', String(itemsPerPage));
+            setCartQueryParams('currentPage', String(currentPage));
+        }
     }, [itemsPerPage, currentPage]);
 
     const setCartQueryParams = (name: string, value: string) => {
@@ -55,7 +44,6 @@ const Cart = () => {
     const getCartQueryParams = () => {
         const url = new URL(window.location.href);
         for (const [key, value] of url.searchParams.entries()) {
-            console.log('getQuery', key, '=>', value);
             if (key === 'itemsPerPage') {
                 setItemsPerPage(+value);
             }
@@ -86,7 +74,6 @@ const Cart = () => {
         }
         if (cart.currentProducts[cartItemIndex].amount === 0) {
             const id = cart.currentProducts[cartItemIndex].product.id;
-            console.log('remove ID', id);
             cart.remove(id);
             localStorage.setItem('cartCurrentProducts', JSON.stringify(cart.currentProducts));
             if (cart.currentProducts.length % itemsPerPage === 0 && currentPage === totalPages) {
@@ -100,7 +87,7 @@ const Cart = () => {
             value = 1;
         }
         setItemsPerPage(value);
-        // setCartQueryParams('itemsPerPage', String(itemsPerPage));
+        setIsClicked(true);
     };
 
     return (
@@ -125,6 +112,7 @@ const Cart = () => {
                             setItemsPerPage={setItemsPerPage}
                             totalPages={totalPages}
                             handleChange={handleChange}
+                            setIsClicked={setIsClicked}
                         />
                         {currentCartList.map((item, index) => (
                             <CartItem

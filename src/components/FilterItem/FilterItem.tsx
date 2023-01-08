@@ -3,7 +3,7 @@ import DBhandler from '../../api/database';
 import { IProduct } from '../../interfaces/products';
 import './FilterItem.scss';
 
-export type FilterItemType = {
+type FilterItemType = {
     searchQuery: string;
     maxAmount: number;
     currentAmount: number;
@@ -37,14 +37,12 @@ const FilterItem = (props: FilterItemType) => {
             const filterData = db.runFilter();
             setCatalogStates(filterData, 'both');
             setChecked(db.hasFilter(filterName, searchQuery.toLowerCase()));
-            console.log(currentAmount);
         } else {
             removeQueryFilter(filterName, searchQuery);
             db.removeFilterField(filterName, searchQuery);
             const filterData = db.runFilter();
             setCatalogStates(filterData, 'both');
             setChecked(db.hasFilter(filterName, searchQuery.toLowerCase()));
-            console.log(currentAmount);
         }
     };
 

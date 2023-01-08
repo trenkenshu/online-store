@@ -5,10 +5,6 @@ import BankCard from '../BankCard';
 import ModalInputBlock from '../ModalInputBlock';
 import './Modal.scss';
 
-// type ModalType = {
-//     setModal: (data: boolean) => void;
-// };
-
 const Modal = () => {
     const { cart, setTotalProducts, setTotalSum, setIsOrderSumbitted, setModal, database, setCatalogStates } =
         useContext(StoreContext);
@@ -70,23 +66,18 @@ const Modal = () => {
         const emailRegexp =
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (String(value).toLowerCase().match(emailRegexp)) {
-            console.log('email correct', String(value).toLowerCase().match(emailRegexp));
             setEmailError(false);
         } else {
-            console.log('email incorrect', String(value).toLowerCase().match(emailRegexp));
             setEmailError(true);
         }
     };
     const fullNameHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFullName(event.target.value);
         const valueArr = event.target.value.split(' ');
-        console.log(valueArr);
         if (valueArr.length >= 2 && valueArr.every((el) => el.length > 2)) {
-            console.log('FullName correct');
             setFullNameError(false);
         } else {
             setFullNameError(true);
-            console.log('FullName incorrect');
         }
     };
 
@@ -103,19 +94,15 @@ const Modal = () => {
     const addressHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         setAddress(event.target.value);
         const valueArr = event.target.value.split(' ');
-        console.log(valueArr);
         if (valueArr.length >= 3 && valueArr.every((el) => el.length > 4)) {
-            console.log('address correct');
             setaddressError(false);
         } else {
-            console.log('address incorrect');
             setaddressError(true);
         }
     };
 
     const creditNumberHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value.replace(/[^\d]/g, '');
-        console.log('CreditCardNumber', value.split(''));
         const valueArray: string[] = [];
         const size = 4;
         if (value.length >= 0 && value.length <= 16) {
@@ -124,7 +111,7 @@ const Modal = () => {
             }
             setCreditCardNumber(valueArray.join(' '));
         }
-        //validation
+        //Validation
         if (value.length > 16) {
             return false;
         }
@@ -133,8 +120,7 @@ const Modal = () => {
         } else {
             setCreditCardNumberError(true);
         }
-        // console.log(valueArray.join('').length);
-        //set logo
+        //Change logo
         if (value[0] === '4') {
             setLogo('visa');
         } else if (value[0] === '5') {
@@ -207,8 +193,7 @@ const Modal = () => {
 
     const handleSumbit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log('submitted');
-        //check validations
+        //Check validations
         fullNameError === true ? setFullNameFocus(true) : setFullNameFocus(false);
         phoneNumberError === true ? setPhoneNumberFocus(true) : setPhoneNumberFocus(false);
         addressError === true ? setAddressFocus(true) : setAddressFocus(false);

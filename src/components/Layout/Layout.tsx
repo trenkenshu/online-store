@@ -1,12 +1,9 @@
 import React from 'react';
 import Footer from '../Footer';
 import Header from '../Header';
-import CartClass from '../../api/cart';
 
 type LayoutType = {
     children: React.ReactNode;
-    // cart: CartClass;
-    // totalProducts: number;
 };
 
 const Layout = (props: LayoutType) => {

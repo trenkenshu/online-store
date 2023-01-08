@@ -1,50 +1,20 @@
 import React, { useContext, useState } from 'react';
-import './ProductCard.scss';
 import Button from '../Button';
-import IProductCard from '../../interfaces/productCard';
 import { Link } from 'react-router-dom';
 import { StoreContext } from '../../context';
 import { IProduct } from '../../interfaces/products';
-import CartClass from '../../api/cart';
-// import { IProduct } from '../../interfaces/products';
+import './ProductCard.scss';
 
-export type AddDropCartType = {
+type ProductCardType = {
     product: IProduct;
-    cart: CartClass;
-    setIncart: (data: boolean) => void;
-    setTotalProducts: (data: number) => void;
-    setTotalSum: (data: number) => void;
+    key: number;
+    isInCart: boolean;
 };
 
-const ProductCard = (props: IProductCard) => {
+const ProductCard = (props: ProductCardType) => {
     const { product, isInCart } = props;
     const { setTotalSum, cart, setTotalProducts, addToCart, dropFromCart } = useContext(StoreContext);
     const [inCart, setIncart] = useState(isInCart);
-    // if (cart?.currentProducts.some((el) => el.product.id === id)) {
-    //     setIncart(false);
-    //     console.log(
-    //         'id',
-    //         cart?.currentProducts.find((el) => el.product.id === id)
-    //     );
-    // }
-    // const addToCart = ({ product, cart, setIncart, setTotalProducts, setTotalSum }: AddDropCartType) => {
-    //     console.log('productObject', product);
-    //     cart && cart.add({ product: product, amount: 1 });
-    //     setIncart(false);
-    //     cart && cart.calculateTotalSum();
-    //     cart && setTotalProducts && setTotalProducts(cart.getTotalProducts());
-    //     cart && setTotalSum(cart.calculateTotalSum());
-    //     localStorage.setItem('cartCurrentProducts', JSON.stringify(cart.currentProducts));
-    // };
-    // const dropFromCart = ({ product, cart, setIncart, setTotalProducts, setTotalSum }: AddDropCartType) => {
-    //     console.log('dropFromCart');
-    //     cart && cart.remove(product.id);
-    //     setIncart(true);
-    //     cart && cart.calculateTotalSum();
-    //     cart && setTotalProducts && setTotalProducts(cart.getTotalProducts());
-    //     cart && setTotalSum(cart.calculateTotalSum());
-    //     localStorage.setItem('cartCurrentProducts', JSON.stringify(cart?.currentProducts));
-    // };
 
     return (
         <div className={inCart ? 'product__card product__card_active' : 'product__card'}>

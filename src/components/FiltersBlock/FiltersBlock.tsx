@@ -1,11 +1,10 @@
 import React, { useContext, useState } from 'react';
-import Button from '../Button/Button';
 import DualSlider from '../DualSlider';
 import Filter from '../Filter';
 import FilterItem from '../FilterItem';
-import './FilterBlock.scss';
 import { StoreContext } from '../../context';
-import { MinmaxType } from '../../api/database';
+import { MinmaxType } from '../../interfaces/types';
+import './FilterBlock.scss';
 
 export const setQueryFilter = (name: string, value: string | MinmaxType): void => {
     const newUrl = new URL(window.location.href);
@@ -46,18 +45,8 @@ export const resetQueryFilter = (): void => {
 };
 
 const FiltersBlock = () => {
-    // eslint-disable-next-line prettier/prettier
-    const {
-        categories,
-        brands,
-        priceRange,
-        stockRange,
-        priceRangeVals,
-        stockRangeVals,
-        database,
-        setCatalogStates,
-        // eslint-disable-next-line prettier/prettier
-    } = useContext(StoreContext);
+    const { categories, brands, priceRange, stockRange, priceRangeVals, stockRangeVals, database, setCatalogStates } =
+        useContext(StoreContext);
 
     const [filtered, setFiltered] = useState(
         Boolean(database.categoryCriteria.length) || Boolean(database.brandCriteria.length)
@@ -81,8 +70,6 @@ const FiltersBlock = () => {
     return (
         <div className="filters">
             <div className="filters__btns">
-                {/* <Button name="Reset filters" onClick={reset}></Button>
-                <Button name="Copy link" onClick={copy}></Button> */}
                 <button className="filters__reset" onClick={reset}>
                     Reset filters
                 </button>

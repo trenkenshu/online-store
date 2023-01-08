@@ -4,45 +4,17 @@ import Catalog from '../pages/Catalog';
 import Error404 from '../pages/Page404';
 import Layout from './Layout';
 import { Routes, Route } from 'react-router-dom';
-import DBhandler, { MinmaxType, UniqueFiltersType } from '../api/database';
-import CartClass, { currentProductsType } from '../api/cart';
+import DBhandler from '../api/database';
+import CartClass from '../api/cart';
+import { MinmaxType, UniqueFiltersType, CurrentProductsType, rangesType } from '../interfaces/types';
 import { IProduct } from '../interfaces/products';
 import { BrowserRouter } from 'react-router-dom';
 import { StoreContext } from '../context';
 import { addQueryFilter, removeQueryFilter, setQueryFilter } from './FiltersBlock/FiltersBlock';
 import '../scss/App.scss';
 import ProductPage from '../pages/ProductPage/ProductPage';
-import { AddDropCartType } from './ProductCard/ProductCard';
-
-export interface StoreType {
-    database: DBhandler;
-    cart: CartClass;
-    products: IProduct[];
-    categories: UniqueFiltersType;
-    brands: UniqueFiltersType;
-    priceRange: MinmaxType;
-    stockRange: MinmaxType;
-    priceRangeVals: MinmaxType;
-    stockRangeVals: MinmaxType;
-    totalProducts: number;
-    setTotalProducts: (number: number) => void;
-    totalSum: number;
-    setTotalSum: (number: number) => void;
-    setCatalogStates: (data: IProduct[], withRanges: rangesType) => void;
-    addQueryFilter: (name: string, value: string) => void;
-    setQueryFilter: (name: string, value: MinmaxType | string) => void;
-    removeQueryFilter: (name: string, value: string) => void;
-    parseQueryFilters: () => rangesType;
-    isOrderSumbitted: boolean;
-    setIsOrderSumbitted: (data: boolean) => void;
-    loadCartProductsLS: () => currentProductsType[];
-    modal: boolean;
-    setModal: (data: boolean) => void;
-    addToCart: (args: AddDropCartType) => void;
-    dropFromCart: (args: AddDropCartType) => void;
-}
-
-type rangesType = 'both' | 'stock' | 'price' | 'none';
+import { AddDropCartType } from '../interfaces/types';
+import { StoreType } from '../interfaces/store';
 
 const db = new DBhandler();
 const data: Promise<IProduct[]> = db.load(new URL('https://dummyjson.com/products?limit=100'));
@@ -123,7 +95,6 @@ const App = () => {
     };
     const dropFromCart = (x: AddDropCartType): void => {
         const { product, cart, setIncart, setTotalProducts, setTotalSum } = x;
-        console.log('dropFromCart');
         cart && cart.remove(product.id);
         setIncart(false);
         cart && cart.calculateTotalSum();
@@ -132,17 +103,16 @@ const App = () => {
         localStorage.setItem('cartCurrentProducts', JSON.stringify(cart?.currentProducts));
     };
 
-    const loadCartProductsLS = (): currentProductsType[] => {
+    const loadCartProductsLS = (): CurrentProductsType[] => {
         const ls = localStorage.getItem('cartCurrentProducts');
-        let cartProductsFromLS: currentProductsType[] = [];
+        let cartProductsFromLS: CurrentProductsType[] = [];
         if (typeof ls === 'string' && ls.length > 2) {
-            cartProductsFromLS = JSON.parse(ls) as currentProductsType[];
+            cartProductsFromLS = JSON.parse(ls) as CurrentProductsType[];
         }
         return cartProductsFromLS;
     };
 
     const cartCurrentProductsLS = loadCartProductsLS();
-    console.log('ProductBlockLS', cartCurrentProductsLS);
     cart.currentProducts = cartCurrentProductsLS.length > 0 ? cartCurrentProductsLS : cart.currentProducts;
     const [totalProducts, setTotalProducts] = useState(cart.getTotalProducts());
     const [totalSum, setTotalSum] = useState(cart.calculateTotalSum());

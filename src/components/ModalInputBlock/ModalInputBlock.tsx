@@ -11,6 +11,7 @@ type ModalInputBlockType = {
     blurHandler: (event: React.FocusEvent<HTMLInputElement>) => void;
     onChangeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
+
 const ModalInputBlock = (props: ModalInputBlockType) => {
     const { name, inputType, placeholder, value, inputFocus, inputError, blurHandler, onChangeHandler } = props;
 

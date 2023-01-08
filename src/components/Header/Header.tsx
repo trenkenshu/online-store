@@ -3,17 +3,21 @@ import React, { useContext } from 'react';
 import './Header.scss';
 import { StoreContext } from '../../context';
 
-// type HeaderType = {
-//     cart: CartClass;
-//     totalProducts: number;
-// };
 const Header = () => {
-    const { totalProducts, totalSum } = useContext(StoreContext);
+    const { totalProducts, totalSum, database, setCatalogStates } = useContext(StoreContext);
 
     return (
         <header className="header">
             <h1 className="header__logo">
-                <Link className="header__logo-link" to="/">
+                <Link
+                    className="header__logo-link"
+                    to="/"
+                    onClick={() => {
+                        database.resetFilter();
+                        const unfiltered = database.runFilter();
+                        setCatalogStates(unfiltered, 'both');
+                    }}
+                >
                     <span className="yellow">Online</span> store
                 </Link>
             </h1>

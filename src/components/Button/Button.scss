@@ -1,12 +1,9 @@
 .btn {
   padding: 10px;
-  // border: 1px solid rgb(255, 230, 0);
   border: 1px solid black;
   border-radius: 10px;
   outline: none;
   font-size: 1.6rem;
-  // background-color: black;
-  // color: rgb(255, 230, 0);
   cursor: pointer;
   white-space: nowrap;
   transition: background-color .3s ease-in,color .3s ease-in;
@@ -25,7 +22,6 @@
     color: rgb(255, 230, 0);
     &:hover {
       background-color: rgb(204, 8, 8);
-      // color: rgb(255, 230, 0);
     }
   }
 }

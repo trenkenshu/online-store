@@ -9,20 +9,23 @@ type CartHeaderType = {
     setItemsPerPage: (data: number) => void;
     totalPages: number;
     handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
+    setIsClicked: (data: boolean) => void;
 };
 const CartHeader = (props: CartHeaderType) => {
     const { cart } = useContext(StoreContext);
-    const { currentPage, setCurrentPage, itemsPerPage, totalPages, handleChange } = props;
+    const { currentPage, setCurrentPage, itemsPerPage, totalPages, handleChange, setIsClicked } = props;
 
     const increasePage = () => {
         if (currentPage < totalPages) {
             setCurrentPage(currentPage + 1);
+            setIsClicked(true);
         }
         return false;
     };
     const decreasePage = () => {
         if (currentPage > 1 && currentPage <= totalPages) {
             setCurrentPage(currentPage - 1);
+            setIsClicked(true);
         }
         return false;
     };

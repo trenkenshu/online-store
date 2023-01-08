@@ -8,6 +8,7 @@ import './Cart.scss';
 
 const Cart = () => {
     const { cart, setTotalProducts, setTotalSum, isOrderSumbitted, modal } = useContext(StoreContext);
+    const [isClicked, setIsClicked] = useState(false);
     //Pagination
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(3);
@@ -28,8 +29,10 @@ const Cart = () => {
     }, [itemsPerPage]);
 
     useEffect(() => {
-        setCartQueryParams('itemsPerPage', String(itemsPerPage));
-        setCartQueryParams('currentPage', String(currentPage));
+        if (isClicked) {
+            setCartQueryParams('itemsPerPage', String(itemsPerPage));
+            setCartQueryParams('currentPage', String(currentPage));
+        }
     }, [itemsPerPage, currentPage]);
 
     const setCartQueryParams = (name: string, value: string) => {
@@ -84,6 +87,7 @@ const Cart = () => {
             value = 1;
         }
         setItemsPerPage(value);
+        setIsClicked(true);
     };
 
     return (
@@ -108,6 +112,7 @@ const Cart = () => {
                             setItemsPerPage={setItemsPerPage}
                             totalPages={totalPages}
                             handleChange={handleChange}
+                            setIsClicked={setIsClicked}
                         />
                         {currentCartList.map((item, index) => (
                             <CartItem

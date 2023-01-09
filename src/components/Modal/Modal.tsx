@@ -79,7 +79,11 @@ const Modal = (props: ModalType) => {
     };
     const fullNameHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFullName(event.target.value);
-        if (event.target.value.match(/^([A-Z][a-z]{2,}|[А-Я][а-я]{2,})\s([A-Z][a-z]{2,}|[А-Я][а-я]{2,})/g)) {
+        if (
+            event.target.value.match(
+                /^([A-Z][a-z]{2,}|[А-Я][а-я]{2,})\s([A-Z][a-z]{2,}|[А-Я][а-я]{2,})(\s[A-Z][a-z]{2,}|[А-Я][а-я]{2,})*[\s]*$/g
+            )
+        ) {
             setFullNameError(false);
         } else {
             setFullNameError(true);

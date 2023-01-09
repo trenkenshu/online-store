@@ -9,6 +9,7 @@ import './Cart.scss';
 const Cart = () => {
     const { cart, setTotalProducts, setTotalSum, isOrderSumbitted, modal } = useContext(StoreContext);
     const [isClicked, setIsClicked] = useState(false);
+    const [timer, setTimer] = useState(100);
     //Pagination
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(3);
@@ -98,7 +99,7 @@ const Cart = () => {
             {isOrderSumbitted && (
                 <div className="order-ready">
                     <div className="order-ready__content">
-                        Thanks for your order. Redirect to the catalog after 3 sec
+                        Thanks for your order. Redirect to the catalog after {timer} sec
                     </div>
                 </div>
             )}
@@ -128,7 +129,7 @@ const Cart = () => {
                         ))}
                     </div>
                     <CartSummary />
-                    {modal && <Modal />}
+                    {modal && <Modal setTimer={setTimer} />}
                 </div>
             )}
         </>

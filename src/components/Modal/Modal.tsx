@@ -5,9 +5,15 @@ import BankCard from '../BankCard';
 import ModalInputBlock from '../ModalInputBlock';
 import './Modal.scss';
 
-const Modal = () => {
+type ModalType = {
+    setTimer: (prev: number) => void;
+};
+
+const Modal = (props: ModalType) => {
     const { cart, setTotalProducts, setTotalSum, setIsOrderSumbitted, setModal, database, setCatalogStates } =
         useContext(StoreContext);
+
+    const { setTimer } = props;
 
     const navigate = useNavigate();
     //For personal details
@@ -211,8 +217,15 @@ const Modal = () => {
             database.resetFilter();
             const unfiltered = database.runFilter();
             setCatalogStates(unfiltered, 'both');
+            let seconds = 3;
+            setTimer(seconds);
+            const backCount = setInterval(() => {
+                seconds = seconds > 0 ? seconds - 1 : seconds;
+                setTimer(seconds);
+            }, 1000);
             setTimeout(() => {
-                setIsOrderSumbitted(false);
+                setIsOrderSumbitted(false)
+                clearInterval(backCount);
                 navigate('/');
             }, 3000);
             setModal(false);

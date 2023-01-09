@@ -12,7 +12,7 @@ const Footer = () => {
                     Oleg Trenkenshu
                 </a>
             </div>
-            <div className="footer__year">{new Date().getFullYear()}</div>
+            <div className="footer__year">© 2022 — {new Date().getFullYear()}</div>
             <a className="footer__rs-logo" href="https://rs.school/js/" target="_blank"></a>
         </footer>
     );

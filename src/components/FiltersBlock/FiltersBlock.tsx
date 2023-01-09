@@ -52,12 +52,15 @@ const FiltersBlock = () => {
         Boolean(database.categoryCriteria.length) || Boolean(database.brandCriteria.length)
     );
 
+    const [isReset, setIsReset] = useState(false);
+
     const reset = () => {
         database.resetFilter();
         resetQueryFilter();
         const unfiltered = database.runFilter();
         setCatalogStates(unfiltered, 'both');
         setFiltered((prev) => !prev);
+        setIsReset((prev) => !prev);
     };
 
     const copy = () => {
@@ -129,6 +132,7 @@ const FiltersBlock = () => {
                     action="price"
                     setCatalogStates={setCatalogStates}
                     setQueryFilter={setQueryFilter}
+                    isReset={isReset}
                 />
             </Filter>
             <Filter name="Stock">
@@ -141,6 +145,7 @@ const FiltersBlock = () => {
                     action="stock"
                     setCatalogStates={setCatalogStates}
                     setQueryFilter={setQueryFilter}
+                    isReset={isReset}
                 />
             </Filter>
         </div>

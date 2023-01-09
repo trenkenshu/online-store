@@ -47,7 +47,7 @@ export const resetQueryFilter = (): void => {
 const FiltersBlock = () => {
     const { categories, brands, priceRange, stockRange, priceRangeVals, stockRangeVals, database, setCatalogStates } =
         useContext(StoreContext);
-
+    const [copyName, setCopyName] = useState('Copy link');
     const [filtered, setFiltered] = useState(
         Boolean(database.categoryCriteria.length) || Boolean(database.brandCriteria.length)
     );
@@ -68,6 +68,8 @@ const FiltersBlock = () => {
         navigator.clipboard.writeText(url.toString()).catch((err) => {
             console.error('cant copy: ', err);
         });
+        setCopyName('Copied!');
+        setTimeout(() => setCopyName('Copy link'), 800);
     };
 
     return (
@@ -77,7 +79,7 @@ const FiltersBlock = () => {
                     Reset filters
                 </button>
                 <button className="filters__copy" onClick={copy}>
-                    Copy link
+                    {copyName}
                 </button>
             </div>
             <Filter name="Category">

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useEffect, useState, useRef, useContext } from 'react';
+import React, { ChangeEvent, FC, useEffect, useState, useContext } from 'react';
 import DBhandler from '../../api/database';
 import { StoreContext } from '../../context';
 import { IProduct } from '../../interfaces/products';

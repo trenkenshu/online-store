@@ -84,5 +84,11 @@
     background-color: black;
     padding: 5px;
     cursor: pointer;
+    transition: all .3s ease-in;
+    &:hover{
+      border-color: black;
+      background-color: #ffe600;
+      color:black;
+    }
   }
 }

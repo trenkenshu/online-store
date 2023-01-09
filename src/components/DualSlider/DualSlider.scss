@@ -59,10 +59,15 @@
             width: 18px;
             margin-top: 4px;
             background-color: yellow;
-
             border-radius: 50%;
             pointer-events: all;
             cursor: pointer;
+            &:hover{
+                background-color: darkred;
+            }
+            &:active {
+                background-color: darkred;
+            }
         }
         &-right {
             z-index: 4;

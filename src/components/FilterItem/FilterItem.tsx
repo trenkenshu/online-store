@@ -51,7 +51,7 @@ const FilterItem = (props: FilterItemType) => {
     }, [filtered]);
 
     return (
-        <div className={currentAmount === 0 ? 'filter__item filter__item_empty' : 'filter__item'}>
+        <li className={currentAmount === 0 ? 'filter__item filter__item_empty' : 'filter__item'}>
             <div className="filter__body">
                 <input
                     type="checkbox"
@@ -60,14 +60,15 @@ const FilterItem = (props: FilterItemType) => {
                     id={searchQuery}
                     onChange={handleChange}
                 ></input>
-                <label className="filter__label" htmlFor={searchQuery} data-name={searchQuery}></label>
-                <p className="filter__name">{searchQuery}</p>
+                <label className="filter__label" htmlFor={searchQuery} data-name={searchQuery}>
+                    {searchQuery}
+                </label>
             </div>
             <div className="filter__amount">
                 <p className="filter__current-amount">{currentAmount} /</p>
                 <p className="filter__total-amount">{maxAmount}</p>
             </div>
-        </div>
+        </li>
     );
 };
 

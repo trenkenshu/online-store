@@ -224,7 +224,7 @@ const Modal = (props: ModalType) => {
                 setTimer(seconds);
             }, 1000);
             setTimeout(() => {
-                setIsOrderSumbitted(false)
+                setIsOrderSumbitted(false);
                 clearInterval(backCount);
                 navigate('/');
             }, 3000);

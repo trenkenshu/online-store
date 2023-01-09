@@ -28,5 +28,10 @@
     border: 1px solid black;
     border-radius: 10px;
     cursor: pointer;
+    transition: all .3s ease-in;
+    &:hover{
+      background-color: #ffe600;
+      color: black;
+    }
   }
 }

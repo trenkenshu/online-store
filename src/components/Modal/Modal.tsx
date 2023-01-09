@@ -79,8 +79,7 @@ const Modal = (props: ModalType) => {
     };
     const fullNameHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFullName(event.target.value);
-        const valueArr = event.target.value.split(' ');
-        if (valueArr.length >= 2 && valueArr.every((el) => el.length > 2)) {
+        if (event.target.value.match(/^([A-Z][a-z]{2,}|[А-Я][а-я]{2,})\s([A-Z][a-z]{2,}|[А-Я][а-я]{2,})/g)) {
             setFullNameError(false);
         } else {
             setFullNameError(true);
@@ -90,7 +89,7 @@ const Modal = (props: ModalType) => {
     const phoneNumberHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPhoneNumber(event.target.value);
         const value = event.target.value;
-        if (value[0] === '+' && value.match(/\d/g) && value.length >= 9) {
+        if (value.match(/^\+\d{9,}/g)) {
             setPhoneNumberError(false);
         } else {
             setPhoneNumberError(true);

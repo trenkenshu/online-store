@@ -1,0 +1,76 @@
+.card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  gap: 40px;
+  font-size: 1.2rem;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: darkred;
+  &__upper-info,
+  &__bottom-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-transform: uppercase;
+  }
+  &__upper-info{
+    gap: 15px;
+  }
+  &__logo{
+    width: 40px;
+    height: 40px;
+    background-image: url('/src/assets/nologo.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    &_visa {
+      background-image: url('/src/assets/visa_icon.png');
+    }
+    &_mastercard {
+      background-image: url('/src/assets/master-card-icon.png');
+    }
+    &_am-express {
+      background-image: url('/src/assets/american_express-icon.png');
+    }
+  }
+  &__input{
+    appearance: none;
+    outline: none;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: lightyellow;
+    font-weight: bold;
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button{
+      -webkit-appearance: none;
+    }
+    &:hover,
+    &:focus{
+      appearance: none;
+    }
+  }
+
+  &__input-number{
+    width: 80%;
+    padding: 5px;
+    text-align: center;
+    font-size: 1.6rem;
+  }
+  &__input-valid,
+  &__input-cvv{
+    width: 50%;
+    text-align: center;
+    font-size: 1.6rem;
+    padding: 5px;
+  }
+  &__valid,
+  &__cvv {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    align-items: center;
+  }
+}

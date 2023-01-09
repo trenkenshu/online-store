@@ -1,0 +1,80 @@
+.item {
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 5px;
+  cursor: pointer;
+  &__number{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 4%;
+   font-size: 2.5rem;
+  }
+  &__info{
+    display: flex;
+    width: 70%;
+    gap: 10px;
+  }
+  &__img{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 25%;
+    height: 120px;
+    border-radius: 10px;
+  }
+  &__data {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 75%;
+  }
+  &__name{
+    text-align: center;
+  }
+  &__description {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  &__others {
+    display: flex;
+    justify-content: space-around;
+  }
+  &__rating,
+  &__discount{
+    font-weight: bold;
+  }
+  &__amount-block{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 20%;
+    gap: 10px;
+  }
+  &__controls{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  &__increase,
+  &__decrease{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: black;
+    color: #ffe600;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: all .3s ease-in;
+    &:hover{
+      background-color: #ffe600;
+      color: black;
+    }
+  }
+  &__amount {
+    font-size: 2.5rem;
+    padding: 5px;
+  }
+  
+}

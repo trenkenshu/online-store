@@ -1,0 +1,84 @@
+.slider {
+    position: relative;;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid black;
+    border-radius: 10px;
+    user-select: none;
+    &__wrapper {
+        position: relative;
+        width: 90%;
+    }
+    &__track {
+        position: absolute;
+        width: 100%;
+        height: 5px;
+        border-radius: 3px;
+        background-color: #ced4da;
+        z-index: 1;
+    }
+    &__range {
+        position: absolute;
+        width: 100%;
+        height: 5px;
+        border-radius: 3px;
+        background-color: black;
+        z-index: 2;
+    }
+    &__from {
+        position: absolute;
+        left: 5px;
+        color: black;
+        font-size: 1.8rem;
+        margin-top: -40px;
+    }
+    &__to {
+        position: absolute;
+        right: -5px;
+        color: black;
+        font-size: 1.8rem;
+        margin-top: -40px;
+    }
+    /* Remove default appearance */
+    &__thumb {
+        appearance: none;
+        -webkit-appearance: none;
+        pointer-events: none;
+        outline: none;
+        position: absolute;
+        height: 0;
+        width: 90%;
+        &::-webkit-slider-thumb {
+            appearance: none;
+            -webkit-appearance: none;
+            border: 1px solid black;
+            position: relative;
+            height: 18px;
+            width: 18px;
+            margin-top: 4px;
+            background-color: yellow;
+            border-radius: 50%;
+            pointer-events: all;
+            cursor: pointer;
+            &:hover{
+                background-color: darkred;
+            }
+            &:active {
+                background-color: darkred;
+            }
+        }
+        &-right {
+            z-index: 4;
+        }
+    }
+    &__notfound{
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0);
+        color: black;
+        font-size: 1.8rem;
+        margin-top: -40px;
+    }
+}

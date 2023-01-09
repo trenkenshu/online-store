@@ -1,0 +1,69 @@
+.product {
+  &__card {
+    display: flex;
+    width: 23%;
+    border: 1px solid black;
+    border-radius: 10px;
+    font-size: 1.6rem;
+    padding: 5px;
+    user-select: none;
+    &_active {
+      background-color:#ebe0ab;
+    }
+  }
+  &__info{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    gap: 10px;
+  }
+  &__body{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  &__title {
+    text-align: center;
+    text-transform: uppercase;
+  }
+  &__data{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  &__value{
+    font-weight: bold;
+  }
+  &__img{
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+  }
+  &__btns {
+    display: flex;
+    justify-content: space-around;
+  }
+  &__btn-details {
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+    outline: none;
+    font-size: 1.6rem;
+    background-color: black;
+    color: rgb(255, 230, 0);
+    white-space: nowrap;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color .3s ease-in,color .3s ease-in;
+    cursor: pointer;
+    &:hover {
+      background-color: rgb(255, 230, 0);
+      color: black;
+    }
+  }
+}

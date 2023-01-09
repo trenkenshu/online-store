@@ -1,0 +1,17 @@
+.error{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  background-color: black;
+  color: white;
+  width: 100%;
+  border-radius: 30px;
+  &__number {
+    font-size: 17rem;
+  }
+  &__text {
+    font-size: 5rem;
+  }
+}

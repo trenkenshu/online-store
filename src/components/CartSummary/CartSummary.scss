@@ -1,0 +1,94 @@
+.cart{
+  &__summary{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 28%;
+    height: fit-content;
+    border-radius: 10px;
+  }
+  &__title{
+   width: 100%;
+   text-align: center;
+   background-color: black;
+   color: #ffe600;
+   border-radius: 10px;
+   padding: 10px;
+  }
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+  }
+  &__products,
+  &__price{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.8rem;
+  }
+  &__total{
+    font-size: 2.2rem;
+    &_old{
+      text-decoration: line-through;
+    }
+  }
+  &__text{
+    font-size: 2rem;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  &__promo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  &__btn {
+    align-self: center;
+    width: 200px;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #ffe600;
+    text-transform: uppercase;
+    color: black;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: background-color .3s ease-in,color .3s ease-in;
+    &:hover{
+      background-color: darkred;
+      color:#ffe600;
+    }
+  }
+  &__discount_aplied {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background-color: darkred;
+    color: #ffe600;
+    border-radius: 10px;
+    padding: 5px;
+  }
+  &__discount-btn {
+    color: #ffe600;
+    border: 1px solid #ffe600;
+    border-radius: 10px;
+    background-color: black;
+    padding: 5px;
+    cursor: pointer;
+    transition: all .3s ease-in;
+    &:hover{
+      border-color: black;
+      background-color: #ffe600;
+      color:black;
+    }
+  }
+}

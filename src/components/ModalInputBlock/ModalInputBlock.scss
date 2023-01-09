@@ -1,0 +1,25 @@
+.modal{
+  &__input-block{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+  }
+  &__input{
+    width: 80%;
+    outline: none;
+    border: 1px solid #ffe600;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 7px;
+    font-size: 1.5rem;
+  }
+  &__error{
+    font-size: 1.4rem;
+    color: red;
+    text-transform: uppercase;
+  }
+}

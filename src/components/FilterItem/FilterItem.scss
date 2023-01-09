@@ -1,0 +1,59 @@
+.filter {
+  &__item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: bold;
+    &_empty{
+      color: lightgray;
+    }
+  }
+  &__body{
+    display: flex;
+    gap: 5px;
+  }
+  &__amount {
+    display: flex;
+    gap: 5px;
+  }
+  &__item {
+    &_empty{
+      color: lightgray;
+    }
+  }
+  &__checkbox{
+   display: none;
+   cursor: pointer;
+   &:checked + .filter__label::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 1px;
+    left: 8px;
+    width: 7px;
+    height: 12px;
+    border: solid darkred;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+   }
+  }
+  &__label {
+    position: relative;
+    display: flex;
+    cursor: pointer;
+    &::before {
+      content:'';
+      appearance: none;
+      -webkit-appearance: none;
+      position: relative;
+      display: inline-block;
+      background-color: transparent;
+      border: 2px solid #000000;
+      border-radius: 5px;
+      padding: 6px 10px;
+      vertical-align: middle;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+  }
+}

@@ -146,6 +146,11 @@ const ProductPage = () => {
                             </div>
                         </div>
                     </div>
+                    <div>
+                        <a className="product-page__go-back" onClick={() => navigate(-1)}>
+                            Go back
+                        </a>
+                    </div>
                 </div>
             )}
         </>

@@ -83,7 +83,7 @@ const FiltersBlock = () => {
                 </button>
             </div>
             <Filter name="Category">
-                <div className="filter__list">
+                <ul className="filter__list">
                     {categories.map(
                         (categoryObj, index): React.ReactNode => (
                             <FilterItem
@@ -101,10 +101,10 @@ const FiltersBlock = () => {
                             />
                         )
                     )}
-                </div>
+                </ul>
             </Filter>
             <Filter name="Brand">
-                <div className="filter__list">
+                <ul className="filter__list">
                     {brands.map(
                         (brandObj, index): React.ReactNode => (
                             <FilterItem
@@ -122,7 +122,7 @@ const FiltersBlock = () => {
                             />
                         )
                     )}
-                </div>
+                </ul>
             </Filter>
             <Filter name="Price">
                 <DualSlider

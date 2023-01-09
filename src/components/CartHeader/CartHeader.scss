@@ -32,6 +32,9 @@
     color: #ffe600;
     text-align: center;
     font-size:2.2rem;
+    &:hover{
+      background-color: #555;
+    }
   }
   &__pages{
     display: flex;
@@ -47,6 +50,9 @@
     color: #ffe600;
     font-size:1.8rem;
     cursor: pointer;
+    &:hover{
+      background-color: #555;
+    }
   }
   &__pages-number{
     font-size: 2.2rem;
